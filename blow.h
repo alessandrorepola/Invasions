@@ -3,7 +3,7 @@
 #define BLOW_H_INCLUDED
 
 #include "spacecraft.h"
-#define DELAY 100
+#define DELAY 1
 #define DAMAGE 1
 
 class blow
@@ -14,7 +14,7 @@ class blow
     public:
 
     blow();
-    void Move(int, int);
+    void Move(spacecraft);
     ~blow();
 };
 

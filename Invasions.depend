@@ -1,18 +1,19 @@
 # depslib dependency file v1.0
-1554321167 source:c:\users\alessandro\dati\programmi\c++\invasions\invasions.cpp
+1554408170 source:c:\users\alessandro\dati\programmi\c++\invasions\invasions.cpp
 	"spacecraft.h"
 	"blow.h"
 
-1554321026 c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.h
+1554408185 c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.h
 	<curses.h>
 	<ncurses.h>
 
-1554322013 c:\users\alessandro\dati\programmi\c++\invasions\blow.h
+1554404932 c:\users\alessandro\dati\programmi\c++\invasions\blow.h
 	"spacecraft.h"
 
-1554321026 source:c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.cpp
+1554408170 source:c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.cpp
 	"spacecraft.h"
 
-1554322013 source:c:\users\alessandro\dati\programmi\c++\invasions\blow.cpp
+1554408170 source:c:\users\alessandro\dati\programmi\c++\invasions\blow.cpp
 	"blow.h"
+	"spacecraft.h"
 

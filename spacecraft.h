@@ -11,17 +11,21 @@
 #define LIFE 3
 #define EXIT 0
 #define MOVE 1
+#define SHOT 2
 
 class spacecraft
 {
+    friend class blow;
+
+    int row;       //coordinata Y
+    int column;    //coordinata X
     int life;      //la vita della navicella
 
     public:
 
-    int row;       //coordinata Y
-    int column;    //coordinata X
     spacecraft();  //costruttore
     int Move(int); //sposta la navicella
+    void shot();   //spara i colpi
     ~spacecraft(); //distruttore
 };
 

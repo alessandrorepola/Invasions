@@ -32,7 +32,11 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="Invasions.cpp" />
+		<Unit filename="blow.cpp" />
+		<Unit filename="blow.h" />
+		<Unit filename="spacecraft.cpp" />
+		<Unit filename="spacecraft.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

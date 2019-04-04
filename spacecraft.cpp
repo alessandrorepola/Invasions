@@ -9,6 +9,7 @@ spacecraft::spacecraft()
     column = 50;
 }
 
+//Movimeto della navicella
 int spacecraft::Move(int key)
 {
     switch (key)
@@ -30,6 +31,9 @@ int spacecraft::Move(int key)
         ++column;
         break;
 
+        case ' ':
+            return SHOT;
+
         case 'q':
         case 'Q':
             return EXIT;
@@ -45,6 +49,7 @@ int spacecraft::Move(int key)
     return MOVE;
 }
 
+//Distruttore
 spacecraft::~spacecraft()
 {
     return;
