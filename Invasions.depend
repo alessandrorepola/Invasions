@@ -1,19 +1,17 @@
 # depslib dependency file v1.0
-1554831585 source:c:\users\alessandro\dati\programmi\c++\invasions\bullet.cpp
+1554924128 source:c:\users\alessandro\dati\programmi\c++\invasions\bullet.cpp
 	"bullet.h"
-	"spacecraft.h"
 
-1554919701 c:\users\alessandro\dati\programmi\c++\invasions\bullet.h
-	"spacecraft.h"
-
-1554919390 c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.h
+1554925848 c:\users\alessandro\dati\programmi\c++\invasions\bullet.h
 	<curses.h>
 	<ncurses.h>
+
+1554921117 c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.h
 	"bullet.h"
 
-1554919390 source:c:\users\alessandro\dati\programmi\c++\invasions\invasions.cpp
+1554924620 source:c:\users\alessandro\dati\programmi\c++\invasions\invasions.cpp
 	"spacecraft.h"
 
-1554833716 source:c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.cpp
+1554925092 source:c:\users\alessandro\dati\programmi\c++\invasions\spacecraft.cpp
 	"spacecraft.h"
 

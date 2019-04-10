@@ -2,11 +2,6 @@
 #ifndef SPACECRAFT_H_INCLUDED
 #define SPACECRAFT_H_INCLUDED
 
-#ifdef WIN32
-    #include <curses.h>
-#else
-    #include <ncurses.h>
-#endif
 #include "bullet.h"
 #define LIFE 3
 #define EXIT 0
