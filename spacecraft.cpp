@@ -2,7 +2,7 @@
 #include "spacecraft.h"
 
 //Costruttore
-spacecraft::spacecraft()
+Spacecraft::Spacecraft()
 {
     life = LIFE;
     row = 15;
@@ -10,7 +10,7 @@ spacecraft::spacecraft()
 }
 
 //Movimeto della navicella
-int spacecraft::Move(int key)
+int Spacecraft::Move(int key)
 {
     switch (key)
     {
@@ -31,9 +31,6 @@ int spacecraft::Move(int key)
         ++column;
         break;
 
-        case ' ':
-            return SHOT;
-
         case 'q':
         case 'Q':
             return EXIT;
@@ -41,16 +38,36 @@ int spacecraft::Move(int key)
         // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti esce
         case ERR:
         default:
-            break;
+            return ERR;
 
     }
     clear();
-    mvprintw(row,column-2,"\\-||-/");
+    Draw();
     return MOVE;
 }
 
+//Disegna la navicella
+void Spacecraft::Draw ()
+{
+    mvprintw(row,column-2,"\\-^-/");
+    refresh();
+}
+
+//Spara il colpo
+void Spacecraft::Shot(Bullet *missile)
+{
+    //Controllo se la lista è vuota
+    if (missile->next == NULL)
+    {
+        //creo un nuovo oggetto che rappresenta il primo colpo da sparare
+        missile->next = new Bullet; //se è vuota indico al puntatore next della sentinella di puntare un nuovo oggetto
+        missile->next->prev = missile; //il puntatore prev del nuovo oggetto punta alla sentinella
+        missile->next->next = missile; //il puntatore next del nuovo oggetto
+    }
+}
+
 //Distruttore
-spacecraft::~spacecraft()
+Spacecraft::~Spacecraft()
 {
     return;
 }

@@ -7,26 +7,25 @@
 #else
     #include <ncurses.h>
 #endif
-
+#include "bullet.h"
 #define LIFE 3
 #define EXIT 0
 #define MOVE 1
 #define SHOT 2
 
-class spacecraft
+class Spacecraft
 {
-    friend class blow;
-
-    int row;       //coordinata Y
-    int column;    //coordinata X
-    int life;      //la vita della navicella
+    int column;     //coordinata X
+    int row;        //coordinata Y
+    int life;       //la vita della navicella
+    void Draw();    //disegna la navicella
 
     public:
 
-    spacecraft();  //costruttore
-    int Move(int); //sposta la navicella
-    void shot();   //spara i colpi
-    ~spacecraft(); //distruttore
+    Spacecraft();       //costruttore
+    int Move(int);      //sposta la navicella
+    void Shot(Bullet*); //spara il colpo
+    ~Spacecraft();      //distruttore
 };
 
 #endif // SPACECRAFT_H_INCLUDED

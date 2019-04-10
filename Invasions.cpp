@@ -1,5 +1,4 @@
 #include "spacecraft.h"
-#include "blow.h"
 #define CONSOLE_LENGTH 100
 #define CONSOLE_HIGH 30
 
@@ -11,22 +10,19 @@ int main()
 	keypad (stdscr, true);	//attiva tasti extra (funzione e frecce)
 	noecho ();				//non scrivere sulla console i tasti premuti
 	raw ();					//l'input da tastiera non necessita di INVIO
-	spacecraft allied;
-	blow *bullet;
+	//nodelay (stdscr, true);	// getch() non aspetta che sia premuto un tasto.
+	Spacecraft player;      //dichiaro un oggetto di tipo navicella per il giocatore
+	Bullet *missile;        //dichiaro un puntatore ad una lista concatenata di oggetti Bullet
 	//loop "infinito" della partita
 	while (TRUE)
     {
+        //missile = new Bullet; //dichiaro un oggetto sentinella per la lista di colpi
         int key = getch();
-        int value = allied.Move(key);
-
-        bullet = new blow;
-        if (value == EXIT)
+        if (player.Move(key)==EXIT)
         {
             break;
         }
-        if (value == SHOT)
-            bullet->Move(allied);
-        delete bullet;
+        player.Shot(missile); //funzione per sparare che prende come argomento la sentinella della lista dei colpi
     }
     endwin(); //termina la funzionalita' curses
     return 0;
