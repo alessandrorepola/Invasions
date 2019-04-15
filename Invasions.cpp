@@ -12,7 +12,6 @@ int main()
 	raw ();					//l'input da tastiera non necessita di INVIO
 	nodelay (stdscr, true);	// getch() non aspetta che sia premuto un tasto
 	Spacecraft player;      //dichiaro un oggetto di tipo navicella per il giocatore
-	Bullet *missile = NULL; //dichiaro un puntatore ad una lista concatenata di oggetti Bullet
 	//loop "infinito" della partita
 	while (TRUE)
     {
@@ -21,7 +20,6 @@ int main()
         {
             break;
         }
-        player.Shot(missile); //funzione per sparare che prende come argomento la sentinella della lista dei colpi
     }
     endwin(); //termina la funzionalita' curses
     return 0;

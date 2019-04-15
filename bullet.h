@@ -1,6 +1,7 @@
 //File bullet.h
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
+#include <ctime>
 #ifdef WIN32
     #include <curses.h>
 #else
@@ -11,22 +12,22 @@
 
 class Bullet
 {
-    friend class Spacecraft;
+    friend class Cannon;
 
     int speed;        //Velocità del colpo
     int damage;       //Danno del colpo
     int row;          //Riga del colpo
     int column;       //Colonna del colpo
-    Bullet *first;    //Punta al primo colpo in testa
     Bullet *next;     //Puntatore al colpo successivo
     Bullet *prev;     //Puntatore al colpo precedente
-    void PrintBlow(); //Stampa il colpo
+    clock_t start;    //Misura il tempo da quando è stato sparato il colpo
 
     public:
 
-    Bullet();           //Costruttore
-    int Move();       //Muove il colpo sparato
-    ~Bullet();          //Distruttore
+    Bullet();          //Costruttore
+    Bullet(int, int);  //Prende come argomento la riga e la colonna
+    void Move();       //Muove il colpo sparato
+    ~Bullet();         //Distruttore
 };
 
 #endif // BULLET_H_INCLUDED

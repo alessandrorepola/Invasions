@@ -10,15 +10,23 @@ Bullet::Bullet()
     prev = NULL;
 }
 
-//Disegna il colpo nella sua posizione attuale
-void Bullet::PrintBlow()
+//Costruttore che posiziona il colpo
+Bullet::Bullet(int r, int c)
 {
-    mvaddch(row,column,'.');
-    refresh();
-    delay_output(100);
+    speed = DELAY;
+    damage = DAMAGE;
+    next = NULL;
+    prev = NULL;
+
+    //Inizializzo le coordinate del colpo
+    row = r;
+    column = c;
+
+    //Inizializzo il tempo
+    start = clock();
 }
 
-//distruttore
+//Distruttore
 Bullet::~Bullet()
 {
     //TO DO

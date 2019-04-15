@@ -19,7 +19,7 @@ class Spacecraft
 
     Spacecraft();       //costruttore
     int Move(int);      //sposta la navicella
-    void Shot(Bullet*); //spara il colpo
+    void Shot();        //spara il colpo
     ~Spacecraft();      //distruttore
 };
 

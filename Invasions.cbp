@@ -35,6 +35,8 @@
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="bullet.cpp" />
 		<Unit filename="bullet.h" />
+		<Unit filename="cannon.cpp" />
+		<Unit filename="cannon.h" />
 		<Unit filename="spacecraft.cpp" />
 		<Unit filename="spacecraft.h" />
 		<Extensions>
