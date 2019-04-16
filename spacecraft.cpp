@@ -39,10 +39,8 @@ int Spacecraft::Move(int key)
         case ERR:
         default:
             return ERR;
-
     }
-    clear();
-    Draw();
+    erase();
     return MOVE;
 }
 
@@ -54,9 +52,12 @@ void Spacecraft::Draw ()
 }
 
 //Spara il colpo
-void Spacecraft::Shot()
+void Spacecraft::Shoot(Cannon &c)
 {
-
+    c.AddBullet(row-1, column);
+    c.MoveBullet();
+    erase();
+    c.Draw();
 }
 
 //Distruttore

@@ -7,25 +7,38 @@ Cannon::Cannon()
     first = NULL;
     last = NULL;
     iter = NULL;
+    start = clock();
 }
 
 //Aggiunge un nuovo colpo
 void Cannon::AddBullet(int r, int c)
 {
-    Bullet *add = NULL;
+    clock_t time;
+    double diff = 0;
 
-    //Controllo se è il primo oggetto colpo
-    if (first == NULL)
+    //Controllo il tempo trascorso dall'ultimo colpo
+    time = clock();
+    diff = (double)(time-start);
+    diff = diff/CLOCKS_PER_SEC;
+
+    //Controllo se si può muovere
+    if (diff >= 1.00)
     {
-        first = new Bullet(r,c); //Dichiaro il primo colpo
-        last = first;           //last punterà al primo colpo
-    }
-    else
-    {
-        add = new Bullet(r,c); //Dichiaro un nuovo colpo
-        add->prev = last;      //prev punterà a last che è il penultimo colpo
-        last->next = add;      //Il puntatore next del colpo precedente punterà a quello attuale
-        last = add;            //Aggiorno il puntatore last all'ultimo colpo
+        Bullet *add = NULL;
+
+        //Controllo se è il primo oggetto colpo
+        if (first == NULL)
+        {
+            first = new Bullet(r,c); //Dichiaro il primo colpo
+            last = first;           //last punterà al primo colpo
+        }
+        else
+        {
+            add = new Bullet(r,c); //Dichiaro un nuovo colpo
+            add->prev = last;      //prev punterà a last che è il penultimo colpo
+            last->next = add;      //Il puntatore next del colpo precedente punterà a quello attuale
+            last = add;            //Aggiorno il puntatore last all'ultimo colpo
+        }
     }
 }
 
@@ -55,5 +68,50 @@ void Cannon::RemoveBullet()
         first = first->next;
         first->prev = NULL;
         delete rm;
+    }
+}
+
+//Muove i colpi
+void Cannon::MoveBullet()
+{
+    //Controllo se ci sono colpi
+    if (first == NULL)
+        return;
+    else
+    {
+        first->Move();
+    }
+
+    //Controllo se il colpo è arrivato al bordo superiore dello schermo e quindi deve essere cancellato
+    if(first->row<=0)
+        RemoveBullet();
+}
+
+//Disegna i colpi
+void Cannon::Draw ()
+{
+    Bullet *d = first;
+    while(d != NULL)
+    {
+        mvprintw(d->row,d->column,"*");
+        d = d->next;
+    }
+}
+
+//Distruttore
+Cannon::~Cannon()
+{
+    //Puntatore per la deallocazione della memoria
+    Bullet *del = first;
+
+    //Puntatore di appoggio
+    Bullet *tmp = first;
+
+    //Rilascio al sistema tutta lamemoria ancora allocata
+    while (del!=NULL)
+    {
+        tmp = del->next; //A tmp assegno il colpo successivo a quello da cancellare
+        delete del;      //Cancello il colpo
+        del = tmp;       //A del riassegno il prossimo colpo da cancellare
     }
 }

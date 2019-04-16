@@ -26,6 +26,29 @@ Bullet::Bullet(int r, int c)
     start = clock();
 }
 
+//Sposta il colpo
+void Bullet::Move()
+{
+    clock_t time;
+    double diff = 0;
+
+    //Controllo se ci sono altri colpi
+    if (next != NULL)
+        next->Move();
+
+    //Controllo il tempo trascorso dall'ultimo colpo
+    time = clock();
+    diff = (double)(time-start);
+    diff = diff/CLOCKS_PER_SEC;
+
+    //Controllo se si può muovere
+    if (diff >= 0.05)
+    {
+        start = time;
+        row--;
+    }
+}
+
 //Distruttore
 Bullet::~Bullet()
 {
