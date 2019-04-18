@@ -1,21 +1,13 @@
 //File bullet.h
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
-#include <ctime>
-#ifdef WIN32
-    #include <curses.h>
-#else
-    #include <ncurses.h>
-#endif
-#define DELAY 1
-#define DAMAGE 1
+
+#include "Invasions.h"
 
 class Bullet
 {
     friend class Cannon;
 
-    int speed;        //Velocità del colpo
-    int damage;       //Danno del colpo
     int row;          //Riga del colpo
     int column;       //Colonna del colpo
     Bullet *next;     //Puntatore al colpo successivo

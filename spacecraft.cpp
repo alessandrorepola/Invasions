@@ -4,13 +4,16 @@
 //Costruttore
 Spacecraft::Spacecraft()
 {
-    life = LIFE;
-    row = 15;
-    column = 50;
+    //Vita iniziale della navicella
+    life = SPACECRAFT_LIFE;
+
+    //Coordinate iniziali della navicella
+    row = CONSOLE_HIGH/2;
+    column = CONSOLE_LENGTH/2;
 }
 
 //Movimeto della navicella
-int Spacecraft::Move(int key)
+bool Spacecraft::Move(int key)
 {
     switch (key)
     {
@@ -33,22 +36,42 @@ int Spacecraft::Move(int key)
 
         case 'q':
         case 'Q':
-            return EXIT;
+            return false;
 
-        // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti spara
+        // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti ritorana al loop principale
         case ERR:
         default:
-            return ERR;
+            return true;
     }
+    CheckMove();
     erase();
-    return MOVE;
+    return true;
+}
+
+void Spacecraft::CheckMove()
+{
+	if (column <= INIT+2)
+	{
+		column = INIT+2;
+	}
+	if (row <= INIT)
+	{
+		row = INIT;
+	}
+	if (column >= CONSOLE_LENGTH-3)
+	{
+		column = CONSOLE_LENGTH-3;
+	}
+	if (row >= CONSOLE_HIGH)
+	{
+		row = CONSOLE_HIGH-1;
+	}
 }
 
 //Disegna la navicella
 void Spacecraft::Draw ()
 {
     mvprintw(row,column-2,"\\-^-/");
-    refresh();
 }
 
 //Spara il colpo

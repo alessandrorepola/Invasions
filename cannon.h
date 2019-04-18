@@ -1,3 +1,4 @@
+//File cannon.h
 #ifndef CANNON_H_INCLUDED
 #define CANNON_H_INCLUDED
 
@@ -7,12 +8,11 @@ class Cannon
 {
     Bullet *first; //Puntatore al primo colpo sparato
     Bullet *last;  //Puntatore all'utimo colpo sparato
-    Bullet *iter;  //Puntatore mobile
-    clock_t start;
+    clock_t start; //Per cronometrare il tempo
 
     public:
 
-    Cannon();                 //Distruttore
+    Cannon();                 //Costruttore
     void AddBullet(int, int); //Genera un nuovo colpo con le sue coordinate
     void RemoveBullet();      //Remuove un colpo
     void MoveBullet();        //Muove i colpi

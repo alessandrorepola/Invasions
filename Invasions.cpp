@@ -1,31 +1,32 @@
 #include "spacecraft.h"
-#include <windows.h>
-#define CONSOLE_LENGTH 100
-#define CONSOLE_HIGH 30
 
 int main()
 {
-    initscr();              //imposta la modalita curses
-    resize_term(CONSOLE_HIGH, CONSOLE_LENGTH);  //imposta le dimensioni della console
-    curs_set (0);			//rende il cursore invisibile
-	keypad (stdscr, true);	//attiva tasti extra (funzione e frecce)
-	noecho ();				//non scrivere sulla console i tasti premuti
-	nodelay (stdscr, true);	// getch() non aspetta che sia premuto un tasto
-	Spacecraft player;      //dichiaro un oggetto di tipo navicella per il giocatore
-	Cannon c;               //Dichiaro un oggetto cannon
+    initscr();              //Imposta la modalita curses
+    resize_term(CONSOLE_HIGH, CONSOLE_LENGTH);  //Imposta le dimensioni della console
+    curs_set (false);		//Rende il cursore invisibile
+	keypad (stdscr, true);	//Abilita i tasti freccia
+	noecho ();				//Disabilita l'echo dei tasti premuti
+	nodelay (stdscr, true);	//Se non viene digitato alcun tasto la funzione getch() restituisce ERR
+	Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
+	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
+
 	//loop "infinito" della partita
 	while (TRUE)
     {
+        //Legge l'input da tastiera
         int key = getch();
-        if (player.Move(key)==EXIT)
-        {
+
+        //Chiama la funzione per muovere la navicella e controlla se e' stato digitato q
+        if (!player.Move(key))
             break;
-        }
+
+        //Spara i colpi
         player.Shoot(c);
         player.Draw();
         refresh();
     }
-    endwin(); //termina la funzionalita' curses
+    endwin(); //Termina la modalita' curses
     return 0;
 }
 

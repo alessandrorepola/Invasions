@@ -1,12 +1,10 @@
 //File cannon.cpp
-#include "bullet.h"
 #include "cannon.h"
 
 Cannon::Cannon()
 {
     first = NULL;
     last = NULL;
-    iter = NULL;
     start = clock();
 }
 
@@ -14,7 +12,7 @@ Cannon::Cannon()
 void Cannon::AddBullet(int r, int c)
 {
     clock_t time;
-    double diff = 0;
+    double diff = INIT;
 
     //Controllo il tempo trascorso dall'ultimo colpo
     time = clock();
@@ -22,8 +20,9 @@ void Cannon::AddBullet(int r, int c)
     diff = diff/CLOCKS_PER_SEC;
 
     //Controllo se si può muovere
-    if (diff >= 1.00)
+    if (diff >= BULLET_GENERATION_TIME)
     {
+        start = time;
         Bullet *add = NULL;
 
         //Controllo se è il primo oggetto colpo
@@ -83,7 +82,7 @@ void Cannon::MoveBullet()
     }
 
     //Controllo se il colpo è arrivato al bordo superiore dello schermo e quindi deve essere cancellato
-    if(first->row<=0)
+    if(first->row<=INIT)
         RemoveBullet();
 }
 

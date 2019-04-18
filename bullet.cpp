@@ -4,8 +4,6 @@
 //costruttore
 Bullet::Bullet()
 {
-    speed = DELAY;
-    damage = DAMAGE;
     next = NULL;
     prev = NULL;
 }
@@ -13,8 +11,6 @@ Bullet::Bullet()
 //Costruttore che posiziona il colpo
 Bullet::Bullet(int r, int c)
 {
-    speed = DELAY;
-    damage = DAMAGE;
     next = NULL;
     prev = NULL;
 
@@ -30,7 +26,7 @@ Bullet::Bullet(int r, int c)
 void Bullet::Move()
 {
     clock_t time;
-    double diff = 0;
+    double diff = INIT;
 
     //Controllo se ci sono altri colpi
     if (next != NULL)
@@ -42,7 +38,7 @@ void Bullet::Move()
     diff = diff/CLOCKS_PER_SEC;
 
     //Controllo se si può muovere
-    if (diff >= 0.05)
+    if (diff >= BULLET_SPEED)
     {
         start = time;
         row--;
