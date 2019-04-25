@@ -9,7 +9,7 @@ Cannon::Cannon()
 }
 
 //Aggiunge un nuovo colpo
-void Cannon::AddBullet(int r, int c)
+void Cannon::AddObject(int r, int c)
 {
     clock_t time;
     double diff = INIT;
@@ -42,7 +42,7 @@ void Cannon::AddBullet(int r, int c)
 }
 
 //Rimuove il primo colpo
-void Cannon::RemoveBullet()
+void Cannon::RemoveFirst()
 {
     Bullet *rm = NULL;
 
@@ -70,8 +70,66 @@ void Cannon::RemoveBullet()
     }
 }
 
+//Rimuove l'ultimo colpo
+void Cannon::RemoveLast()
+{
+    Bullet *rm = NULL;
+
+    //Controllo prima se ci sono dei colpi
+    if (first == NULL)
+        return;
+
+    //Controllo se c'è solo un colpo sparato
+    else if (first->next == NULL)
+    {
+        //Cancello il colpo e qualsiasi riferimento ad esso
+        delete first;
+        first = NULL;
+        last = NULL;
+    }
+
+    //Nel caso ci siano più colpi sparati
+    else
+    {
+        //Sposto il puntatore last indietro di un elemento e cancello l'ultimo colpo
+        rm = last;
+        last = last->prev;
+        last->next = NULL;
+        delete rm;
+    }
+}
+
+//Rimuove un colpo specifico
+void Cannon::RemoveObject(Bullet *pbull)
+{
+    //Controllo se ci sono colpi sparati
+    if (first == NULL)
+        return;
+
+    //Controllo se è il primo colpo della lista
+    else if (first == pbull)
+        RemoveFirst();
+
+    //Controllo se è l'ultimo colpo della lista
+    else if (last == pbull)
+        RemoveLast();
+
+    //Altrimenti concateno il precedente e il successivo del colpo da cancellare tra di loro
+    else
+    {
+        //Il successivo puntera' al precedente del colpo da cancellare
+        pbull->next->prev = pbull->prev;
+
+        //Il precedente invece andra' a puntare al successivo del colpo da cancellare
+        pbull->prev->next = pbull->next;
+
+        //Cancello il colpo
+        delete pbull;
+    }
+}
+
 //Muove i colpi
-void Cannon::MoveBullet()
+void Cannon::MoveObject()
 {
     //Controllo se ci sono colpi
     if (first == NULL)
@@ -81,9 +139,9 @@ void Cannon::MoveBullet()
         first->Move();
     }
 
-    //Controllo se il colpo è arrivato al bordo superiore dello schermo e quindi deve essere cancellato
+    //Controllo se il primo colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
     if(first->row<=INIT)
-        RemoveBullet();
+        RemoveFirst();
 }
 
 //Disegna i colpi

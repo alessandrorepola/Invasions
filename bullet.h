@@ -13,13 +13,13 @@ class Bullet
     Bullet *next;     //Puntatore al colpo successivo
     Bullet *prev;     //Puntatore al colpo precedente
     clock_t start;    //Misura il tempo da quando è stato sparato il colpo
+    Bullet(int, int); //Costruttore che prende come argomento la riga e la colonna
+    void Move();      //Muove il colpo sparato
 
     public:
 
-    Bullet();          //Costruttore
-    Bullet(int, int);  //Prende come argomento la riga e la colonna
-    void Move();       //Muove il colpo sparato
-    ~Bullet();         //Distruttore
+    Bullet();         //Costruttore di default
+    ~Bullet();        //Distruttore
 };
 
 #endif // BULLET_H_INCLUDED

@@ -36,8 +36,12 @@
 		<Unit filename="Bullet.h" />
 		<Unit filename="Cannon.cpp" />
 		<Unit filename="Cannon.h" />
+		<Unit filename="Enemy.cpp" />
+		<Unit filename="Enemy.h" />
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="Invasions.h" />
+		<Unit filename="Mothership.cpp" />
+		<Unit filename="Mothership.h" />
 		<Unit filename="Spacecraft.cpp" />
 		<Unit filename="Spacecraft.h" />
 		<Extensions>

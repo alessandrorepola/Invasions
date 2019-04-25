@@ -12,12 +12,14 @@ class Cannon
 
     public:
 
-    Cannon();                 //Costruttore
-    void AddBullet(int, int); //Genera un nuovo colpo con le sue coordinate
-    void RemoveBullet();      //Remuove un colpo
-    void MoveBullet();        //Muove i colpi
-    void Draw();              //Disegna i colpi
-    ~Cannon();                //Distruttore
+    Cannon();                   //Costruttore
+    void AddObject(int, int);   //Genera un nuovo colpo con le sue coordinate
+    void RemoveFirst();         //Remuove il primo colpo della lista
+    void RemoveLast();          //Remuove l'ultimo colpo della lista
+    void RemoveObject(Bullet*); //Rimuove il colpo specificato
+    void MoveObject();          //Muove i colpi
+    void Draw();                //Disegna i colpi
+    ~Cannon();                  //Distruttore
 };
 
 #endif // CANNON_H_INCLUDED

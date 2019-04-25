@@ -48,5 +48,6 @@ void Bullet::Move()
 //Distruttore
 Bullet::~Bullet()
 {
-    //TO DO
+    next = NULL;
+    prev = NULL;
 }

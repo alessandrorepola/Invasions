@@ -77,8 +77,8 @@ void Spacecraft::Draw ()
 //Spara il colpo
 void Spacecraft::Shoot(Cannon &c)
 {
-    c.AddBullet(row-1, column);
-    c.MoveBullet();
+    c.AddObject(row-1, column);
+    c.MoveObject();
     erase();
     c.Draw();
 }
