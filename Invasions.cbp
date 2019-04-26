@@ -38,6 +38,8 @@
 		<Unit filename="Cannon.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="Invasions.h" />
 		<Unit filename="Mothership.cpp" />

@@ -36,6 +36,8 @@
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4
 
+#define ENEMY_GENERATION_TIME rand()%146732 == 0
+
 //Definisce quali sono i quattro lati della console
 enum ConsoleSide
 {

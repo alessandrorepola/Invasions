@@ -86,7 +86,7 @@ void Enemy::SetDirection()
         }
 
         //Altrimenti se si trova nell'angolo in alto a destra
-        else if (column == CONSOLE_LENGTH)
+        else if (column >= CONSOLE_LENGTH)
         {
             //Genero una direzione in cui puo' muouersi il nemico
             while ((direction != WEST) && (direction != SOUTH) && (direction != SOUTH_WEST))
@@ -105,14 +105,14 @@ void Enemy::SetDirection()
     else if (row >= CONSOLE_HIGH)
     {
         //Controllo se si trova nell'angolo in basso a sinistra
-        if (column == INIT)
+        if (column <= INIT)
         {
             while ((direction != EST) && (direction != NORTH) && (direction != NORTH_EST))
                 direction = rand()%NORTH_WEST;
         }
 
         //Altrimenti se si trova nell'angolo in basso a destra
-        else if (column == CONSOLE_LENGTH)
+        else if (column >= CONSOLE_LENGTH)
         {
             while ((direction != WEST) && (direction != NORTH) && (direction != NORTH_WEST))
                 direction = rand()%SOUTH_WEST+1;
