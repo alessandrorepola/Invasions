@@ -19,6 +19,8 @@ class Bullet
     public:
 
     Bullet();         //Costruttore di default
+    int GetRow();     //Restituisce la riga del colpo
+    int GetColumn();  //Restituisce la colonna del colpo
     ~Bullet();        //Distruttore
 };
 

@@ -25,7 +25,7 @@ void Game::UpdateScreen()
     erase();
 
     //Stampa i nemici
-    alliens.Draw();
+    aliens.Draw();
 
     //Stampa la navicella del giocatore
     player.Draw();
@@ -60,19 +60,73 @@ void Game::GenerationEnemy()
 {
     //Controllo se possono essere generati i nemici
     if (ENEMY_GENERATION_TIME)
-        alliens.AddEnemy();
+        aliens.AddEnemy();
 }
 
 //Per lo spostamento dei nemici
 void Game::MoveEnemy()
 {
-    alliens.MoveEnemy();
+    aliens.MoveEnemy();
 }
 
 //Controlla se è stato colpito il nemico
 void Game::Hitted()
 {
-    //TO DO
+    for(int i=INIT; i<CONSOLE_LENGTH; i++)
+    {
+        if (c.GetFirst()==NULL||aliens.GetFirst()==NULL)
+            return;
+
+        c.SetIter();
+        while (c.GetIter() != NULL)
+        {
+            if (i == c.GetIter()->GetColumn())
+                break;
+
+            else
+                c.NextBullet();
+        }
+
+        aliens.SetIter();
+        while (aliens.GetIter() != NULL)
+        {
+            if (i == aliens.GetIter()->GetColumn())
+                break;
+
+            else
+                aliens.NextEnemy();
+        }
+
+        if (c.GetIter()->GetRow() == aliens.GetIter()->GetRow())
+        {
+          /*  c.RemoveObject(c.GetIter());
+            if (aliens.GetIter()->CheckDie())
+                aliens.RemoveEnemy(aliens.GetIter());*/
+        }
+        /*
+        while (c.GetIter()!= NULL)
+        {
+            if (i == c.GetIter()->GetColumn())
+            {
+                alliens.SetIter();
+                while (alliens.GetIter()!= NULL)
+                {
+
+                    if((c.GetIter()->GetColumn() == alliens.GetIter()->GetColumn())&&(c.GetIter()->GetRow() == alliens.GetIter()->GetRow()))
+                    {
+
+                        c.RemoveObject(c.GetIter());
+                        if (alliens.GetIter()->CheckDie())
+                        {
+                            alliens.RemoveEnemy(alliens.GetIter());
+                        }
+                    }
+                    alliens.NextEnemy();
+                }
+            }
+            c.NextBullet();
+        }*/
+    }
 }
 
 //Controlla se la navicella del giocatore ha avuto una collisione con il nemico

@@ -6,7 +6,13 @@ Mothership::Mothership()
 {
     first = NULL;
     last = NULL;
+    iter = NULL;
     start = clock();
+}
+
+Enemy *Mothership::GetFirst()
+{
+    return first;
 }
 
 //Aggiunge un nuovo oggetto nemico
@@ -137,6 +143,27 @@ void Mothership::Draw ()
         mvprintw(d->row-1,d->column,"\\0/");
         d = d->next;
     }
+}
+
+//Imposta il puntatore iter
+void Mothership::SetIter()
+{
+    iter = first;
+}
+
+//Imposta il puntatore iter al nemico successivo
+void Mothership::NextEnemy()
+{
+    if (iter == NULL)
+        return;
+
+    iter = iter->next;
+}
+
+//Restituisce il valore di iter
+Enemy *Mothership::GetIter()
+{
+    return iter;
 }
 
 //Distruttore

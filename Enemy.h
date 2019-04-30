@@ -11,6 +11,7 @@ class Enemy
     int row;                //Riga del nemico
     int column;             //Colonna del nemico
     int side;               //Il lato iniziale da cui parte la navicella
+    int life;               //Vita del nemico
     Enemy *next;            //Puntatore all'oggetto successivo
     Enemy *prev;            //Puntatore all'oggetto precedente
     clock_t start;          //Misura il tempo dall'ultimo nemico generato
@@ -22,6 +23,9 @@ class Enemy
     public:
 
     Enemy();                //Costruttore
+    int GetRow();           //Restituisce il valore della riga del nemico
+    int GetColumn();        //Restituisce la colonna del nemico
+    bool CheckDie();        //Controlla se il nemico e stato distrutto
     ~Enemy();               //Distruttore
 };
 

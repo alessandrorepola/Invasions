@@ -28,6 +28,9 @@ int main()
         //Spostamento dei nemici
         game.MoveEnemy();
 
+        //Controllo se il nemico è stato colpito
+        game.Hitted();
+
         //Aggiorno la schermata
         game.UpdateScreen();
     }

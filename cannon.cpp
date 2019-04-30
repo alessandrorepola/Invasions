@@ -8,6 +8,12 @@ Cannon::Cannon()
     start = clock();
 }
 
+//Restituisce il puntatore al primo elemento della lista
+Bullet *Cannon::GetFirst()
+{
+    return first;
+}
+
 //Aggiunge un nuovo colpo
 void Cannon::AddObject(int r, int c)
 {
@@ -153,6 +159,27 @@ void Cannon::Draw ()
         mvprintw(d->row,d->column,"*");
         d = d->next;
     }
+}
+
+//Imposta il puntatore iter
+void Cannon::SetIter()
+{
+    iter = first;
+}
+
+//Imposta il puntatore iter al colpo successivo
+void Cannon::NextBullet()
+{
+    if (iter == NULL)
+        return;
+
+    iter = iter->next;
+}
+
+//Restituisce il valore di iter
+Bullet *Cannon::GetIter()
+{
+    return iter;
 }
 
 //Distruttore

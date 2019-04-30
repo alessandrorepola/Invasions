@@ -5,6 +5,7 @@ Enemy::Enemy()
 {
     next = NULL;
     prev = NULL;
+    life = ENEMY_LIFE;
 
     //Genera il lato da cui parte il nemico
     side = rand()%CONSOLE_SIDE;
@@ -183,6 +184,30 @@ void Enemy::Movement()
             --column;
             break;
     }
+}
+
+//Restituisce la riga del nemico
+int Enemy::GetRow()
+{
+    return row;
+}
+
+//Restituisce la colonna del nemico
+int Enemy::GetColumn()
+{
+    return column;
+}
+
+//Decrementa la vita del nemico
+bool Enemy::CheckDie()
+{
+    life = life - BULLET_DAMAGE;
+
+    //Controllo se il nemico è stato distrutto
+    if(life <= INIT)
+        return TRUE;
+
+    return FALSE;
 }
 
 //Distruttore

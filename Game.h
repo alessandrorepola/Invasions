@@ -13,7 +13,7 @@ class Game
 {
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
-	Mothership alliens;     //Dichiaro un oggetto mothership per gestire i nemici
+	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
 	int score;              //Per il punteggio
 	int highScore;          //Miglior punteggio
 

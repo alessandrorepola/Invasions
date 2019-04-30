@@ -28,7 +28,7 @@
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 10
-#define ENEMY_LIFE 2
+#define ENEMY_LIFE 1
 
 //Velocità di movimento dei nemici
 #define ENEMY_SPEED 0.5

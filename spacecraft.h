@@ -2,7 +2,7 @@
 #ifndef SPACECRAFT_H_INCLUDED
 #define SPACECRAFT_H_INCLUDED
 
-#include "cannon.h"
+#include "Cannon.h"
 
 class Spacecraft
 {
