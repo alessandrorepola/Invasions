@@ -5,6 +5,7 @@ Cannon::Cannon()
 {
     first = NULL;
     last = NULL;
+    iter = NULL;
     start = clock();
 }
 
@@ -135,19 +136,25 @@ void Cannon::RemoveObject(Bullet *pbull)
 }
 
 //Muove i colpi
-void Cannon::MoveObject()
+bool Cannon::MoveObject()
 {
+    bool value;
+
     //Controllo se ci sono colpi
     if (first == NULL)
-        return;
+    {
+        return false;
+    }
     else
     {
-        first->Move();
+        value = first->Move();
     }
 
     //Controllo se il primo colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
     if(first->row<=INIT)
         RemoveFirst();
+
+    return value;
 }
 
 //Disegna i colpi
@@ -165,6 +172,11 @@ void Cannon::Draw ()
 void Cannon::SetIter()
 {
     iter = first;
+}
+
+void Cannon::SetIter(Bullet *pbull)
+{
+    iter = pbull;
 }
 
 //Imposta il puntatore iter al colpo successivo

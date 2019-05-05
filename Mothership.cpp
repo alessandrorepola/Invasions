@@ -123,14 +123,14 @@ void Mothership::RemoveEnemy(Enemy *pobj)
 }
 
 //Muove il nemico
-void Mothership::MoveEnemy()
+bool Mothership::MoveEnemy()
 {
     //Controllo se ci sono nemici
     if (first == NULL)
-        return;
+        return false;
     else
     {
-        first->Move();
+        return first->Move();
     }
 }
 
@@ -149,6 +149,12 @@ void Mothership::Draw ()
 void Mothership::SetIter()
 {
     iter = first;
+}
+
+//Imposta il puntatore iter
+void Mothership::SetIter(Enemy *palien)
+{
+    iter = palien;
 }
 
 //Imposta il puntatore iter al nemico successivo

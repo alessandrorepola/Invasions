@@ -44,7 +44,6 @@ bool Spacecraft::Move(int key)
             return true;
     }
     CheckMove();
-    //erase();
     return true;
 }
 
@@ -75,10 +74,11 @@ void Spacecraft::Draw ()
 }
 
 //Spara il colpo
-void Spacecraft::Shoot(Cannon &c)
+bool Spacecraft::Shoot(Cannon &c)
 {
     c.AddObject(row-1, column);
-    c.MoveObject();
+    bool value = c.MoveObject();
+    return value;
 }
 
 //Distruttore

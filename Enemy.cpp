@@ -45,14 +45,15 @@ void Enemy::CoordGeneration()
 }
 
 //Per il movimento del nemico
-void Enemy::Move()
+bool Enemy::Move()
 {
     clock_t time;
     double diff = INIT;
+    bool value;
 
     //Controllo se ci sono altri nemici
     if (next != NULL)
-        next->Move();
+        value = next->Move();
 
     //Controllo il tempo trascorso dall'ultimo controllo
     time = clock();
@@ -69,7 +70,10 @@ void Enemy::Move()
 
         //Sposta il nemico di una posizione in base alla direzione
         Movement();
+
+        value = true;
     }
+    return value;
 }
 
 //Imposta una direzione in cui si puo' spostare la navicella
@@ -81,7 +85,7 @@ void Enemy::SetDirection()
         //Controllo se si trova nell'angolo in alto a sinistra
         if (column <= INIT)
         {
-            //Genero una direzione in cui puo' muouersi il nemico
+            //Genero una direzione in cui puo' muoversi il nemico
             while ((direction != EST) && (direction != SOUTH) && (direction != SOUTH_EST))
                 direction = rand()%SOUTH_EST+1;
         }
@@ -108,21 +112,21 @@ void Enemy::SetDirection()
         //Controllo se si trova nell'angolo in basso a sinistra
         if (column <= INIT)
         {
-            while ((direction != EST) && (direction != NORTH) && (direction != NORTH_EST))
+            while (/*(direction != EST) && */(direction != NORTH) && (direction != NORTH_EST))
                 direction = rand()%NORTH_WEST;
         }
 
         //Altrimenti se si trova nell'angolo in basso a destra
         else if (column >= CONSOLE_LENGTH)
         {
-            while ((direction != WEST) && (direction != NORTH) && (direction != NORTH_WEST))
+            while (/*(direction != WEST) && */(direction != NORTH) && (direction != NORTH_WEST))
                 direction = rand()%SOUTH_WEST+1;
         }
 
         //Altrimenti
         else
         {
-            while ((direction != NORTH_EST) && (direction != NORTH_WEST) && (direction != WEST) && (direction != EST) && (direction != NORTH))
+            while ((direction != NORTH_EST) && (direction != NORTH_WEST) && /*(direction != WEST) && (direction != EST) && */(direction != NORTH))
                 direction = rand()%SOUTH_WEST+1;
         }
     }
@@ -205,9 +209,10 @@ bool Enemy::CheckDie()
 
     //Controllo se il nemico è stato distrutto
     if(life <= INIT)
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
+
 }
 
 //Distruttore

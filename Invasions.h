@@ -31,7 +31,7 @@
 #define ENEMY_LIFE 1
 
 //Velocità di movimento dei nemici
-#define ENEMY_SPEED 0.5
+#define ENEMY_SPEED 0.4
 
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4

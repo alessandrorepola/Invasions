@@ -50,9 +50,9 @@ bool Game::MoveSpacesraft()
 }
 
 //Sparo della navicella del giocatore
-void Game::SpacecraftShoot()
+bool Game::SpacecraftShoot()
 {
-    player.Shoot(c);
+    return player.Shoot(c);
 }
 
 //Generazione dei nemici
@@ -64,68 +64,27 @@ void Game::GenerationEnemy()
 }
 
 //Per lo spostamento dei nemici
-void Game::MoveEnemy()
+bool Game::MoveEnemy()
 {
-    aliens.MoveEnemy();
+    return aliens.MoveEnemy();
 }
 
 //Controlla se è stato colpito il nemico
 void Game::Hitted()
 {
-    for(int i=INIT; i<CONSOLE_LENGTH; i++)
+    for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
     {
-        if (c.GetFirst()==NULL||aliens.GetFirst()==NULL)
-            return;
-
-        c.SetIter();
-        while (c.GetIter() != NULL)
+        for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
         {
-            if (i == c.GetIter()->GetColumn())
-                break;
-
-            else
-                c.NextBullet();
-        }
-
-        aliens.SetIter();
-        while (aliens.GetIter() != NULL)
-        {
-            if (i == aliens.GetIter()->GetColumn())
-                break;
-
-            else
-                aliens.NextEnemy();
-        }
-
-        if (c.GetIter()->GetRow() == aliens.GetIter()->GetRow())
-        {
-          /*  c.RemoveObject(c.GetIter());
-            if (aliens.GetIter()->CheckDie())
-                aliens.RemoveEnemy(aliens.GetIter());*/
-        }
-        /*
-        while (c.GetIter()!= NULL)
-        {
-            if (i == c.GetIter()->GetColumn())
+            if(((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()))
             {
-                alliens.SetIter();
-                while (alliens.GetIter()!= NULL)
+                c.RemoveObject(c.GetIter());
+                if (aliens.GetIter()->CheckDie())
                 {
-
-                    if((c.GetIter()->GetColumn() == alliens.GetIter()->GetColumn())&&(c.GetIter()->GetRow() == alliens.GetIter()->GetRow()))
-                    {
-
-                        c.RemoveObject(c.GetIter());
-                        if (alliens.GetIter()->CheckDie())
-                        {
-                            alliens.RemoveEnemy(alliens.GetIter());
-                        }
-                    }
-                    alliens.NextEnemy();
+                    aliens.RemoveEnemy(aliens.GetIter());
                 }
             }
-            c.NextBullet();
-        }*/
+        }
     }
 }
 

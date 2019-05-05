@@ -19,17 +19,15 @@ int main()
         //Sposta la nevicella del giocatore
         endGame = game.MoveSpacesraft();
 
-        //Sparo della navicella del giocatore
-        game.SpacecraftShoot();
+        //Controlla se il colpo sparato dal nemico si e' mosso o il numico si e' spostato
+        if (game.SpacecraftShoot() || game.MoveEnemy())
+        {
+            //Controlla se il nemico è stato colpito
+            game.Hitted();
+        }
 
         //Generazione dei nemici
         game.GenerationEnemy();
-
-        //Spostamento dei nemici
-        game.MoveEnemy();
-
-        //Controllo se il nemico è stato colpito
-        game.Hitted();
 
         //Aggiorno la schermata
         game.UpdateScreen();

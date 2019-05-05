@@ -14,13 +14,14 @@ class Mothership
 
     Mothership();
     Enemy *GetFirst();
-    void AddEnemy();            //Genera un nuovo nemico
-    void RemoveFirst();         //Remuove il primo nemico della lista
-    void RemoveLast();          //Remuove l'ultimo nemico della lista
-    void RemoveEnemy(Enemy*);   //Rimuove il nemico specificato
-    void MoveEnemy();           //Muove i nemici
-    void Draw();                //Disegna i nemici
-    void SetIter();             //Imposta il puntatore iter
+    void AddEnemy();           //Genera un nuovo nemico
+    void RemoveFirst();        //Remuove il primo nemico della lista
+    void RemoveLast();         //Remuove l'ultimo nemico della lista
+    void RemoveEnemy(Enemy*);  //Rimuove il nemico specificato
+    bool MoveEnemy();          //Muove i nemici
+    void Draw();               //Disegna i nemici
+    void SetIter();            //Imposta il puntatore iter
+    void SetIter(Enemy *);     //Imposta il puntatore iter
     void NextEnemy();          //Sposta il puntatore iter al colpo successivo
     Enemy *GetIter();          //Restituisce il puntatore iter
     ~Mothership();

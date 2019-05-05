@@ -23,14 +23,15 @@ Bullet::Bullet(int r, int c)
 }
 
 //Sposta il colpo
-void Bullet::Move()
+bool Bullet::Move()
 {
     clock_t time;
     double diff = INIT;
+    bool value = false;
 
     //Controllo se ci sono altri colpi
     if (next != NULL)
-        next->Move();
+        value = next->Move();
 
     //Controllo il tempo trascorso dall'ultimo colpo
     time = clock();
@@ -42,7 +43,9 @@ void Bullet::Move()
     {
         start = time;
         row--;
+        value = true;
     }
+    return value;
 }
 
 //Restituisce la riga del colpo

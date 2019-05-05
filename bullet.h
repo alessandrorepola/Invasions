@@ -14,7 +14,7 @@ class Bullet
     Bullet *prev;     //Puntatore al colpo precedente
     clock_t start;    //Misura il tempo da quando è stato sparato il colpo
     Bullet(int, int); //Costruttore che prende come argomento la riga e la colonna
-    void Move();      //Muove il colpo sparato
+    bool Move();      //Muove il colpo sparato
 
     public:
 

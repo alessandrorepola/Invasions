@@ -16,7 +16,7 @@ class Enemy
     Enemy *prev;            //Puntatore all'oggetto precedente
     clock_t start;          //Misura il tempo dall'ultimo nemico generato
     void CoordGeneration(); //Genera le posizioni iniziali del nemico
-    void Move();            //Muove il nemico
+    bool Move();            //Muove il nemico
     void SetDirection();    //Imposta una direzione in cui si puo' spostare la navicella
     void Movement();        //Sposta il nemico di una posizione in base alla direzione
 
