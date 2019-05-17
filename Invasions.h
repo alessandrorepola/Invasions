@@ -4,11 +4,11 @@
 
 #include <ctime>
 #include <cstdlib>
-#ifdef WIN32
+//#ifdef WIN32
     #include <curses.h>
-#else
+/*#else
     #include <ncurses.h>
-#endif
+#endif*/
 
 //Velocità di movimento del colpo
 #define BULLET_SPEED 0.1

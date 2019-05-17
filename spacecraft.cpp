@@ -57,9 +57,9 @@ void Spacecraft::CheckMove()
 	{
 		row = INIT;
 	}
-	if (column >= CONSOLE_LENGTH-3)
+	if (column >= CONSOLE_LENGTH)
 	{
-		column = CONSOLE_LENGTH-3;
+		column = CONSOLE_LENGTH;
 	}
 	if (row >= CONSOLE_HIGH)
 	{
@@ -74,11 +74,10 @@ void Spacecraft::Draw ()
 }
 
 //Spara il colpo
-bool Spacecraft::Shoot(Cannon &c)
+void Spacecraft::Shoot(Cannon &c)
 {
     c.AddObject(row-1, column);
-    bool value = c.MoveObject();
-    return value;
+    c.MoveObject();
 }
 
 //Distruttore

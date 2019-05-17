@@ -123,14 +123,14 @@ void Mothership::RemoveEnemy(Enemy *pobj)
 }
 
 //Muove il nemico
-bool Mothership::MoveEnemy()
+void Mothership::MoveEnemy()
 {
     //Controllo se ci sono nemici
     if (first == NULL)
-        return false;
+        return;
     else
     {
-        return first->Move();
+        first->Move();
     }
 }
 

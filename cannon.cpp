@@ -136,25 +136,21 @@ void Cannon::RemoveObject(Bullet *pbull)
 }
 
 //Muove i colpi
-bool Cannon::MoveObject()
+void Cannon::MoveObject()
 {
-    bool value;
-
     //Controllo se ci sono colpi
     if (first == NULL)
     {
-        return false;
+        return;
     }
     else
     {
-        value = first->Move();
+        first->Move();
     }
 
     //Controllo se il primo colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
     if(first->row<=INIT)
         RemoveFirst();
-
-    return value;
 }
 
 //Disegna i colpi

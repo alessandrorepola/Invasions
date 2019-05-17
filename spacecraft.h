@@ -15,7 +15,7 @@ class Spacecraft
     Spacecraft();        //costruttore
     bool Move(int);      //sposta la navicella
     void CheckMove();    //Controlla lo spostamento della navicella
-    bool Shoot(Cannon&); //spara il colpo
+    void Shoot(Cannon&); //spara il colpo
     void Draw();         //disegna la navicella
     ~Spacecraft();       //distruttore
 };

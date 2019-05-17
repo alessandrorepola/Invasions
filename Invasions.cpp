@@ -19,12 +19,14 @@ int main()
         //Sposta la nevicella del giocatore
         endGame = game.MoveSpacesraft();
 
-        //Controlla se il colpo sparato dal nemico si e' mosso o il numico si e' spostato
-        if (game.SpacecraftShoot() || game.MoveEnemy())
-        {
-            //Controlla se il nemico è stato colpito
-            game.Hitted();
-        }
+        //Sparo del giocatore
+        game.SpacecraftShoot();
+
+        //Sposta gli alieni
+        game.MoveEnemy();
+
+        //Controlla se il nemico è stato colpito
+        game.Hitted();
 
         //Generazione dei nemici
         game.GenerationEnemy();
@@ -38,7 +40,7 @@ int main()
 
 void SetConsole()
 {
-    resize_term(CONSOLE_HIGH, CONSOLE_LENGTH);  //Imposta le dimensioni della console
+    resize_term(CONSOLE_HIGH, CONSOLE_LENGTH+3);  //Imposta le dimensioni della console
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti

@@ -50,9 +50,9 @@ bool Game::MoveSpacesraft()
 }
 
 //Sparo della navicella del giocatore
-bool Game::SpacecraftShoot()
+void Game::SpacecraftShoot()
 {
-    return player.Shoot(c);
+    player.Shoot(c);
 }
 
 //Generazione dei nemici
@@ -64,9 +64,9 @@ void Game::GenerationEnemy()
 }
 
 //Per lo spostamento dei nemici
-bool Game::MoveEnemy()
+void Game::MoveEnemy()
 {
-    return aliens.MoveEnemy();
+    aliens.MoveEnemy();
 }
 
 //Controlla se è stato colpito il nemico
@@ -76,7 +76,7 @@ void Game::Hitted()
     {
         for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
         {
-            if(((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()))
+            if((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)/*(c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn())*/)
             {
                 c.RemoveObject(c.GetIter());
                 if (aliens.GetIter()->CheckDie())

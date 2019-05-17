@@ -23,9 +23,9 @@ class Game
     void StartMessage();    //Messaggio iniziale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
     bool MoveSpacesraft();  //Gestisce l'input per lo spastamento della navicella del giocatore
-    bool SpacecraftShoot(); //Sparo della navicella del giocatore
+    void SpacecraftShoot(); //Sparo della navicella del giocatore
     void GenerationEnemy(); //Genera i nemici
-    bool MoveEnemy();       //Muove i nemici
+    void MoveEnemy();       //Muove i nemici
     void Hitted();          //Controlla se il nemico è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
     void UpdateScore();     //Aggiorna il punteggio attuale della partita

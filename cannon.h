@@ -20,7 +20,7 @@ class Cannon
     void RemoveFirst();         //Remuove il primo colpo della lista
     void RemoveLast();          //Remuove l'ultimo colpo della lista
     void RemoveObject(Bullet*); //Rimuove il colpo specificato
-    bool MoveObject();          //Muove i colpi
+    void MoveObject();          //Muove i colpi
     void Draw();                //Disegna i colpi
     void SetIter();             //Imposta il puntatore iter
     void SetIter(Bullet *);     //Imposta il puntatore iter

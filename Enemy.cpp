@@ -45,15 +45,14 @@ void Enemy::CoordGeneration()
 }
 
 //Per il movimento del nemico
-bool Enemy::Move()
+void Enemy::Move()
 {
     clock_t time;
     double diff = INIT;
-    bool value;
 
     //Controllo se ci sono altri nemici
     if (next != NULL)
-        value = next->Move();
+        next->Move();
 
     //Controllo il tempo trascorso dall'ultimo controllo
     time = clock();
@@ -70,10 +69,7 @@ bool Enemy::Move()
 
         //Sposta il nemico di una posizione in base alla direzione
         Movement();
-
-        value = true;
     }
-    return value;
 }
 
 //Imposta una direzione in cui si puo' spostare la navicella
