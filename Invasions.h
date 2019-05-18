@@ -3,6 +3,8 @@
 #define INVASIONS_H_INCLUDED
 
 #include <ctime>
+#include <stdio.h>
+#include <windows.h>
 #include <cstdlib>
 //#ifdef WIN32
     #include <curses.h>
@@ -28,7 +30,7 @@
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 10
-#define ENEMY_LIFE 1
+#define ENEMY_LIFE 2
 
 //Velocità di movimento dei nemici
 #define ENEMY_SPEED 0.4

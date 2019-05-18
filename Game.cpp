@@ -76,7 +76,7 @@ void Game::Hitted()
     {
         for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
         {
-            if((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)/*(c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)) && (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn())*/)
+            if((c.GetIter()->GetRow()+1 == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+2)))
             {
                 c.RemoveObject(c.GetIter());
                 if (aliens.GetIter()->CheckDie())

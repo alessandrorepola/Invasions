@@ -149,7 +149,7 @@ void Cannon::MoveObject()
     }
 
     //Controllo se il primo colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
-    if(first->row<=INIT)
+    if(first->row < INIT)
         RemoveFirst();
 }
 

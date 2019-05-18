@@ -33,12 +33,12 @@ void Enemy::CoordGeneration()
             break;
 
         case LEFT:
-            column = INIT;
+            column = INIT+1;
             row = rand()%(CONSOLE_HIGH+1);
             break;
 
         case RIGHT:
-            column = CONSOLE_LENGTH+1;
+            column = CONSOLE_LENGTH;
             row = rand()%(CONSOLE_HIGH+1);
             break;
     }
@@ -76,7 +76,7 @@ void Enemy::Move()
 void Enemy::SetDirection()
 {
     //Controllo se il nemico si trova lungo il bordo superiore della console
-    if (row <= INIT)
+    if (row <= INIT+1)
     {
         //Controllo se si trova nell'angolo in alto a sinistra
         if (column <= INIT)
@@ -91,14 +91,14 @@ void Enemy::SetDirection()
         {
             //Genero una direzione in cui puo' muouersi il nemico
             while ((direction != WEST) && (direction != SOUTH) && (direction != SOUTH_WEST))
-                direction = rand()%SOUTH_WEST+1;
+                direction = rand()%SOUTH_WEST;
         }
 
         //Altrimenti
         else
         {
             while ((direction != EST) && (direction != WEST) && (direction != SOUTH_EST) && (direction != SOUTH_WEST) && (direction != SOUTH))
-                direction = rand()%SOUTH_WEST+1;
+                direction = rand()%SOUTH_WEST;
         }
     }
 
@@ -116,14 +116,14 @@ void Enemy::SetDirection()
         else if (column >= CONSOLE_LENGTH)
         {
             while (/*(direction != WEST) && */(direction != NORTH) && (direction != NORTH_WEST))
-                direction = rand()%SOUTH_WEST+1;
+                direction = rand()%SOUTH_WEST;
         }
 
         //Altrimenti
         else
         {
             while ((direction != NORTH_EST) && (direction != NORTH_WEST) && /*(direction != WEST) && (direction != EST) && */(direction != NORTH))
-                direction = rand()%SOUTH_WEST+1;
+                direction = rand()%SOUTH_WEST;
         }
     }
 
@@ -139,7 +139,7 @@ void Enemy::SetDirection()
     else if (column >= CONSOLE_LENGTH)
     {
         while ((direction != NORTH) && (direction != SOUTH) && (direction != WEST) && (direction != NORTH_WEST) && (direction != SOUTH_WEST))
-            direction = rand()%8;
+            direction = rand()%SOUTH_WEST;
     }
 }
 
@@ -183,6 +183,11 @@ void Enemy::Movement()
             ++row;
             --column;
             break;
+        default:
+            endwin();
+            printf("direction: %d",direction);
+            Sleep(5000);
+            exit(0);
     }
 }
 
