@@ -72,9 +72,9 @@ void Game::MoveEnemy()
 //Controlla se è stato colpito il nemico
 void Game::Hitted()
 {
-    for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
+    for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
     {
-        for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
+        for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
         {
             if((c.GetIter()->GetRow()+1 == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+2)))
             {
@@ -91,7 +91,21 @@ void Game::Hitted()
 //Controlla se la navicella del giocatore ha avuto una collisione con il nemico
 void Game::Collision()
 {
-    //TO DO
+    //Controllo se c'è stata una collisione tra il nemico e la navicella
+    for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
+    {
+        if ((player.GetRow() == aliens.GetIter()->GetRow()-1) && (player.GetColumn() == aliens.GetIter()->GetColumn()+1))
+        {
+            aliens.RemoveEnemy(aliens.GetIter());
+            if(player.DecreseLife(ENEMY_LIFE))
+            {
+                mvprintw(CONSOLE_HIGH/2,43,"SEI MORTO");
+                refresh();
+                delay_output(5000);
+                exit(0);
+            }
+        }
+    }
 }
 
 //Aggiora il punteggio

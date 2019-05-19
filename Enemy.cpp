@@ -128,7 +128,7 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova sul lato sinistro della console
-    else if (column <= INIT)
+    else if (column <= INIT+1)
     {
         //Non ricontrollo nuovamente se il nemico è negli angoli in quanto già è stato verificato precedentemente
         while ((direction != NORTH) && (direction != SOUTH) && (direction != EST) && (direction != NORTH_EST) && (direction != SOUTH_EST))
@@ -183,11 +183,6 @@ void Enemy::Movement()
             ++row;
             --column;
             break;
-        default:
-            endwin();
-            printf("direction: %d",direction);
-            Sleep(5000);
-            exit(0);
     }
 }
 
@@ -210,7 +205,9 @@ bool Enemy::CheckDie()
 
     //Controllo se il nemico è stato distrutto
     if(life <= INIT)
+    {
         return true;
+    }
 
     return false;
 

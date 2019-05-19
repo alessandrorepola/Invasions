@@ -178,10 +178,10 @@ void Cannon::SetIter(Bullet *pbull)
 //Imposta il puntatore iter al colpo successivo
 void Cannon::NextBullet()
 {
-    if (iter == NULL)
-        return;
-
-    iter = iter->next;
+    if (iter != NULL)
+    {
+        iter = iter->next;
+    }
 }
 
 //Restituisce il valore di iter

@@ -3,8 +3,6 @@
 #define INVASIONS_H_INCLUDED
 
 #include <ctime>
-#include <stdio.h>
-#include <windows.h>
 #include <cstdlib>
 //#ifdef WIN32
     #include <curses.h>
@@ -29,11 +27,11 @@
 #define CONSOLE_HIGH 30
 
 //Definisco la vita del nemico e della navicella dell'utente
-#define SPACECRAFT_LIFE 10
-#define ENEMY_LIFE 2
+#define SPACECRAFT_LIFE 1
+#define ENEMY_LIFE 3
 
 //Velocità di movimento dei nemici
-#define ENEMY_SPEED 0.4
+#define ENEMY_SPEED 0.3
 
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4

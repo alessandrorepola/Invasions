@@ -33,6 +33,9 @@ int main()
 
         //Aggiorno la schermata
         game.UpdateScreen();
+
+        //Contrlla se c'è stata una collisione tra ilo nemico e la navicella
+        game.Collision();
     }
     endwin(); //Termina la modalita' curses
     return 0;

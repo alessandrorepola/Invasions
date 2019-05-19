@@ -12,6 +12,18 @@ Spacecraft::Spacecraft()
     column = CONSOLE_LENGTH/2;
 }
 
+//Restituisce la riga della navicella
+int Spacecraft::GetRow()
+{
+    return row;
+}
+
+//Restituisce la colonna della navicella
+int Spacecraft::GetColumn()
+{
+    return column;
+}
+
 //Movimeto della navicella
 bool Spacecraft::Move(int key)
 {
@@ -80,8 +92,21 @@ void Spacecraft::Shoot(Cannon &c)
     c.MoveObject();
 }
 
+//Decremanta la vita della navicella
+bool Spacecraft::DecreseLife(int damage)
+{
+    life = life-damage;
+
+    //Controllo se la navicella è stata distrutta
+    if (life <= INIT)
+    {
+        return true;
+    }
+    return false;
+}
+
 //Distruttore
 Spacecraft::~Spacecraft()
 {
-    return;
+
 }
