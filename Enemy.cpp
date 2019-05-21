@@ -108,14 +108,14 @@ void Enemy::SetDirection()
         //Controllo se si trova nell'angolo in basso a sinistra
         if (column <= INIT)
         {
-            while (/*(direction != EST) && */(direction != NORTH) && (direction != NORTH_EST))
+            while ((direction != NORTH) && (direction != NORTH_EST))
                 direction = rand()%NORTH_WEST;
         }
 
         //Altrimenti se si trova nell'angolo in basso a destra
         else if (column >= CONSOLE_LENGTH)
         {
-            while (/*(direction != WEST) && */(direction != NORTH) && (direction != NORTH_WEST))
+            while ((direction != NORTH) && (direction != NORTH_WEST))
                 direction = rand()%SOUTH_WEST;
         }
 

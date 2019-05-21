@@ -3,12 +3,18 @@
 #define INVASIONS_H_INCLUDED
 
 #include <ctime>
+#include <cstdio>
+#include <string>
 #include <cstdlib>
+#include <iostream>
+
 //#ifdef WIN32
     #include <curses.h>
 /*#else
     #include <ncurses.h>
 #endif*/
+
+#define N_CHOICES 5
 
 //Velocità di movimento del colpo
 #define BULLET_SPEED 0.1
@@ -23,8 +29,8 @@
 #define INIT 0
 
 //Dimensioni della console
-#define CONSOLE_LENGTH 100
-#define CONSOLE_HIGH 30
+#define CONSOLE_LENGTH 80
+#define CONSOLE_HIGH 25
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 1
@@ -36,7 +42,14 @@
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4
 
+//Tempo generazione nemici
 #define ENEMY_GENERATION_TIME rand()%146732 == 0
+
+//Dimensioni menu iniziale
+#define MENU_LENGHT 30
+#define MENU_HIGH 10
+
+
 
 //Definisce quali sono i quattro lati della console
 enum ConsoleSide

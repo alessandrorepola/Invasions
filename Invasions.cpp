@@ -1,5 +1,6 @@
-#include "Invasions.h"
+//#include "Invasions.h"
 #include "Game.h"
+#include "Graphics/Menu.h"
 
 //Imposta le varie funzioni per ncurses
 void SetConsole();
@@ -9,6 +10,7 @@ int main()
     initscr();     //Inizializzo la modalita' curses
     SetConsole();  //Imposto le funzioni per curses
     Game game;     //Dichiaro un oggetto game
+
 
     //Dichiaro una variabile per capire quando l'utente desidera uscire dalla partita
     bool endGame = FALSE;
