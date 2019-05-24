@@ -1,5 +1,5 @@
 //File cannon.cpp
-#include "cannon.h"
+#include "Cannon.h"
 
 Cannon::Cannon()
 {

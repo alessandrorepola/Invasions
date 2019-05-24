@@ -18,7 +18,7 @@ Menu::Menu()
 }
 
 //Gestisce la scelta dell'utente
-void Menu::SelectChoice()
+int Menu::SelectChoice()
 {
     startx = (80 - MENU_LENGHT) / 2;
 	starty = (24 - MENU_HIGH) / 2;
@@ -56,6 +56,7 @@ void Menu::SelectChoice()
 	}
 	clrtoeol();
 	refresh();
+	return choice;
 }
 
 //Stampa il Menu
@@ -77,4 +78,10 @@ void Menu::PrintMenu()
 		++y;
 	}
 	wrefresh(menu_win);
+}
+
+//Distruttore
+Menu::~Menu()
+{
+    delwin(menu_win);
 }

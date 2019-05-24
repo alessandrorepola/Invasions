@@ -8,12 +8,13 @@
 #include <cstdlib>
 #include <iostream>
 
-//#ifdef WIN32
+#ifndef WIN32
     #include <curses.h>
-/*#else
+#else
     #include <ncurses.h>
-#endif*/
+#endif
 
+//Numero di scelte del menu
 #define N_CHOICES 5
 
 //Velocità di movimento del colpo
@@ -29,27 +30,24 @@
 #define INIT 0
 
 //Dimensioni della console
-#define CONSOLE_LENGTH 80
-#define CONSOLE_HIGH 25
+#define CONSOLE_LENGTH 77
+#define CONSOLE_HIGH 24
+
+//Dimensione del menu
+#define MENU_LENGHT 25
+#define MENU_HIGH 10
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 1
 #define ENEMY_LIFE 3
 
 //Velocità di movimento dei nemici
-#define ENEMY_SPEED 0.3
+#define ENEMY_SPEED 0.2
 
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4
 
-//Tempo generazione nemici
 #define ENEMY_GENERATION_TIME rand()%146732 == 0
-
-//Dimensioni menu iniziale
-#define MENU_LENGHT 30
-#define MENU_HIGH 10
-
-
 
 //Definisce quali sono i quattro lati della console
 enum ConsoleSide
@@ -73,5 +71,14 @@ enum Directions
     SOUTH_WEST,
 };
 
+//Enumero le scelte dell'utente
+enum Choice
+{
+    NEW_MATCH = 1,
+    LAST_MATCH,
+    GUIDE,
+    CHANGE_NAME,
+    EXIT,
+};
 
 #endif // INVASIONS_H_INCLUDED

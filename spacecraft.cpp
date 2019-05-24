@@ -1,5 +1,5 @@
 //File spacecraft.cpp
-#include "spacecraft.h"
+#include "Spacecraft.h"
 
 //Costruttore
 Spacecraft::Spacecraft()

@@ -140,7 +140,7 @@ void Mothership::Draw ()
     Enemy *d = first;
     while(d != NULL)
     {
-        mvprintw(d->row-1,d->column,"\\0/");
+        mvprintw(d->row,d->column-1,"\\0/");
         d = d->next;
     }
 }

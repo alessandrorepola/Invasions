@@ -1,15 +1,28 @@
-//#include "Invasions.h"
+#include "Invasions.h"
 #include "Game.h"
 #include "Graphics/Menu.h"
 
+//Fare la stampa all'interno della console
+
 //Imposta le varie funzioni per ncurses
 void SetConsole();
+
+//
+bool UserChoice(int);
 
 int main()
 {
     initscr();     //Inizializzo la modalita' curses
     SetConsole();  //Imposto le funzioni per curses
     Game game;     //Dichiaro un oggetto game
+
+    Menu FirstMenu; //Menu iniziale
+
+
+    while (!UserChoice(FirstMenu.SelectChoice()))
+    {
+        erase();
+    }
 
 
     //Dichiaro una variabile per capire quando l'utente desidera uscire dalla partita
@@ -18,6 +31,7 @@ int main()
 	//loop "infinito" della partita
 	while (!endGame)
     {
+
         //Sposta la nevicella del giocatore
         endGame = game.MoveSpacesraft();
 
@@ -51,4 +65,31 @@ void SetConsole()
 	noecho ();				//Disabilita l'echo dei tasti premuti
 	srand(time(NULL));      //Per la generazione di valori random
 	nodelay (stdscr, true);	//Se non viene digitato alcun tasto la funzione getch() restituisce ERR
+}
+
+bool UserChoice(int choice)
+{
+    switch(choice)
+    {
+        case NEW_MATCH:
+            return true;
+
+        case LAST_MATCH:
+            //TO DO
+            break;
+
+        case GUIDE:
+            //TO DO
+            break;
+
+        case CHANGE_NAME:
+            //TO DO
+            break;
+
+        case EXIT:
+            exit(INIT);
+
+        default:
+            return false;
+    }
 }

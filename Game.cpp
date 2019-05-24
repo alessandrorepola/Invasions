@@ -22,7 +22,7 @@ void Game::StartMessage()
 void Game::UpdateScreen()
 {
     //Cancella la schermata
-    erase();
+    //erase();
 
     //Stampa i nemici
     aliens.Draw();
@@ -33,7 +33,7 @@ void Game::UpdateScreen()
     //stampa i colpi sparati dalla navicella del giocatore
     c.Draw();
 
-    refresh();
+    cons.PrintConsole();
 }
 
 //Gestisce l'input per lo spastamento della navicella del giocatore
@@ -76,7 +76,7 @@ void Game::Hitted()
     {
         for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
         {
-            if((c.GetIter()->GetRow()+1 == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+2)))
+            if((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)))
             {
                 c.RemoveObject(c.GetIter());
                 if (aliens.GetIter()->CheckDie())
@@ -94,7 +94,7 @@ void Game::Collision()
     //Controllo se c'è stata una collisione tra il nemico e la navicella
     for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
     {
-        if ((player.GetRow() == aliens.GetIter()->GetRow()-1) && (player.GetColumn() == aliens.GetIter()->GetColumn()+1))
+        if (((player.GetRow() == aliens.GetIter()->GetRow()) && ((player.GetColumn() == aliens.GetIter()->GetColumn()) || (player.GetColumn() == aliens.GetIter()->GetColumn()-1) || (player.GetColumn() == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()-1))))
         {
             aliens.RemoveEnemy(aliens.GetIter());
             if(player.DecreseLife(ENEMY_LIFE))

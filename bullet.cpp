@@ -1,5 +1,5 @@
 //File bullet.cpp
-#include "bullet.h"
+#include "Bullet.h"
 
 //costruttore
 Bullet::Bullet()
