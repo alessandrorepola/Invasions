@@ -40,10 +40,10 @@
 		<Unit filename="Enemy.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
-		<Unit filename="Graphics/Console.cpp" />
-		<Unit filename="Graphics/Console.h" />
 		<Unit filename="Graphics/Menu.cpp" />
 		<Unit filename="Graphics/Menu.h" />
+		<Unit filename="Graphics/Window.cpp" />
+		<Unit filename="Graphics/Window.h" />
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="Invasions.h" />
 		<Unit filename="Mothership.cpp" />

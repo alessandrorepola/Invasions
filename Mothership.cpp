@@ -135,12 +135,12 @@ void Mothership::MoveEnemy()
 }
 
 //Disegna tutti i nemici
-void Mothership::Draw ()
+void Mothership::Draw (WINDOW *win)
 {
     Enemy *d = first;
     while(d != NULL)
     {
-        mvprintw(d->row,d->column-1,"\\0/");
+        mvwprintw(win, d->row, d->column-1 ,"\\0/");
         d = d->next;
     }
 }

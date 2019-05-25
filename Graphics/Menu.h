@@ -9,29 +9,26 @@ class Menu
     int startx;
     int starty;
 
-    //Variabile per le voci del menu
-    int highlight;
-
-    //Scelta dell'utente
-    int choice;
+    int highlight;  //Variabile per le voci del menu
+    int choice;     //Scelta dell'utente
+    int menu_type;  //Per il tipo di menu
 
     //Dichiaro un array di stringhe per le scelte dell'utente
-    char* choices[N_CHOICES] = {"NUOVA PARTITA", "PARTITA PRECEDENTE", "GUIDA", "NOME GIOCATORE", "ESCI"};;
+    char* first_menu_choices[N_CHOICES] = {"Nuova partita","Partita precedente","Guida","Esci"};
 
-    //Dichiaro un puntatore alla struttura WINDOW
-    WINDOW *menu_win;
+    //Dichiaro un array di stringhe per le scelte dell'utente
+    char* secondary_menu_choices[N_CHOICES] = {"Riprendi","Riavvia","Menu Principale","Esci"};
 
-    //Dichiaro un metodo per la stampa del menu
-    void PrintMenu();
+    WINDOW *menu_win;           //Dichiaro un puntatore alla struttura WINDOW
+    void PrintMenu();           //Dichiaro un metodo per la stampa del menu
+    int SelectChoice();//Dichiaro il metodo per gestire la scelta dell'utente
 
     public:
 
     //Costruttore e distruttore
-    Menu();
+    Menu(int);
     ~Menu();
-
-    //Dichiaro il metodo per gestire la scelta dell'utente
-    int SelectChoice();
+    int GetChoice(); //Restituisce la scelta dell'utente
 };
 
 #endif // MENU_H_INCLUDED

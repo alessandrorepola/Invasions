@@ -148,18 +148,21 @@ void Cannon::MoveObject()
         first->Move();
     }
 
-    //Controllo se il primo colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
-    if(first->row < INIT)
-        RemoveFirst();
+    for (SetIter(); GetIter()!= NULL; NextBullet())
+    {
+        //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
+        if(iter->row < START_XY)
+            RemoveObject(iter);
+    }
 }
 
 //Disegna i colpi
-void Cannon::Draw ()
+void Cannon::Draw (WINDOW *win)
 {
     Bullet *d = first;
     while(d != NULL)
     {
-        mvprintw(d->row,d->column,"*");
+        mvwaddch(win, d->row, d->column, ACS_DIAMOND);
         d = d->next;
     }
 }

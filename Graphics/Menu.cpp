@@ -5,42 +5,46 @@
 
 #include "Menu.h"
 
-Menu::Menu()
+Menu::Menu(int type)
 {
     //Inizializzo le coordinate iniziali del menu
     startx = INIT;
     starty = INIT;
 
     //imposto il cursore sulla prima voce per default
-    highlight = 1;
+    highlight = START_XY;
 
     choice = INIT;
+
+    menu_type = type;
+
+    startx = (CONSOLE_LENGTH - MENU_LENGHT) / 2;
+	starty = (CONSOLE_HIGH - MENU_HIGH) / 2;
+
+	menu_win = newwin(MENU_HIGH, MENU_LENGHT, starty, startx);
+	keypad(menu_win, TRUE);
+
+	SelectChoice();
 }
 
 //Gestisce la scelta dell'utente
 int Menu::SelectChoice()
 {
-    startx = (80 - MENU_LENGHT) / 2;
-	starty = (24 - MENU_HIGH) / 2;
-
-	menu_win = newwin(MENU_HIGH, MENU_LENGHT, starty, startx);
-	keypad(menu_win, TRUE);
-
 	PrintMenu();
-	while(1)
+	while(TRUE)
 	{
 	    int c = wgetch(menu_win);
 		switch(c)
 		{
 		    case KEY_UP:
-				if(highlight == 1)
+				if(highlight == START_XY)
 					highlight = N_CHOICES;
 				else
 					--highlight;
 				break;
 			case KEY_DOWN:
 				if(highlight == N_CHOICES)
-					highlight = 1;
+					highlight = START_XY;
 				else
 					++highlight;
 				break;
@@ -68,16 +72,38 @@ void Menu::PrintMenu()
 	y = 2;
 	box(menu_win, INIT, INIT);
 	for(i = INIT; i < N_CHOICES; ++i)
-	{	if(highlight == i + 1)
+	{	if(highlight == i + START_XY)
 		{	wattron(menu_win, A_REVERSE);
-			mvwprintw(menu_win, y, x, "%s", choices[i]);
+            if (menu_type == FIRST_MENU)
+            {
+                mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
+            }
+            else
+            {
+                mvwprintw(menu_win, y, x, "%s", secondary_menu_choices[i]);
+            }
 			wattroff(menu_win, A_REVERSE);
 		}
 		else
-			mvwprintw(menu_win, y, x, "%s", choices[i]);
-		++y;
+        {
+            if (menu_type == FIRST_MENU)
+            {
+                mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
+            }
+            else
+            {
+                mvwprintw(menu_win, y, x, "%s", secondary_menu_choices[i]);
+            }
+        }
+        ++y;
 	}
 	wrefresh(menu_win);
+}
+
+//Restituisce la scelta dell'utente
+int Menu::GetChoice()
+{
+    return choice;
 }
 
 //Distruttore

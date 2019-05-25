@@ -50,6 +50,14 @@ bool Spacecraft::Move(int key)
         case 'Q':
             return false;
 
+        case 'p':
+        case 'P':
+        {
+            Menu secondary_menu(SECONDARY_MENU);
+
+            break;
+        }
+
         // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti ritorana al loop principale
         case ERR:
         default:
@@ -61,17 +69,17 @@ bool Spacecraft::Move(int key)
 
 void Spacecraft::CheckMove()
 {
-	if (column <= INIT+2)
+	if (column <= START_XY+2)
 	{
-		column = INIT+2;
+		column = START_XY+2;
 	}
-	if (row <= INIT)
+	if (row <= START_XY)
 	{
-		row = INIT;
+		row = START_XY;
 	}
-	if (column >= CONSOLE_LENGTH)
+	if (column >= CONSOLE_LENGTH-3)
 	{
-		column = CONSOLE_LENGTH;
+		column = CONSOLE_LENGTH-3;
 	}
 	if (row >= CONSOLE_HIGH)
 	{
@@ -80,9 +88,9 @@ void Spacecraft::CheckMove()
 }
 
 //Disegna la navicella
-void Spacecraft::Draw ()
+void Spacecraft::Draw (WINDOW *win)
 {
-    mvprintw(row,column-2,"\\-^-/");
+    mvwprintw(win,row,column-2,"\\-^-/");
 }
 
 //Spara il colpo

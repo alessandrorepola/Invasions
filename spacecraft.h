@@ -3,6 +3,8 @@
 #define SPACECRAFT_H_INCLUDED
 
 #include "Cannon.h"
+#include "Graphics/Window.h"
+#include "Graphics/Menu.h"
 
 class Spacecraft
 {
@@ -18,7 +20,7 @@ class Spacecraft
     bool Move(int);        //sposta la navicella
     void CheckMove();      //Controlla lo spostamento della navicella
     void Shoot(Cannon&);   //spara il colpo
-    void Draw();           //disegna la navicella
+    void Draw(WINDOW*);    //disegna la navicella
     bool DecreseLife(int); //decrementa la vita della navicella
     ~Spacecraft();         //distruttore
 };

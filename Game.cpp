@@ -10,6 +10,7 @@ Game::Game()
 {
     score = INIT;
     highScore = INIT;
+    console.PrintConsole();
 }
 
 //Messaggio iniziale
@@ -21,19 +22,18 @@ void Game::StartMessage()
 //Stampa a video la condizione attuale della partita
 void Game::UpdateScreen()
 {
-    //Cancella la schermata
-    //erase();
+    console.PrintConsole();
 
     //Stampa i nemici
-    aliens.Draw();
-
-    //Stampa la navicella del giocatore
-    player.Draw();
+    aliens.Draw(console.GetConsole());
 
     //stampa i colpi sparati dalla navicella del giocatore
-    c.Draw();
+    c.Draw(console.GetConsole());
 
-    cons.PrintConsole();
+    //Stampa la navicella del giocatore
+    player.Draw(console.GetConsole());
+
+    wrefresh(console.GetConsole());
 }
 
 //Gestisce l'input per lo spastamento della navicella del giocatore
@@ -59,7 +59,7 @@ void Game::SpacecraftShoot()
 void Game::GenerationEnemy()
 {
     //Controllo se possono essere generati i nemici
-    if (ENEMY_GENERATION_TIME)
+    if (rand()%19817 == 0)
         aliens.AddEnemy();
 }
 

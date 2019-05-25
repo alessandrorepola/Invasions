@@ -8,11 +8,11 @@
 
 #include "Spacecraft.h"
 #include "Mothership.h"
-#include "Graphics/Console.h"
+#include "Graphics/Window.h"
 
 class Game
 {
-    Console cons;
+    Window console;
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici

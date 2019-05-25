@@ -7,23 +7,16 @@
 //Imposta le varie funzioni per ncurses
 void SetConsole();
 
-//
-bool UserChoice(int);
+//Per decidere cosa fare in base alla scelta della'utente
+void UserChoice(int);
 
 int main()
 {
     initscr();     //Inizializzo la modalita' curses
     SetConsole();  //Imposto le funzioni per curses
     Game game;     //Dichiaro un oggetto game
-
-    Menu FirstMenu; //Menu iniziale
-
-
-    while (!UserChoice(FirstMenu.SelectChoice()))
-    {
-        erase();
-    }
-
+    Menu menu(FIRST_MENU); //Menu iniziale
+    UserChoice(menu.GetChoice());
 
     //Dichiaro una variabile per capire quando l'utente desidera uscire dalla partita
     bool endGame = FALSE;
@@ -51,7 +44,7 @@ int main()
         game.UpdateScreen();
 
         //Contrlla se c'è stata una collisione tra ilo nemico e la navicella
-        game.Collision();
+        //game.Collision();
     }
     endwin(); //Termina la modalita' curses
     return 0;
@@ -59,7 +52,7 @@ int main()
 
 void SetConsole()
 {
-    resize_term(CONSOLE_HIGH, CONSOLE_LENGTH+3);  //Imposta le dimensioni della console
+    resize_term(CONSOLE_HIGH+START_XY, CONSOLE_LENGTH+START_XY);  //Imposta le dimensioni della console
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
@@ -67,12 +60,13 @@ void SetConsole()
 	nodelay (stdscr, true);	//Se non viene digitato alcun tasto la funzione getch() restituisce ERR
 }
 
-bool UserChoice(int choice)
+//Per la scelta dell'utente
+void UserChoice(int choice)
 {
     switch(choice)
     {
         case NEW_MATCH:
-            return true;
+            return ;
 
         case LAST_MATCH:
             //TO DO
@@ -88,8 +82,5 @@ bool UserChoice(int choice)
 
         case EXIT:
             exit(INIT);
-
-        default:
-            return false;
     }
 }

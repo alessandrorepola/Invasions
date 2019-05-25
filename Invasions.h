@@ -4,9 +4,7 @@
 
 #include <ctime>
 #include <cstdio>
-#include <string>
 #include <cstdlib>
-#include <iostream>
 
 #ifndef WIN32
     #include <curses.h>
@@ -15,7 +13,7 @@
 #endif
 
 //Numero di scelte del menu
-#define N_CHOICES 5
+#define N_CHOICES 4
 
 //Velocità di movimento del colpo
 #define BULLET_SPEED 0.1
@@ -29,9 +27,12 @@
 //Constante per inizializzare le variabili a zero
 #define INIT 0
 
+//Coordinate Iniziali della console di gioco
+#define START_XY 1
+
 //Dimensioni della console
-#define CONSOLE_LENGTH 77
-#define CONSOLE_HIGH 24
+#define CONSOLE_LENGTH 100
+#define CONSOLE_HIGH 30
 
 //Dimensione del menu
 #define MENU_LENGHT 25
@@ -42,12 +43,13 @@
 #define ENEMY_LIFE 3
 
 //Velocità di movimento dei nemici
-#define ENEMY_SPEED 0.2
+#define ENEMY_SPEED 0.3
 
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4
 
-#define ENEMY_GENERATION_TIME rand()%146732 == 0
+#define FIRST_MENU 10
+#define SECONDARY_MENU 11
 
 //Definisce quali sono i quattro lati della console
 enum ConsoleSide
