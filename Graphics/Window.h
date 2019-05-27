@@ -9,20 +9,23 @@
 
 class Window
 {
-    //Dichiaro le coordinate per i menu
+    //Dichiaro le coordinate per le finestre
     int startx;
     int starty;
+    int endx;
+    int endy;
 
     //Dichiaro un puntatore alla struttura WINDOW
-    WINDOW *console_win;
+    WINDOW *win;
 
     public:
 
-    Window();        //Costruttore
-    ~Window();       //Distruttore
-    void PrintConsole();  //Finestra della console
-    WINDOW *GetConsole(); //Restituisce un puntatore alla finestra principale
+    Window();
+    Window(int, int, int, int);      //Costruttore
+    ~Window();              //Distruttore
+    void PrintWinBorder();  //Aggiorna Stampa a video i bordi della console
+    WINDOW *GetWin();       //Restituisce un puntatore alla finestra principale
 
 };
 
-#endif // CONSOLE_H_INCLUDED
+#endif // WINDOW_H_INCLUDED

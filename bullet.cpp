@@ -9,7 +9,7 @@ Bullet::Bullet()
 }
 
 //Costruttore che posiziona il colpo
-Bullet::Bullet(int r, int c)
+Bullet::Bullet(int r, int c, int type)
 {
     next = NULL;
     prev = NULL;
@@ -17,6 +17,7 @@ Bullet::Bullet(int r, int c)
     //Inizializzo le coordinate del colpo
     row = r;
     column = c;
+    id = type;
 
     //Inizializzo il tempo
     start = clock();
@@ -41,7 +42,14 @@ void Bullet::Move()
     if (diff >= BULLET_SPEED)
     {
         start = time;
-        row--;
+        if (id == PLAYER)
+        {
+            --row;
+        }
+        else
+        {
+            ++row;
+        }
     }
 }
 
@@ -55,6 +63,12 @@ int Bullet::GetRow()
 int Bullet::GetColumn()
 {
     return column;
+}
+
+//Restituisce l'id del colpo
+int Bullet::GetId()
+{
+    return id;
 }
 
 //Distruttore

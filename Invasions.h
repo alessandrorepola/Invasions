@@ -22,28 +22,41 @@
 #define BULLET_DAMAGE 1
 
 //Tempo di generazione dei colpi
-#define BULLET_GENERATION_TIME 0.3
+#define TIME_PLAYER_BULLET 0.3
+#define TIME_ENEMY_BULLET 4
 
 //Constante per inizializzare le variabili a zero
 #define INIT 0
 
 //Coordinate Iniziali della console di gioco
-#define START_XY 1
+#define START_XY 2
 
-//Dimensioni della console
-#define CONSOLE_LENGTH 100
-#define CONSOLE_HIGH 30
+//Dimensioni della finestra principale
+#define WIN_LENGTH 102
+#define WIN_HIGH 35
+
+//Dimensioni della finestra di gioco
+#define START_COORD 1
+#define GAME_WIN_LENGTH 100
+#define GAME_WIN_HIGH 30
 
 //Dimensione del menu
 #define MENU_LENGHT 25
 #define MENU_HIGH 10
 
 //Definisco la vita del nemico e della navicella dell'utente
-#define SPACECRAFT_LIFE 1
+#define SPACECRAFT_LIFE 10
 #define ENEMY_LIFE 3
+
+//Definesco le entità del giocatore e del nemico per la gestione dei colpi
+#define ENEMY 100
+#define PLAYER 101
 
 //Velocità di movimento dei nemici
 #define ENEMY_SPEED 0.3
+
+//Tempo di generazione dei nemici
+#define ENEMY_GENERATION_TIME 3.5
 
 //Indica i 4 lati della console
 #define CONSOLE_SIDE 4
@@ -79,7 +92,6 @@ enum Choice
     NEW_MATCH = 1,
     LAST_MATCH,
     GUIDE,
-    CHANGE_NAME,
     EXIT,
 };
 

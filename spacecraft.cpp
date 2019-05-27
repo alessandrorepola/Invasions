@@ -8,8 +8,8 @@ Spacecraft::Spacecraft()
     life = SPACECRAFT_LIFE;
 
     //Coordinate iniziali della navicella
-    row = CONSOLE_HIGH/2;
-    column = CONSOLE_LENGTH/2;
+    row = GAME_WIN_HIGH/2;
+    column = GAME_WIN_LENGTH/2;
 }
 
 //Restituisce la riga della navicella
@@ -77,13 +77,13 @@ void Spacecraft::CheckMove()
 	{
 		row = START_XY;
 	}
-	if (column >= CONSOLE_LENGTH-3)
+	if (column >= GAME_WIN_LENGTH-3)
 	{
-		column = CONSOLE_LENGTH-3;
+		column = GAME_WIN_LENGTH-3;
 	}
-	if (row >= CONSOLE_HIGH)
+	if (row >= GAME_WIN_HIGH)
 	{
-		row = CONSOLE_HIGH-1;
+		row = GAME_WIN_HIGH-1;
 	}
 }
 
@@ -96,7 +96,7 @@ void Spacecraft::Draw (WINDOW *win)
 //Spara il colpo
 void Spacecraft::Shoot(Cannon &c)
 {
-    c.AddObject(row-1, column);
+    c.AddObject(row-1, column, PLAYER);
     c.MoveObject();
 }
 

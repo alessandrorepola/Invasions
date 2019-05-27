@@ -10,13 +10,14 @@ class Cannon
     Bullet *first; //Puntatore al primo colpo sparato
     Bullet *last;  //Puntatore all'utimo colpo sparato
     Bullet *iter;  //Puntatore mobile
-    clock_t start; //Per cronometrare il tempo
+    clock_t start_enemy; //Per cronometrare il tempo trascorso dal colpo nemico
+    clock_t start_player; //Per cronometrare il tempo trascorso dal colpo del giocatore
 
     public:
 
     Cannon();                   //Costruttore
     Bullet *GetFirst();         //Restituisce il puntatore al primo elemento della lista
-    void AddObject(int, int);   //Genera un nuovo colpo con le sue coordinate
+    void AddObject(int, int, int);   //Genera un nuovo colpo con le sue coordinate
     void RemoveFirst();         //Remuove il primo colpo della lista
     void RemoveLast();          //Remuove l'ultimo colpo della lista
     void RemoveObject(Bullet*); //Rimuove il colpo specificato

@@ -31,11 +31,17 @@ int main()
         //Sparo del giocatore
         game.SpacecraftShoot();
 
+        //Sparo del nemico
+        game.EnemyShoot();
+
         //Sposta gli alieni
         game.MoveEnemy();
 
         //Controlla se il nemico è stato colpito
-        game.Hitted();
+        game.EnemyHitted();
+
+        //Controlla se il nemico è stato colpito
+        game.PlayerHitted();
 
         //Generazione dei nemici
         game.GenerationEnemy();
@@ -44,7 +50,7 @@ int main()
         game.UpdateScreen();
 
         //Contrlla se c'è stata una collisione tra ilo nemico e la navicella
-        //game.Collision();
+        game.Collision();
     }
     endwin(); //Termina la modalita' curses
     return 0;
@@ -52,12 +58,17 @@ int main()
 
 void SetConsole()
 {
-    resize_term(CONSOLE_HIGH+START_XY, CONSOLE_LENGTH+START_XY);  //Imposta le dimensioni della console
+    resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);  //Imposta le dimensioni della console
+
+    //Creo la finestra principale
+    Window first_win(INIT, INIT, WIN_LENGTH, WIN_HIGH);
+
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
 	srand(time(NULL));      //Per la generazione di valori random
 	nodelay (stdscr, true);	//Se non viene digitato alcun tasto la funzione getch() restituisce ERR
+	first_win.PrintWinBorder(); //Stampo i bordi della console
 }
 
 //Per la scelta dell'utente
@@ -73,10 +84,6 @@ void UserChoice(int choice)
             break;
 
         case GUIDE:
-            //TO DO
-            break;
-
-        case CHANGE_NAME:
             //TO DO
             break;
 

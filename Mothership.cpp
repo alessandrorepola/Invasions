@@ -18,20 +18,33 @@ Enemy *Mothership::GetFirst()
 //Aggiunge un nuovo oggetto nemico
 void Mothership::AddEnemy()
 {
-    Enemy *add = NULL;
+    clock_t time;
+    double diff = INIT;
 
-    //Controllo se è il primo oggetto
-    if (first == NULL)
+    //Controllo il tempo trascorso dall'ultimo colpo
+    time = clock();
+    diff = (double)(time-start);
+    diff = diff/CLOCKS_PER_SEC;
+
+    //Controllo se si può muovere
+    if (diff >= ENEMY_GENERATION_TIME)
     {
-        first = new Enemy();     //Dichiaro il primo nemico
-        last = first;            //last punterà al primo nemico
-    }
-    else
-    {
-        add = new Enemy();     //Dichiaro un nuovo nemico
-        add->prev = last;      //prev punterà a last che è il penultimo nemico generato
-        last->next = add;      //Il puntatore next del nemico precedente punterà a quello attuale
-        last = add;            //Aggiorno il puntatore last all'ultimo nemico genenato
+        start = time;
+        Enemy *add = NULL;
+
+         //Controllo se è il primo oggetto
+        if (first == NULL)
+        {
+            first = new Enemy();     //Dichiaro il primo nemico
+            last = first;            //last punterà al primo nemico
+        }
+        else
+        {
+            add = new Enemy();     //Dichiaro un nuovo nemico
+            add->prev = last;      //prev punterà a last che è il penultimo nemico generato
+            last->next = add;      //Il puntatore next del nemico precedente punterà a quello attuale
+            last = add;            //Aggiorno il puntatore last all'ultimo nemico genenato
+        }
     }
 }
 
@@ -170,6 +183,12 @@ void Mothership::NextEnemy()
 Enemy *Mothership::GetIter()
 {
     return iter;
+}
+
+//Unisce i nemici tra di loro
+void Mothership::FuseEnemy()
+{
+    //TO DO
 }
 
 //Distruttore

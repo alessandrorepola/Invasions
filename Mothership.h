@@ -9,6 +9,7 @@ class Mothership
     Enemy *last;   //Puntatore all'utimo nemico generato
     Enemy *iter;   //Puntatore mobile
     clock_t start; //Per cronometrare il tempo
+    void FuseEnemy(); //Unisce due navicelle aliene che si scontrano
 
     public:
 

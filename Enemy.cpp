@@ -24,22 +24,22 @@ void Enemy::CoordGeneration()
     {
         case UP:
             row = START_XY;
-            column = (rand()%(CONSOLE_LENGTH-4))+2;
+            column = (rand()%(GAME_WIN_LENGTH-4))+2;
             break;
 
         case DOWN:
-            row = CONSOLE_HIGH-1;
-            column = (rand()%(CONSOLE_LENGTH-4))+2;
+            row = GAME_WIN_HIGH-1;
+            column = (rand()%(GAME_WIN_LENGTH-4))+2;
             break;
 
         case LEFT:
             column = START_XY+1;
-            row = (rand()%(CONSOLE_HIGH-2))+1;
+            row = (rand()%(GAME_WIN_HIGH-2))+1;
             break;
 
         case RIGHT:
-            column = CONSOLE_LENGTH-2;
-            row = (rand()%(CONSOLE_HIGH-2))+1;
+            column = GAME_WIN_LENGTH-2;
+            row = (rand()%(GAME_WIN_HIGH-2))+1;
             break;
     }
 }
@@ -87,7 +87,7 @@ void Enemy::SetDirection()
         }
 
         //Altrimenti se si trova nell'angolo in alto a destra
-        else if (column >= CONSOLE_LENGTH-2)
+        else if (column >= GAME_WIN_LENGTH-2)
         {
             //Genero una direzione in cui puo' muouersi il nemico
             while ((direction != WEST) && (direction != SOUTH) && (direction != SOUTH_WEST))
@@ -103,7 +103,7 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova lungo il bordo inferiore della console
-    else if (row >= CONSOLE_HIGH-1)
+    else if (row >= GAME_WIN_HIGH-1)
     {
         //Controllo se si trova nell'angolo in basso a sinistra
         if (column <= START_XY+1)
@@ -113,7 +113,7 @@ void Enemy::SetDirection()
         }
 
         //Altrimenti se si trova nell'angolo in basso a destra
-        else if (column >= CONSOLE_LENGTH-2)
+        else if (column >= GAME_WIN_LENGTH-2)
         {
             while ((direction != NORTH) && (direction != NORTH_WEST))
                 direction = rand()%SOUTH_WEST;
@@ -136,7 +136,7 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova sul lato destro della console
-    else if (column >= CONSOLE_LENGTH-2)
+    else if (column >= GAME_WIN_LENGTH-2)
     {
         while ((direction != NORTH) && (direction != SOUTH) && (direction != WEST) && (direction != NORTH_WEST) && (direction != SOUTH_WEST))
             direction = rand()%SOUTH_WEST;

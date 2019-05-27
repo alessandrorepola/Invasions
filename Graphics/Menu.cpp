@@ -18,8 +18,8 @@ Menu::Menu(int type)
 
     menu_type = type;
 
-    startx = (CONSOLE_LENGTH - MENU_LENGHT) / 2;
-	starty = (CONSOLE_HIGH - MENU_HIGH) / 2;
+    startx = (GAME_WIN_LENGTH - MENU_LENGHT) / 2;
+	starty = (GAME_WIN_HIGH - MENU_HIGH) / 2;
 
 	menu_win = newwin(MENU_HIGH, MENU_LENGHT, starty, startx);
 	keypad(menu_win, TRUE);

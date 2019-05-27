@@ -13,14 +13,16 @@ class Bullet
     Bullet *next;     //Puntatore al colpo successivo
     Bullet *prev;     //Puntatore al colpo precedente
     clock_t start;    //Misura il tempo da quando è stato sparato il colpo
-    Bullet(int, int); //Costruttore che prende come argomento la riga e la colonna
+    Bullet(int, int, int); //Costruttore che prende come argomento la riga e la colonna
     void Move();      //Muove il colpo sparato
+    int id;           //Identifica l'appartenenza del colpo
 
     public:
 
     Bullet();         //Costruttore di default
     int GetRow();     //Restituisce la riga del colpo
     int GetColumn();  //Restituisce la colonna del colpo
+    int GetId();      //Restituisce l'id del colpo
     ~Bullet();        //Distruttore
 };
 

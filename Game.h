@@ -12,7 +12,9 @@
 
 class Game
 {
-    Window console;
+    //Dichiaro la finestra di gioco
+    Window *game_win;
+
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
@@ -22,13 +24,16 @@ class Game
     public:
 
     Game();                 //Costruttore
+    ~Game();                //Distruttore
     void StartMessage();    //Messaggio iniziale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
     bool MoveSpacesraft();  //Gestisce l'input per lo spastamento della navicella del giocatore
     void SpacecraftShoot(); //Sparo della navicella del giocatore
+    void EnemyShoot();      //Sparo del nemico
     void GenerationEnemy(); //Genera i nemici
     void MoveEnemy();       //Muove i nemici
-    void Hitted();          //Controlla se il nemico è stato colpito
+    void EnemyHitted();     //Controlla se il nemico è stato colpito
+    void PlayerHitted();    //Controlla se il giocatore è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
     void UpdateScore();     //Aggiorna il punteggio attuale della partita
     void SaveScore();       //Salva il miglior punteggio

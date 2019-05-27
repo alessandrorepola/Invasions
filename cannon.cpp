@@ -6,7 +6,8 @@ Cannon::Cannon()
     first = NULL;
     last = NULL;
     iter = NULL;
-    start = clock();
+    start_enemy = clock();
+    start_player = clock();
 }
 
 //Restituisce il puntatore al primo elemento della lista
@@ -16,31 +17,49 @@ Bullet *Cannon::GetFirst()
 }
 
 //Aggiunge un nuovo colpo
-void Cannon::AddObject(int r, int c)
+void Cannon::AddObject(int r, int c, int id)
 {
     clock_t time;
     double diff = INIT;
+    double generation_time;
 
     //Controllo il tempo trascorso dall'ultimo colpo
     time = clock();
-    diff = (double)(time-start);
+
+    if (id == PLAYER)
+    {
+        generation_time = TIME_PLAYER_BULLET;
+        diff = (double)(time-start_player);
+    }
+    else
+    {
+        generation_time = TIME_ENEMY_BULLET;
+        diff = (double)(time-start_enemy);
+    }
     diff = diff/CLOCKS_PER_SEC;
 
     //Controllo se si può muovere
-    if (diff >= BULLET_GENERATION_TIME)
+    if (diff >= generation_time)
     {
-        start = time;
+        if (id == PLAYER)
+        {
+            start_player = time;
+        }
+        else
+        {
+            start_enemy = time;
+        }
         Bullet *add = NULL;
 
         //Controllo se è il primo oggetto colpo
         if (first == NULL)
         {
-            first = new Bullet(r,c); //Dichiaro il primo colpo
-            last = first;           //last punterà al primo colpo
+            first = new Bullet(r,c,id); //Dichiaro il primo colpo
+            last = first;            //last punterà al primo colpo
         }
         else
         {
-            add = new Bullet(r,c); //Dichiaro un nuovo colpo
+            add = new Bullet(r,c,id); //Dichiaro un nuovo colpo
             add->prev = last;      //prev punterà a last che è il penultimo colpo
             last->next = add;      //Il puntatore next del colpo precedente punterà a quello attuale
             last = add;            //Aggiorno il puntatore last all'ultimo colpo
@@ -150,9 +169,18 @@ void Cannon::MoveObject()
 
     for (SetIter(); GetIter()!= NULL; NextBullet())
     {
-        //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
-        if(iter->row < START_XY)
-            RemoveObject(iter);
+        if (iter->id == PLAYER)
+        {
+            //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
+            if(iter->row < START_XY)
+                RemoveObject(iter);
+        }
+        else
+        {
+            //Controllo se il colpo è arrivato al bordo inferiore della console e quindi deve essere cancellato
+            if(iter->row >= GAME_WIN_HIGH-1)
+                RemoveObject(iter);
+        }
     }
 }
 
@@ -162,7 +190,14 @@ void Cannon::Draw (WINDOW *win)
     Bullet *d = first;
     while(d != NULL)
     {
-        mvwaddch(win, d->row, d->column, ACS_DIAMOND);
+        if (d->GetId() == PLAYER)
+        {
+            mvwaddch(win, d->row, d->column, ACS_DIAMOND);
+        }
+        else
+        {
+            mvwaddch(win, d->row, d->column, ACS_LANTERN);
+        }
         d = d->next;
     }
 }
