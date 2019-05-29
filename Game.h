@@ -12,9 +12,8 @@
 
 class Game
 {
-    //Dichiaro la finestra di gioco
-    Window *game_win;
-
+    Window main_win;        //Apro una finestra principale
+    Window *game_win;       //Dichiaro un puntatore alla finestra di gioco
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici

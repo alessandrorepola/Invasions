@@ -192,6 +192,7 @@ void Cannon::Draw (WINDOW *win)
     {
         if (d->GetId() == PLAYER)
         {
+           // mvwaddch(win, d->row, d->column, 'l' | A_BOLD | A_UNDERLINE);
             mvwaddch(win, d->row, d->column, ACS_DIAMOND);
         }
         else

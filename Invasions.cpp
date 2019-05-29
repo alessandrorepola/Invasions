@@ -58,17 +58,20 @@ int main()
 
 void SetConsole()
 {
-    resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);  //Imposta le dimensioni della console
-
-    //Creo la finestra principale
-    Window first_win(INIT, INIT, WIN_LENGTH, WIN_HIGH);
-
+      //Imposta le dimensioni della console
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
 	srand(time(NULL));      //Per la generazione di valori random
 	nodelay (stdscr, true);	//Se non viene digitato alcun tasto la funzione getch() restituisce ERR
-	first_win.PrintWinBorder(); //Stampo i bordi della console
+}
+
+//Ridimensiona il terminale
+void SizeTerm()
+{
+    #ifdef WIN 32
+        resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);
+    #endif
 }
 
 //Per la scelta dell'utente

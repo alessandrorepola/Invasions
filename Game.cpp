@@ -11,8 +11,11 @@ Game::Game()
     score = INIT;
     highScore = INIT;
 
-    //Dichiaro la finestra di gioco
-    game_win = new Window(START_COORD, START_COORD, GAME_WIN_LENGTH+START_COORD, GAME_WIN_HIGH+START_COORD);
+    //Disegno la finestra principale
+    main_win.PrintWinBorder();
+
+    //Apro la finestra di gioco
+    game_win = new Window(main_win.GetWin());
 }
 
 //Messaggio iniziale
