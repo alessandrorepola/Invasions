@@ -20,10 +20,21 @@ Window::Window()
 Window::Window(WINDOW *parent)
 {
     //Inizializzo le coordinate
-    startx = START_COORD;
-    starty = START_COORD;
-    sizex = GAME_WIN_LENGTH+START_COORD;
-    sizey = GAME_WIN_HIGH+START_COORD;
+    startx = START_XY;
+    starty = START_XY;
+    sizex = GAME_WIN_LENGTH+START_XY;
+    sizey = GAME_WIN_HIGH+START_XY;
+
+    //Creo una finestra principale
+    win = derwin(parent, sizey, sizex, starty, startx);
+}
+
+Window::Window(WINDOW * parent, int sx, int sy, int ex, int ey )
+{
+    startx = sx;
+    starty = sy;
+    sizex = ex;
+    sizey = ey;
 
     //Creo una finestra principale
     win = derwin(parent, sizey, sizex, starty, startx);
@@ -31,11 +42,12 @@ Window::Window(WINDOW *parent)
 
 void Window::PrintWinBorder()
 {
-    werase(win);
+
 
     //Se è la finestra di gioco
-    if (startx == START_COORD)
+    if (startx == START_XY)
     {
+        werase(win);
         //Creo dei bordi più belli
         wborder(win,
                 ACS_BLOCK,
@@ -50,8 +62,8 @@ void Window::PrintWinBorder()
     else
     {
         box(win, ACS_VLINE, ACS_HLINE);
+        wrefresh(win);
     }
-    wrefresh(win);
 }
 
 WINDOW *Window::GetWin()

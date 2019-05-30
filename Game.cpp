@@ -13,6 +13,14 @@ Game::Game()
 
     //Disegno la finestra principale
     main_win.PrintWinBorder();
+    Banner();
+    wrefresh(main_win.GetWin());
+
+    start_message = new Window(main_win.GetWin(),22, 12, 60, 5);
+
+    StartMessage();
+    start_message->PrintWinBorder();
+    wrefresh(start_message->GetWin());
 
     //Apro la finestra di gioco
     game_win = new Window(main_win.GetWin());
@@ -21,12 +29,26 @@ Game::Game()
 //Messaggio iniziale
 void Game::StartMessage()
 {
-    //TO DO
+    wprintw(start_message->GetWin(), "\n\tGuerriero Spaziale benvenuto in Invasions\n   Difendi l'universo dagli alieni e conquista la gloria\n\t\t     COSA ASPETTI!!!");
+}
+
+//Banner iniziale
+void Game::Banner()
+{
+    mvwprintw(main_win.GetWin(), 1, START_XY, "\t  _________ _                 _______  _______ _________ _______  _        _______");
+    mvwprintw(main_win.GetWin(), 2, START_XY, "\t  \\__   __/( (    /||\\     /|(  ___  )(  ____ \\\\__   __/(  ___  )( (    /|(  ____ \\");
+    mvwprintw(main_win.GetWin(), 3, START_XY, "\t     ) (   |  \\  ( || )   ( || (   ) || (    \\/   ) (   | (   ) ||  \\  ( || (    \\/");
+    mvwprintw(main_win.GetWin(), 4, START_XY, "\t     | |   |   \\ | || |   | || (___) || (_____    | |   | |   | ||   \\ | || (_____ ");
+    mvwprintw(main_win.GetWin(), 5, START_XY, "\t     | |   | (\\ \\) |( (   ) )|  ___  |(_____  )   | |   | |   | || (\\ \\) |(_____  )");
+    mvwprintw(main_win.GetWin(), 6, START_XY, "\t     | |   | | \\   | \\ \\_/ / | (   ) |      ) |   | |   | |   | || | \\   |      ) |");
+    mvwprintw(main_win.GetWin(), 7, START_XY, "\t  ___) (___| )  \\  |  \\   /  | )   ( |/\\____) |___) (___| (___) || )  \\  |/\\____) |");
+    mvwprintw(main_win.GetWin(), 8, START_XY, "\t  \\_______/|/    )_)   \\_/   |/     \\|\\_______)\\_______/(_______)|/    )_)\\_______)");
 }
 
 //Stampa a video la condizione attuale della partita
 void Game::UpdateScreen()
 {
+    //Disegno la finestra di gioco
     game_win->PrintWinBorder();
 
     //stampa i colpi sparati dalla navicella del giocatore
@@ -38,6 +60,7 @@ void Game::UpdateScreen()
     //Stampa la navicella del giocatore
     player.Draw(game_win->GetWin());
 
+    //Aggiorno la finestra di gioco
     wrefresh(game_win->GetWin());
 }
 
@@ -185,5 +208,6 @@ void Game::ReadHighScore()
 //Distruttore
 Game::~Game()
 {
+    delete start_message;
     delete game_win;
 }

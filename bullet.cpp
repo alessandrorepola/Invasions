@@ -1,13 +1,6 @@
 //File bullet.cpp
 #include "Bullet.h"
 
-//costruttore
-Bullet::Bullet()
-{
-    next = NULL;
-    prev = NULL;
-}
-
 //Costruttore che posiziona il colpo
 Bullet::Bullet(int r, int c, int type)
 {

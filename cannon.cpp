@@ -169,17 +169,17 @@ void Cannon::MoveObject()
 
     for (SetIter(); GetIter()!= NULL; NextBullet())
     {
-        if (iter->id == PLAYER)
+        if (GetIter()->GetId() == PLAYER)
         {
             //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
-            if(iter->row < START_XY)
-                RemoveObject(iter);
+            if(GetIter()->GetRow() < START_XY)
+                RemoveObject(GetIter());
         }
         else
         {
             //Controllo se il colpo è arrivato al bordo inferiore della console e quindi deve essere cancellato
-            if(iter->row >= GAME_WIN_HIGH-1)
-                RemoveObject(iter);
+            if(GetIter()->GetRow() >= GAME_WIN_HIGH)
+                RemoveObject(GetIter());
         }
     }
 }
@@ -192,8 +192,9 @@ void Cannon::Draw (WINDOW *win)
     {
         if (d->GetId() == PLAYER)
         {
-           // mvwaddch(win, d->row, d->column, 'l' | A_BOLD | A_UNDERLINE);
+            wattron(win, COLOR_PAIR(RED));
             mvwaddch(win, d->row, d->column, ACS_DIAMOND);
+            wattroff(win, COLOR_PAIR(RED));
         }
         else
         {

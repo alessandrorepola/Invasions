@@ -2,19 +2,25 @@
 #include "Game.h"
 #include "Graphics/Menu.h"
 
-//Fare la stampa all'interno della console
-
 //Imposta le varie funzioni per ncurses
 void SetConsole();
 
 //Per decidere cosa fare in base alla scelta della'utente
 void UserChoice(int);
 
+//Imposta le dimensioni del terminale
+void SizeTerm();
+
+//Inizializzo i colori
+void UseColor();
+
 int main()
 {
     initscr();     //Inizializzo la modalita' curses
+    UseColor();
     SetConsole();  //Imposto le funzioni per curses
     Game game;     //Dichiaro un oggetto game
+    game.Banner(); //Banner
     Menu menu(FIRST_MENU); //Menu iniziale
     UserChoice(menu.GetChoice());
 
@@ -58,7 +64,8 @@ int main()
 
 void SetConsole()
 {
-      //Imposta le dimensioni della console
+    SizeTerm();             //Imposta le dimensioni della console
+    start_color();          //Inizializza i colori
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
@@ -69,9 +76,7 @@ void SetConsole()
 //Ridimensiona il terminale
 void SizeTerm()
 {
-    #ifdef WIN 32
-        resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);
-    #endif
+    resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);
 }
 
 //Per la scelta dell'utente
@@ -92,5 +97,15 @@ void UserChoice(int choice)
 
         case EXIT:
             exit(INIT);
+    }
+}
+
+//Inizializzo i colori
+void UseColor()
+{
+    if (has_colors())
+    {
+        init_pair(RED, COLOR_RED, COLOR_BLACK);
+        init_pair(YELLOW, COLOR_YELLOW, COLOR_BLACK);
     }
 }

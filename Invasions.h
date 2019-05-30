@@ -29,14 +29,13 @@
 #define INIT 0
 
 //Coordinate Iniziali della console di gioco
-#define START_XY 2
+#define START_XY 1
 
 //Dimensioni della finestra principale
-#define WIN_LENGTH 102
-#define WIN_HIGH 35
+#define WIN_LENGTH 103
+#define WIN_HIGH 36
 
 //Dimensioni della finestra di gioco
-#define START_COORD 1
 #define GAME_WIN_LENGTH 100
 #define GAME_WIN_HIGH 30
 
@@ -93,6 +92,13 @@ enum Choice
     LAST_MATCH,
     GUIDE,
     EXIT,
+};
+
+//Dichiaro le costanti per i colori
+enum Colors
+{
+    RED = 1,
+    YELLOW,
 };
 
 #endif // INVASIONS_H_INCLUDED

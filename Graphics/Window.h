@@ -24,8 +24,10 @@ class Window
 
     Window();               //Costruttore di default
     Window(WINDOW*);        //Costruttore per le sottofinestre
+    Window(WINDOW*, int, int, int, int);        //Costruttore per le sottofinestre
     ~Window();              //Distruttore
     void PrintWinBorder();  //Aggiorna e Stampa a video i bordi della console
+    void SetWindow();       //Imposta le dimensioni se necessario
     WINDOW *GetWin();       //Restituisce un puntatore alla finestra principale
 
 };

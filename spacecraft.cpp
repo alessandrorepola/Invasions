@@ -67,6 +67,7 @@ bool Spacecraft::Move(int key)
     return true;
 }
 
+//Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
 void Spacecraft::CheckMove()
 {
 	if (column <= START_XY+2)
@@ -90,7 +91,10 @@ void Spacecraft::CheckMove()
 //Disegna la navicella
 void Spacecraft::Draw (WINDOW *win)
 {
+    wattron(win, COLOR_PAIR(RED));
     mvwprintw(win,row,column-2,"\\-^-/");
+    wrefresh(win);
+    wattroff(win, COLOR_PAIR(RED));
 }
 
 //Spara il colpo

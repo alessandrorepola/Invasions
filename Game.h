@@ -14,6 +14,7 @@ class Game
 {
     Window main_win;        //Apro una finestra principale
     Window *game_win;       //Dichiaro un puntatore alla finestra di gioco
+    Window *start_message;  //Messaggio iniziale
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
@@ -24,6 +25,7 @@ class Game
 
     Game();                 //Costruttore
     ~Game();                //Distruttore
+    void Banner();          //Banner iniziale
     void StartMessage();    //Messaggio iniziale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
     bool MoveSpacesraft();  //Gestisce l'input per lo spastamento della navicella del giocatore

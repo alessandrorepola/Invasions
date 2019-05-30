@@ -18,8 +18,8 @@ Menu::Menu(int type)
 
     menu_type = type;
 
-    startx = (GAME_WIN_LENGTH - MENU_LENGHT) / 2;
-	starty = (GAME_WIN_HIGH - MENU_HIGH) / 2;
+    startx = (WIN_LENGTH - MENU_LENGHT) / 2;
+	starty = (WIN_HIGH+5) / 2;
 
 	menu_win = newwin(MENU_HIGH, MENU_LENGHT, starty, startx);
 	keypad(menu_win, TRUE);
@@ -73,7 +73,7 @@ void Menu::PrintMenu()
 	box(menu_win, INIT, INIT);
 	for(i = INIT; i < N_CHOICES; ++i)
 	{	if(highlight == i + START_XY)
-		{	wattron(menu_win, A_REVERSE);
+		{	wattron(menu_win, A_REVERSE );
             if (menu_type == FIRST_MENU)
             {
                 mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
