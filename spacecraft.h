@@ -14,15 +14,16 @@ class Spacecraft
 
     public:
 
-    Spacecraft();          //costruttore
-    int GetRow();          //restituisce la riga della navicella
+    Spacecraft();          //Costruttore
+    int GetRow();          //Restituisce la riga della navicella
     int GetColumn();       //Restituisce la colonna della navicella
     bool Move(int);        //sposta la navicella
     void CheckMove();      //Controlla lo spostamento della navicella
-    void Shoot(Cannon&);   //spara il colpo
-    void Draw(WINDOW*);    //disegna la navicella
-    bool DecreseLife(int); //decrementa la vita della navicella
-    ~Spacecraft();         //distruttore
+    void Shoot(Cannon&);   //Spara il colpo
+    void Draw(WINDOW*);    //Disegna la navicella
+    bool DecreseLife(int); //Decrementa la vita della navicella
+    int GetLife();         //Restituisce la vita della navicella
+    ~Spacecraft();         //Distruttore
 };
 
 #endif // SPACECRAFT_H_INCLUDED

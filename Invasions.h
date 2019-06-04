@@ -33,7 +33,7 @@
 
 //Dimensioni della finestra principale
 #define WIN_LENGTH 103
-#define WIN_HIGH 36
+#define WIN_HIGH 37
 
 //Dimensioni della finestra di gioco
 #define GAME_WIN_LENGTH 100
@@ -97,8 +97,14 @@ enum Choice
 //Dichiaro le costanti per i colori
 enum Colors
 {
-    RED = 1,
+    RED = 10,
     YELLOW,
+    BLUE,
+    ORANGE,
+    CYAN,
+    GREEN,
+    MAGENTA,
+    WHITE,
 };
 
 #endif // INVASIONS_H_INCLUDED

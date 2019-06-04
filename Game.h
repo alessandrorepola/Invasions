@@ -15,6 +15,8 @@ class Game
     Window main_win;        //Apro una finestra principale
     Window *game_win;       //Dichiaro un puntatore alla finestra di gioco
     Window *start_message;  //Messaggio iniziale
+    Window *score_win;      //Puntatore alla finestra per il punteggio
+    Window *life_win;       //Puntatore alla finestra con la vita del giocatore
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
@@ -36,9 +38,13 @@ class Game
     void EnemyHitted();     //Controlla se il nemico è stato colpito
     void PlayerHitted();    //Controlla se il giocatore è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
-    void UpdateScore();     //Aggiorna il punteggio attuale della partita
+    void UpdateScore(int);  //Aggiorna il punteggio attuale della partita
     void SaveScore();       //Salva il miglior punteggio
     void ReadHighScore();   //Imposta la variabile highScore
+    void SaveGame();        //Per salvare la partita attuale
+    void RestoreGame();     //Per riprendere dalla partita precedente
+    void PrintScore();       //Inizializza il punteggio
+    void PrintLife();        //Inizializza la vita del giocatore
 };
 
 #endif // GAME_H_INCLUDED

@@ -192,13 +192,15 @@ void Cannon::Draw (WINDOW *win)
     {
         if (d->GetId() == PLAYER)
         {
-            wattron(win, COLOR_PAIR(RED));
+            wattrset(win, COLOR_PAIR(RED));
             mvwaddch(win, d->row, d->column, ACS_DIAMOND);
-            wattroff(win, COLOR_PAIR(RED));
+            wattrset(win, COLOR_PAIR(WHITE));
         }
         else
         {
+            wattrset(win, COLOR_PAIR(BLUE));
             mvwaddch(win, d->row, d->column, ACS_LANTERN);
+            wattrset(win, COLOR_PAIR(WHITE));
         }
         d = d->next;
     }

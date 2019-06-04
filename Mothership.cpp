@@ -153,7 +153,9 @@ void Mothership::Draw (WINDOW *win)
     Enemy *d = first;
     while(d != NULL)
     {
+        wattron(win, COLOR_PAIR(GREEN));
         mvwprintw(win, d->row, d->column-1 ,"\\0/");
+        wattroff(win, COLOR_PAIR(GREEN));
         d = d->next;
     }
 }

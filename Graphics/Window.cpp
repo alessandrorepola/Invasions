@@ -45,7 +45,7 @@ void Window::PrintWinBorder()
 
 
     //Se è la finestra di gioco
-    if (startx == START_XY)
+    if (sizex == GAME_WIN_LENGTH+START_XY)
     {
         werase(win);
         //Creo dei bordi più belli
@@ -62,7 +62,6 @@ void Window::PrintWinBorder()
     else
     {
         box(win, ACS_VLINE, ACS_HLINE);
-        wrefresh(win);
     }
 }
 

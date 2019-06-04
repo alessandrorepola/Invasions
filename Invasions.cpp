@@ -11,16 +11,20 @@ void UserChoice(int);
 //Imposta le dimensioni del terminale
 void SizeTerm();
 
-//Inizializzo i colori
-void UseColor();
+//Inizializza le tonalità di colore
+void InitColor();
+
+//Inizializzo le coppie di colori
+void ColorPair();
 
 int main()
 {
     initscr();     //Inizializzo la modalita' curses
-    UseColor();
+    start_color(); //Per utilizzare i colori
+    InitColor();   //Inizializzo le tonalità di colore
+    ColorPair();    //Inizializzo le coppie di colori
     SetConsole();  //Imposto le funzioni per curses
     Game game;     //Dichiaro un oggetto game
-    game.Banner(); //Banner
     Menu menu(FIRST_MENU); //Menu iniziale
     UserChoice(menu.GetChoice());
 
@@ -65,7 +69,6 @@ int main()
 void SetConsole()
 {
     SizeTerm();             //Imposta le dimensioni della console
-    start_color();          //Inizializza i colori
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
@@ -85,7 +88,7 @@ void UserChoice(int choice)
     switch(choice)
     {
         case NEW_MATCH:
-            return ;
+            return;
 
         case LAST_MATCH:
             //TO DO
@@ -100,12 +103,35 @@ void UserChoice(int choice)
     }
 }
 
-//Inizializzo i colori
-void UseColor()
+//Inizializzo le coppie di colori
+void InitColor()
 {
+    init_color(COLOR_RED,1000,0,0);
+    init_color(COLOR_BLUE,0,0,1000);
+    init_color(COLOR_YELLOW,1000,1000,0);
+    init_color(COLOR_GREEN,0,1000,0);
+    init_color(ORANGE,1000,500,0);
+    init_color(COLOR_CYAN,0,1000,1000);
+    init_color(COLOR_MAGENTA, 1000, 0, 1000);
+    init_color(COLOR_WHITE, 1000, 1000, 1000);
+}
+
+//Inizializzo le coppie di colori
+void ColorPair()
+{
+    //Controllo che il terminale supporti i colori
     if (has_colors())
     {
-        init_pair(RED, COLOR_RED, COLOR_BLACK);
-        init_pair(YELLOW, COLOR_YELLOW, COLOR_BLACK);
+        if (can_change_color())
+        {
+            init_pair(RED,      COLOR_RED,     COLOR_BLACK);
+            init_pair(YELLOW,   COLOR_YELLOW,  COLOR_BLACK);
+            init_pair(BLUE,     COLOR_BLUE,    COLOR_BLACK);
+            init_pair(ORANGE,   ORANGE,        COLOR_BLACK);
+            init_pair(CYAN,     COLOR_CYAN,    COLOR_BLACK);
+            init_pair(GREEN,    COLOR_GREEN,   COLOR_BLACK);
+            init_pair(MAGENTA,  COLOR_MAGENTA, COLOR_BLACK);
+            init_pair(WHITE,    COLOR_WHITE,   COLOR_BLACK);
+        }
     }
 }

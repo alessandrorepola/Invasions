@@ -91,10 +91,10 @@ void Spacecraft::CheckMove()
 //Disegna la navicella
 void Spacecraft::Draw (WINDOW *win)
 {
-    wattron(win, COLOR_PAIR(RED));
+    wattrset(win, COLOR_PAIR(YELLOW));
     mvwprintw(win,row,column-2,"\\-^-/");
+    wattrset(win, COLOR_PAIR(WHITE));
     wrefresh(win);
-    wattroff(win, COLOR_PAIR(RED));
 }
 
 //Spara il colpo
@@ -115,6 +115,12 @@ bool Spacecraft::DecreseLife(int damage)
         return true;
     }
     return false;
+}
+
+//Restituisce il valore della vita
+int Spacecraft::GetLife()
+{
+    return life;
 }
 
 //Distruttore
