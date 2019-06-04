@@ -22,46 +22,70 @@ int main()
     initscr();     //Inizializzo la modalita' curses
     start_color(); //Per utilizzare i colori
     InitColor();   //Inizializzo le tonalità di colore
-    ColorPair();    //Inizializzo le coppie di colori
+    ColorPair();   //Inizializzo le coppie di colori
     SetConsole();  //Imposto le funzioni per curses
-    Game game;     //Dichiaro un oggetto game
-    Menu menu(FIRST_MENU); //Menu iniziale
-    UserChoice(menu.GetChoice());
-
-    //Dichiaro una variabile per capire quando l'utente desidera uscire dalla partita
-    bool endGame = FALSE;
-
-	//loop "infinito" della partita
-	while (!endGame)
+    int choice;    //Per la scelta dell'utente nel caso dovesse mettere in pausa
+    do
     {
+        Game game;     //Dichiaro un oggetto game
+        if (choice != RESTART)
+        {
+            Menu menu(FIRST_MENU); //Menu iniziale
+            UserChoice(menu.GetChoice());
+        }
 
-        //Sposta la nevicella del giocatore
-        endGame = game.MoveSpacesraft();
+        choice = EXIT;
 
-        //Sparo del giocatore
-        game.SpacecraftShoot();
+        //loop "infinito" della partita
+        while (true)
+        {
 
-        //Sparo del nemico
-        game.EnemyShoot();
+            //Sposta la nevicella del giocatore
+            switch (game.MoveSpacesraft())
+            {
+                case RESTART:
+                    choice = RESTART;
+                    break;
 
-        //Sposta gli alieni
-        game.MoveEnemy();
+                case MAIN_MENU:
+                    choice = MAIN_MENU;
+                    break;
 
-        //Controlla se il nemico è stato colpito
-        game.EnemyHitted();
+                case EXIT:
+                    exit(INIT);
+            }
 
-        //Controlla se il nemico è stato colpito
-        game.PlayerHitted();
+            if (choice == RESTART || choice == MAIN_MENU)
+            {
+                break;
+            }
 
-        //Generazione dei nemici
-        game.GenerationEnemy();
+            //Sparo del giocatore
+            game.SpacecraftShoot();
 
-        //Aggiorno la schermata
-        game.UpdateScreen();
+            //Sparo del nemico
+            game.EnemyShoot();
 
-        //Contrlla se c'è stata una collisione tra ilo nemico e la navicella
-        game.Collision();
+            //Sposta gli alieni
+            game.MoveEnemy();
+
+            //Controlla se il nemico è stato colpito
+            game.EnemyHitted();
+
+            //Controlla se il nemico è stato colpito
+            game.PlayerHitted();
+
+            //Generazione dei nemici
+            game.GenerationEnemy();
+
+            //Aggiorno la schermata
+            game.UpdateScreen();
+
+            //Contrlla se c'è stata una collisione tra ilo nemico e la navicella
+            game.Collision();
+        }
     }
+    while (choice != EXIT);
     endwin(); //Termina la modalita' curses
     return 0;
 }
@@ -88,7 +112,7 @@ void UserChoice(int choice)
     switch(choice)
     {
         case NEW_MATCH:
-            return;
+            break;
 
         case LAST_MATCH:
             //TO DO

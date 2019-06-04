@@ -30,7 +30,7 @@ class Game
     void Banner();          //Banner iniziale
     void StartMessage();    //Messaggio iniziale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
-    bool MoveSpacesraft();  //Gestisce l'input per lo spastamento della navicella del giocatore
+    int MoveSpacesraft();   //Gestisce l'input per lo spastamento della navicella del giocatore
     void SpacecraftShoot(); //Sparo della navicella del giocatore
     void EnemyShoot();      //Sparo del nemico
     void GenerationEnemy(); //Genera i nemici

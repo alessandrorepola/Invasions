@@ -198,6 +198,12 @@ int Enemy::GetColumn()
     return column;
 }
 
+//Restituisce la vita del nemico
+int Enemy::GetLife()
+{
+    return life;
+}
+
 //Decrementa la vita del nemico
 bool Enemy::CheckDie()
 {

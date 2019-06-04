@@ -86,12 +86,20 @@ enum Directions
 };
 
 //Enumero le scelte dell'utente
-enum Choice
+enum MainMenuChoice
 {
     NEW_MATCH = 1,
     LAST_MATCH,
     GUIDE,
     EXIT,
+};
+
+//Enumero le scelte dell'utente sul menu secondario
+enum SecondaryMenuChoice
+{
+    RESUME = 1,
+    RESTART,
+    MAIN_MENU,
 };
 
 //Dichiaro le costanti per i colori

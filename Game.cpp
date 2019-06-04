@@ -75,16 +75,18 @@ void Game::UpdateScreen()
 }
 
 //Gestisce l'input per lo spastamento della navicella del giocatore
-bool Game::MoveSpacesraft()
+int Game::MoveSpacesraft()
 {
     //Legge l'input da tastiera
     int key = getch();
 
-    //Chiama la funzione per muovere la navicella e controlla se e' stato digitato q
-    if (!player.Move(key))
-        return TRUE;
+    int value = player.Move(key);
 
-    return FALSE;
+    //Chiama la funzione per muovere la navicella e controlla se e' stato digitato q
+    if (value == NULL)
+        return NULL;
+
+    return value;
 }
 
 //Sparo della navicella del giocatore
@@ -191,16 +193,17 @@ void Game::Collision()
             //Rimuovo il nemico
             aliens.RemoveEnemy(aliens.GetIter());
 
-            //Aggiorno il punteggio
-            UpdateScore(10);
-
-            if(player.DecreseLife(ENEMY_LIFE))
+            //Controllo i punti vita rimasti alla navicella del giocatore
+            if(player.DecreseLife(aliens.GetIter()->GetLife()))
             {
                 mvprintw(GAME_WIN_HIGH/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
                 exit(0);
             }
+
+            //Aggiorno il punteggio
+            UpdateScore(10);
         }
     }
 }
@@ -238,6 +241,7 @@ Game::~Game()
     delete start_message;
     delete game_win;
     delete score_win;
+    delete life_win;
 }
 
 //Inizializza il punteggio del giocatore

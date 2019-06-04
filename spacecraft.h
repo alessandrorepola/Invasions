@@ -17,7 +17,7 @@ class Spacecraft
     Spacecraft();          //Costruttore
     int GetRow();          //Restituisce la riga della navicella
     int GetColumn();       //Restituisce la colonna della navicella
-    bool Move(int);        //sposta la navicella
+    int Move(int);        //sposta la navicella
     void CheckMove();      //Controlla lo spostamento della navicella
     void Shoot(Cannon&);   //Spara il colpo
     void Draw(WINDOW*);    //Disegna la navicella

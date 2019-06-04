@@ -25,6 +25,7 @@ class Enemy
     Enemy();                //Costruttore
     int GetRow();           //Restituisce il valore della riga del nemico
     int GetColumn();        //Restituisce la colonna del nemico
+    int GetLife();          //Rstituisce la vita restante del nemico
     bool CheckDie();        //Controlla se il nemico e stato distrutto
     ~Enemy();               //Distruttore
 };

@@ -25,7 +25,7 @@ int Spacecraft::GetColumn()
 }
 
 //Movimeto della navicella
-bool Spacecraft::Move(int key)
+int Spacecraft::Move(int key)
 {
     switch (key)
     {
@@ -48,23 +48,22 @@ bool Spacecraft::Move(int key)
 
         case 'q':
         case 'Q':
-            return false;
+            return EXIT;
 
         case 'p':
         case 'P':
         {
             Menu secondary_menu(SECONDARY_MENU);
-
-            break;
+            return secondary_menu.GetChoice();
         }
 
         // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti ritorana al loop principale
         case ERR:
         default:
-            return true;
+            break;
     }
     CheckMove();
-    return true;
+    return NULL;
 }
 
 //Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
