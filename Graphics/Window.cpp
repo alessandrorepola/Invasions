@@ -10,11 +10,11 @@ Window::Window()
     //Inizializzo le coordinate
     startx = INIT;
     starty = INIT;
-    sizex = WIN_LENGTH;
-    sizey = WIN_HIGH;
+    width = WIN_LENGTH;
+    height = WIN_HIGH;
 
     //Creo una finestra principale
-    win = newwin(sizey, sizex, starty, startx);
+    win = newwin(height, width, starty, startx);
 }
 
 Window::Window(WINDOW *parent)
@@ -22,22 +22,22 @@ Window::Window(WINDOW *parent)
     //Inizializzo le coordinate
     startx = START_XY;
     starty = START_XY;
-    sizex = GAME_WIN_LENGTH+START_XY;
-    sizey = GAME_WIN_HIGH+START_XY;
+    width = GAME_WIN_LENGTH+START_XY;
+    height = GAME_WIN_HIGH+START_XY;
 
     //Creo una finestra principale
-    win = derwin(parent, sizey, sizex, starty, startx);
+    win = derwin(parent, height, width, starty, startx);
 }
 
 Window::Window(WINDOW * parent, int sx, int sy, int ex, int ey )
 {
     startx = sx;
     starty = sy;
-    sizex = ex;
-    sizey = ey;
+    width = ex;
+    height = ey;
 
     //Creo una finestra principale
-    win = derwin(parent, sizey, sizex, starty, startx);
+    win = derwin(parent, height, width, starty, startx);
 }
 
 void Window::PrintWinBorder()
@@ -45,7 +45,7 @@ void Window::PrintWinBorder()
 
 
     //Se è la finestra di gioco
-    if (sizex == GAME_WIN_LENGTH+START_XY)
+    if (width == GAME_WIN_LENGTH+START_XY)
     {
         werase(win);
         //Creo dei bordi più belli
@@ -65,9 +65,34 @@ void Window::PrintWinBorder()
     }
 }
 
+//Restituisce il puntatore alla finestra
 WINDOW *Window::GetWin()
 {
     return win;
+}
+
+//Restitusce l'altezza della finestra
+int Window::GetHeight()
+{
+    return height;
+}
+
+//Restitusce la larghezza della finestra
+int Window::GetWidth()
+{
+    return width;
+}
+
+//Restitusce la coordinata x della finestra
+int Window::GetX()
+{
+    return startx;
+}
+
+//Rsestitusce la coordinata y della finestra
+int Window::GetY()
+{
+    return starty;
 }
 
 Window::~Window()

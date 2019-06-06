@@ -5,7 +5,7 @@
 
 #include "Menu.h"
 
-Menu::Menu(int type)
+Menu::Menu(Window &parent)
 {
     //Inizializzo le coordinate iniziali del menu
     startx = INIT;
@@ -16,21 +16,26 @@ Menu::Menu(int type)
 
     choice = INIT;
 
-    menu_type = type;
+    startx = (parent.GetWidth() - MENU_LENGHT) / 2;
+    if (parent.GetY() == INIT)
+    {
+        starty = (parent.GetHeight()+5) / 2;
+    }
+    else
+    {
+        starty = (parent.GetHeight()-MENU_HIGH) / 2;
+    }
 
-    startx = (WIN_LENGTH - MENU_LENGHT) / 2;
-	starty = (WIN_HIGH+5) / 2;
-
-	menu_win = newwin(MENU_HIGH, MENU_LENGHT, starty, startx);
+	menu_win = derwin(parent.GetWin(), MENU_HIGH, MENU_LENGHT, starty, startx);
 	keypad(menu_win, TRUE);
 
-	SelectChoice();
+	SelectChoice(parent);
 }
 
 //Gestisce la scelta dell'utente
-int Menu::SelectChoice()
+int Menu::SelectChoice(Window &parent)
 {
-	PrintMenu();
+	PrintMenu(parent);
 	while(TRUE)
 	{
 	    int c = wgetch(menu_win);
@@ -54,7 +59,7 @@ int Menu::SelectChoice()
 			default:
 				break;
 		}
-		PrintMenu();
+		PrintMenu(parent);
 		if(choice != INIT)
 			break;
 	}
@@ -64,17 +69,18 @@ int Menu::SelectChoice()
 }
 
 //Stampa il Menu
-void Menu::PrintMenu()
+void Menu::PrintMenu(Window &parent)
 {
     int x, y, i;
 
 	x = 2;
 	y = 2;
+	werase(menu_win);
 	box(menu_win, INIT, INIT);
 	for(i = INIT; i < N_CHOICES; ++i)
 	{	if(highlight == i + START_XY)
 		{	wattron(menu_win, COLOR_PAIR(CYAN));
-            if (menu_type == FIRST_MENU)
+            if (parent.GetX() == INIT)
             {
                 mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
             }
@@ -86,7 +92,7 @@ void Menu::PrintMenu()
 		}
 		else
         {
-            if (menu_type == FIRST_MENU)
+            if (parent.GetX() == INIT)
             {
                 mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
             }

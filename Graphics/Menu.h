@@ -2,6 +2,7 @@
 #define MENU_H_INCLUDED
 
 #include "../Invasions.h"
+#include "Window.h"
 
 class Menu
 {
@@ -20,13 +21,13 @@ class Menu
     char* secondary_menu_choices[N_CHOICES] = {"Riprendi","Riavvia","Menu Principale","Esci"};
 
     WINDOW *menu_win;           //Dichiaro un puntatore alla struttura WINDOW
-    void PrintMenu();           //Dichiaro un metodo per la stampa del menu
-    int SelectChoice();//Dichiaro il metodo per gestire la scelta dell'utente
+    void PrintMenu(Window&);    //Dichiaro un metodo per la stampa del menu
+    int SelectChoice(Window&);  //Dichiaro il metodo per gestire la scelta dell'utente
 
     public:
 
     //Costruttore e distruttore
-    Menu(int);
+    Menu(Window&);
     ~Menu();
     int GetChoice(); //Restituisce la scelta dell'utente
 };

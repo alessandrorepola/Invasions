@@ -14,8 +14,8 @@ class Window
     int starty;
 
     //Dichiaro le variabili per le dimensioni delle finestre
-    int sizex;
-    int sizey;
+    int width;
+    int height;
 
     //Dichiaro un puntatore alla struttura WINDOW
     WINDOW *win;
@@ -29,6 +29,10 @@ class Window
     void PrintWinBorder();  //Aggiorna e Stampa a video i bordi della console
     void SetWindow();       //Imposta le dimensioni se necessario
     WINDOW *GetWin();       //Restituisce un puntatore alla finestra principale
+    int GetHeight();        //Restituisce l'altezza della finestra
+    int GetWidth();         //Restituisce la larghezza della finestra
+    int GetX();             //Restituisce la coordinata x della finestra
+    int GetY();             //Restituisce la coordinata y della finestra
 
 };
 

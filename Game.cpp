@@ -15,24 +15,83 @@ Game::Game()
     Banner();
     wrefresh(main_win.GetWin());
 
-    start_message = new Window(main_win.GetWin(),22, 12, 60, 5);
-
     StartMessage();
-    start_message->PrintWinBorder();
-    wrefresh(start_message->GetWin());
 
-    //Apro la finestra di gioco
+    //Dichiaro una finestra di gioco
     game_win = new Window(main_win.GetWin());
 
+    //Dichiaro una finestra per la visualizzazione del punteggio
     score_win = new Window(main_win.GetWin(),START_XY,32,30, 4);
 
+    //dichiaro una finestra per la visualizzazione della vita
     life_win = new Window(main_win.GetWin(),START_XY+32,32,30, 4);
+}
+
+//Loop principale del gioco
+int Game::StartGameLoop()
+{
+    int choice = EXIT;
+
+    while (true)
+    {
+        //Sposta la nevicella del giocatore
+        switch (UserInput())
+        {
+            case RESTART:
+                choice = RESTART;
+                break;
+
+            case MAIN_MENU:
+                choice = MAIN_MENU;
+                break;
+
+            case EXIT:
+                exit(INIT);
+        }
+
+        if (choice == RESTART || choice == MAIN_MENU)
+        {
+            return choice;
+        }
+
+        //Sparo del giocatore
+        player.Shoot(c);
+
+        //Sparo del nemico
+        EnemyShoot();
+
+        //Sposta gli alieni
+        aliens.MoveEnemy();
+
+        //Controlla se il nemico è stato colpito
+        EnemyHitted();
+
+        //Controlla se il nemico è stato colpito
+        PlayerHitted();
+
+        //Generazione dei nemici
+        aliens.AddEnemy();
+
+        //Aggiorno la schermata
+        UpdateScreen();
+
+        //Contrlla se c'è stata una collisione tra il nemico e la navicella
+        Collision();
+
+        //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
+        usleep(1);
+    }
+    return 0;
 }
 
 //Messaggio iniziale
 void Game::StartMessage()
 {
+    start_message = new Window(main_win.GetWin(), 22, 12, 60, 5);
     wprintw(start_message->GetWin(), "\n\tGuerriero Spaziale benvenuto in Invasions\n   Difendi l'universo dagli alieni e conquista la gloria\n\t\t     COSA ASPETTI!!!");
+    start_message->PrintWinBorder();
+    wrefresh(start_message->GetWin());
+    delete start_message;
 }
 
 //Banner iniziale
@@ -75,24 +134,18 @@ void Game::UpdateScreen()
 }
 
 //Gestisce l'input per lo spastamento della navicella del giocatore
-int Game::MoveSpacesraft()
+int Game::UserInput()
 {
     //Legge l'input da tastiera
     int key = getch();
 
-    int value = player.Move(key);
+    int value = player.Move(key, *game_win);
 
     //Chiama la funzione per muovere la navicella e controlla se e' stato digitato q
-    if (value == NULL)
-        return NULL;
+    if (value == 0)
+        return 0;
 
     return value;
-}
-
-//Sparo della navicella del giocatore
-void Game::SpacecraftShoot()
-{
-    player.Shoot(c);
 }
 
 //Gestisce lo sparo dei nemici
@@ -108,18 +161,6 @@ void Game::EnemyShoot()
             c.MoveObject();
         }
     }
-}
-
-//Generazione dei nemici
-void Game::GenerationEnemy()
-{
-    aliens.AddEnemy();
-}
-
-//Per lo spostamento dei nemici
-void Game::MoveEnemy()
-{
-    aliens.MoveEnemy();
 }
 
 //Controlla se è stato colpito il nemico
@@ -235,13 +276,10 @@ void SaveGame()
     scr_init("Salva_Schermo.bin");
 }
 
-//Distruttore
-Game::~Game()
+//Restituisce un riferimento alla finestra principale
+Window &Game::GetMainWin()
 {
-    delete start_message;
-    delete game_win;
-    delete score_win;
-    delete life_win;
+    return main_win;
 }
 
 //Inizializza il punteggio del giocatore
@@ -262,4 +300,12 @@ void Game::PrintLife()
     wprintw(life_win->GetWin(), "\n Punti vita: %d",player.GetLife());
     wprintw(life_win->GetWin(), "\n Scudo: %d",INIT);
     life_win->PrintWinBorder();
+}
+
+//Distruttore
+Game::~Game()
+{
+    delete game_win;
+    delete score_win;
+    delete life_win;
 }

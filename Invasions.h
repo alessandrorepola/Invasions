@@ -5,6 +5,7 @@
 #include <ctime>
 #include <cstdio>
 #include <cstdlib>
+#include <unistd.h> //per la funzione usleep
 
 #ifndef WIN32
     #include <curses.h>
@@ -63,6 +64,9 @@
 #define FIRST_MENU 10
 #define SECONDARY_MENU 11
 
+#define WIN_MESS_WIDTH 22
+#define WIN_MESS_HEIGHT 12
+
 //Definisce quali sono i quattro lati della console
 enum ConsoleSide
 {
@@ -90,7 +94,7 @@ enum MainMenuChoice
 {
     NEW_MATCH = 1,
     LAST_MATCH,
-    GUIDE,
+    HELP,
     EXIT,
 };
 
@@ -113,6 +117,11 @@ enum Colors
     GREEN,
     MAGENTA,
     WHITE,
+
+    //Per regolare l'intensità di colore
+    EMPTY_COLOR = 0,
+    MEDIUM_COLOR = 500,
+    FULL_COLOR = 1000,
 };
 
 #endif // INVASIONS_H_INCLUDED

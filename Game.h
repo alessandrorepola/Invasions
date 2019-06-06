@@ -27,14 +27,12 @@ class Game
 
     Game();                 //Costruttore
     ~Game();                //Distruttore
+    int StartGameLoop();    //Loop della partita
     void Banner();          //Banner iniziale
     void StartMessage();    //Messaggio iniziale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
-    int MoveSpacesraft();   //Gestisce l'input per lo spastamento della navicella del giocatore
-    void SpacecraftShoot(); //Sparo della navicella del giocatore
+    int UserInput();        //Gestisce l'input per lo spastamento della navicella del giocatore
     void EnemyShoot();      //Sparo del nemico
-    void GenerationEnemy(); //Genera i nemici
-    void MoveEnemy();       //Muove i nemici
     void EnemyHitted();     //Controlla se il nemico è stato colpito
     void PlayerHitted();    //Controlla se il giocatore è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
@@ -43,8 +41,9 @@ class Game
     void ReadHighScore();   //Imposta la variabile highScore
     void SaveGame();        //Per salvare la partita attuale
     void RestoreGame();     //Per riprendere dalla partita precedente
-    void PrintScore();       //Inizializza il punteggio
-    void PrintLife();        //Inizializza la vita del giocatore
+    void PrintScore();      //Inizializza il punteggio
+    void PrintLife();       //Inizializza la vita del giocatore
+    Window &GetMainWin();   //Restiruisce un riferimento alla finestra principale
 };
 
 #endif // GAME_H_INCLUDED
