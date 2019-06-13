@@ -178,7 +178,7 @@ void Cannon::MoveObject()
         else
         {
             //Controllo se il colpo è arrivato al bordo inferiore della console e quindi deve essere cancellato
-            if(GetIter()->GetRow() >= GAME_WIN_HIGH)
+            if(GetIter()->GetRow() >= GAME_WIN_HEIGHT)
                 RemoveObject(GetIter());
         }
     }

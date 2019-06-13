@@ -15,10 +15,10 @@ class Menu
     int menu_type;  //Per il tipo di menu
 
     //Dichiaro un array di stringhe per le scelte dell'utente
-    char* first_menu_choices[N_CHOICES] = {"Nuova partita","Partita precedente","Guida","Esci"};
+    const char* first_menu_choices[N_CHOICES] = {"Nuova partita","Partita precedente","Guida","Esci"};
 
     //Dichiaro un array di stringhe per le scelte dell'utente
-    char* secondary_menu_choices[N_CHOICES] = {"Riprendi","Riavvia","Menu Principale","Esci"};
+    const char* secondary_menu_choices[N_CHOICES] = {"Riprendi","Riavvia","Menu Principale","Esci"};
 
     WINDOW *menu_win;           //Dichiaro un puntatore alla struttura WINDOW
     void PrintMenu(Window&);    //Dichiaro un metodo per la stampa del menu

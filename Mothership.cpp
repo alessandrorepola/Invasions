@@ -147,6 +147,21 @@ void Mothership::MoveEnemy()
     }
 }
 
+//Gestisce lo sparo dei nemici
+void Mothership::EnemyShoot(Cannon &c)
+{
+    for(SetIter(); GetIter()!= NULL; NextEnemy())
+    {
+        //Scelgo una navicella random da cui sparare
+        if (rand()%12==0)
+        {
+            //Spara il colpo
+            c.AddObject(GetIter()->GetRow()+1, GetIter()->GetColumn(), ENEMY);
+            c.MoveObject();
+        }
+    }
+}
+
 //Disegna tutti i nemici
 void Mothership::Draw (WINDOW *win)
 {

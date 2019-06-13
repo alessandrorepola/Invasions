@@ -1,3 +1,4 @@
+
 #include "Invasions.h"
 #include "Game.h"
 #include "Graphics/Menu.h"
@@ -6,7 +7,7 @@
 void SetConsole();
 
 //Per decidere cosa fare in base alla scelta della'utente
-void UserChoice(int);
+void UserChoice(int, Window&);
 
 //Imposta le dimensioni del terminale
 void SizeTerm();
@@ -18,7 +19,7 @@ void InitColor();
 void ColorPair();
 
 //Stampa a video l'help
-void Help();
+void Help(Window&);
 
 int main()
 {
@@ -27,25 +28,24 @@ int main()
     InitColor();   //Inizializzo le tonalità di colore
     ColorPair();   //Inizializzo le coppie di colori
     SetConsole();  //Imposto le funzioni per curses
-    int choice;    //Per la scelta dell'utente nel caso dovesse mettere in pausa
+    bool endGame = true;  //Per uscire dal gioco
     do
     {
-        Game game;     //Dichiaro un oggetto game
+        //Oggetto game
+        Game game;
 
-        //Se l'utente decide di riavviare la partita salta la fase di scelta del menu principale
-        if (choice != RESTART)
+        //Se l'utente ricomincia direttamente una nuova partita
+        //Salta la fase della schermata principale
+        if (endGame)
         {
-            Menu menu(game.GetMainWin()); //Menu iniziale
-            UserChoice(menu.GetChoice()); //Controllo la scelta dell'utente relativo al menu iniziale
+            //Schermata principale
+            game.MainScreen();
         }
 
-        //Reimposto la variabile choice per evitare un loop sulla schermata principale
-        choice = EXIT;
-
         //loop "infinito" della partita
-        choice = game.StartGameLoop();
+        endGame = game.StartGameLoop();
     }
-    while (choice != EXIT);  //Finchè l'utente non decide di uscire dal gioco
+    while (!endGame);  //Finchè l'utente non decide di uscire dal gioco
     endwin(); //Termina la modalita' curses
     return 0;
 }
@@ -63,28 +63,7 @@ void SetConsole()
 //Ridimensiona il terminale
 void SizeTerm()
 {
-    resize_term(WIN_HIGH+START_XY, WIN_LENGTH+START_XY);
-}
-
-//Per la scelta dell'utente
-void UserChoice(int choice)
-{
-    switch(choice)
-    {
-        case NEW_MATCH:
-            break;
-
-        case LAST_MATCH:
-            //TO DO
-            break;
-
-        case HELP:
-            Help();
-            break;
-
-        case EXIT:
-            exit(INIT);
-    }
+    resize_term(WIN_HEIGHT+START_XY, WIN_WIDTH+START_XY);
 }
 
 //Inizializzo le coppie di colori
@@ -123,7 +102,32 @@ void ColorPair()
 }
 
 //Stampa a video l'Help
-void Help()
+void Help(Window &parent)
 {
-    Window help_win; //Dichiaro una finestra per la guida
+    Window help(parent.GetWin(), parent.GetWidth()/4, parent.GetHeight()/4, parent.GetWidth()/2, parent.GetHeight()/2);
+    werase(parent.GetWin());
+    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
+    wprintw(help.GetWin(), "\n                  Comandi di gioco\n");
+    wprintw(help.GetWin(), "\n      Comando                     Tasto\n");
+    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
+    wprintw(help.GetWin(), "\n      Sopra:                        "); waddch(help.GetWin(),ACS_UARROW);
+    wprintw(help.GetWin(), "\n      Sotto:                        "); waddch(help.GetWin(),ACS_DARROW);
+    wprintw(help.GetWin(), "\n      Destra:                       "); waddch(help.GetWin(),ACS_RARROW);
+    wprintw(help.GetWin(), "\n      Sinistra:                     "); waddch(help.GetWin(),ACS_LARROW);
+    wprintw(help.GetWin(), "\n      Pausa:                        p");
+    wprintw(help.GetWin(), "\n      Esci:                         q");
+    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
+    wprintw(help.GetWin(), "\n\n                  Comandi del menu\n");
+    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
+    wprintw(help.GetWin(), "\n      Voce Precedente:              "); waddch(help.GetWin(),ACS_UARROW);
+    wprintw(help.GetWin(), "\n      Voce Successiva:              "); waddch(help.GetWin(),ACS_DARROW);
+    wprintw(help.GetWin(), "\n      Scegli:                     Enter");
+
+    help.PrintWinBorder();
+    parent.PrintWinBorder();
+    wattrset(parent.GetWin(), COLOR_PAIR(BLUE));
+    mvwprintw(parent.GetWin(), 9, 30, " GUIDA ");
+    wattrset(parent.GetWin(), COLOR_PAIR(WHITE));
+    wrefresh(parent.GetWin());
+    getchar();
 }

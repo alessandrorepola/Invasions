@@ -23,16 +23,12 @@ class Game
 	int score;              //Per il punteggio
 	int highScore;          //Miglior punteggio
 
-    public:
-
-    Game();                 //Costruttore
-    ~Game();                //Distruttore
-    int StartGameLoop();    //Loop della partita
-    void Banner();          //Banner iniziale
+	void Banner();          //Banner iniziale
     void StartMessage();    //Messaggio iniziale
+    void Help(Window &);    //Guida
+    void UserChoice(int);   //Scelta dell'utente relativa al menu principale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
     int UserInput();        //Gestisce l'input per lo spastamento della navicella del giocatore
-    void EnemyShoot();      //Sparo del nemico
     void EnemyHitted();     //Controlla se il nemico è stato colpito
     void PlayerHitted();    //Controlla se il giocatore è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
@@ -43,6 +39,13 @@ class Game
     void RestoreGame();     //Per riprendere dalla partita precedente
     void PrintScore();      //Inizializza il punteggio
     void PrintLife();       //Inizializza la vita del giocatore
+
+    public:
+
+    Game();                 //Costruttore
+    ~Game();                //Distruttore
+    bool StartGameLoop();    //Loop della partita
+    void MainScreen();      //Schermata principale
     Window &GetMainWin();   //Restiruisce un riferimento alla finestra principale
 };
 

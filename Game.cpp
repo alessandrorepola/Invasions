@@ -10,55 +10,110 @@ Game::Game()
 {
     score = INIT;
 
+    //Dichiaro una finestra di gioco
+    game_win = new Window(main_win.GetWin());
+
+    //Dichiaro una finestra per la visualizzazione del punteggio
+    score_win = new Window(main_win.GetWin(), game_win->GetX(), game_win->GetHeight()+START_XY, game_win->GetWidth()/2, main_win.GetHeight()-game_win->GetHeight()-2);
+
+    //dichiaro una finestra per la visualizzazione della vita
+    life_win = new Window(main_win.GetWin(), score_win->GetWidth()+START_XY, score_win->GetY(), score_win->GetWidth()+1, score_win->GetHeight());
+}
+
+//Stampa a video l'Help
+void Game::Help(Window &parent)
+{
+    Window help(parent.GetWin(), parent.GetWidth()/4, parent.GetHeight()/4, parent.GetWidth()/2, parent.GetHeight()/2);
+    werase(parent.GetWin());
+    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
+    wprintw(help.GetWin(), "\n                  Comandi di gioco\n");
+    wprintw(help.GetWin(), "\n      Comando                     Tasto\n");
+    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
+    wprintw(help.GetWin(), "\n      Sopra:                        "); waddch(help.GetWin(),ACS_UARROW);
+    wprintw(help.GetWin(), "\n      Sotto:                        "); waddch(help.GetWin(),ACS_DARROW);
+    wprintw(help.GetWin(), "\n      Destra:                       "); waddch(help.GetWin(),ACS_RARROW);
+    wprintw(help.GetWin(), "\n      Sinistra:                     "); waddch(help.GetWin(),ACS_LARROW);
+    wprintw(help.GetWin(), "\n      Pausa:                        p");
+    wprintw(help.GetWin(), "\n      Esci:                         q");
+    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
+    wprintw(help.GetWin(), "\n\n                  Comandi del menu\n");
+    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
+    wprintw(help.GetWin(), "\n      Voce Precedente:              "); waddch(help.GetWin(),ACS_UARROW);
+    wprintw(help.GetWin(), "\n      Voce Successiva:              "); waddch(help.GetWin(),ACS_DARROW);
+    wprintw(help.GetWin(), "\n      Scegli:                     Enter");
+
+    help.PrintWinBorder();
+    parent.PrintWinBorder();
+    wattrset(parent.GetWin(), COLOR_PAIR(BLUE));
+    mvwprintw(parent.GetWin(), 9, 30, " GUIDA ");
+    wattrset(parent.GetWin(), COLOR_PAIR(WHITE));
+    wrefresh(parent.GetWin());
+    getchar();
+}
+
+//Per la scelta dell'utente
+void Game::UserChoice(int choice)
+{
+    switch(choice)
+    {
+        case NEW_MATCH:
+            break;
+
+        case LAST_MATCH:
+            //TO DO
+            break;
+
+        case HELP:
+            Help(GetMainWin());
+            break;
+
+        case EXIT:
+            exit(INIT);
+    }
+}
+
+//Schermata principale
+void Game::MainScreen()
+{
+    werase(main_win.GetWin());
+
     //Disegno la finestra principale
     main_win.PrintWinBorder();
     Banner();
     wrefresh(main_win.GetWin());
 
+    //Messaggio iniziale
     StartMessage();
 
-    //Dichiaro una finestra di gioco
-    game_win = new Window(main_win.GetWin());
-
-    //Dichiaro una finestra per la visualizzazione del punteggio
-    score_win = new Window(main_win.GetWin(),START_XY,32,30, 4);
-
-    //dichiaro una finestra per la visualizzazione della vita
-    life_win = new Window(main_win.GetWin(),START_XY+32,32,30, 4);
+    //Menu principale
+    Menu menu(GetMainWin());
+    UserChoice(menu.GetChoice());
 }
 
 //Loop principale del gioco
-int Game::StartGameLoop()
+bool Game::StartGameLoop()
 {
-    int choice = EXIT;
-
     while (true)
     {
         //Sposta la nevicella del giocatore
         switch (UserInput())
         {
             case RESTART:
-                choice = RESTART;
-                break;
+                return false;
 
             case MAIN_MENU:
-                choice = MAIN_MENU;
-                break;
+                MainScreen();
+                return false;
 
             case EXIT:
                 exit(INIT);
-        }
-
-        if (choice == RESTART || choice == MAIN_MENU)
-        {
-            return choice;
         }
 
         //Sparo del giocatore
         player.Shoot(c);
 
         //Sparo del nemico
-        EnemyShoot();
+        aliens.EnemyShoot(c);
 
         //Sposta gli alieni
         aliens.MoveEnemy();
@@ -81,7 +136,7 @@ int Game::StartGameLoop()
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
         usleep(1);
     }
-    return 0;
+    return true;
 }
 
 //Messaggio iniziale
@@ -148,21 +203,6 @@ int Game::UserInput()
     return value;
 }
 
-//Gestisce lo sparo dei nemici
-void Game::EnemyShoot()
-{
-    for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
-    {
-        //Scelgo una navicella random da cui sparare
-        if (rand()%12==0)
-        {
-            //Spara il colpo
-            c.AddObject(aliens.GetIter()->GetRow()+1, aliens.GetIter()->GetColumn(), ENEMY);
-            c.MoveObject();
-        }
-    }
-}
-
 //Controlla se è stato colpito il nemico
 void Game::EnemyHitted()
 {
@@ -213,7 +253,7 @@ void Game::PlayerHitted()
                 //Controllo se la navicella del giocatore è morta
                 if (player.DecreseLife(BULLET_DAMAGE))
                 {
-                    mvprintw(GAME_WIN_HIGH/2,43,"SEI MORTO");
+                    mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
                     refresh();
                     delay_output(5000);
                     exit(0);
@@ -237,7 +277,7 @@ void Game::Collision()
             //Controllo i punti vita rimasti alla navicella del giocatore
             if(player.DecreseLife(aliens.GetIter()->GetLife()))
             {
-                mvprintw(GAME_WIN_HIGH/2,43,"SEI MORTO");
+                mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
                 exit(0);

@@ -38,6 +38,7 @@
 		<Unit filename="Cannon.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
+		<Unit filename="FileManager.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
 		<Unit filename="Graphics/Menu.cpp" />

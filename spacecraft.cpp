@@ -8,8 +8,8 @@ Spacecraft::Spacecraft()
     life = SPACECRAFT_LIFE;
 
     //Coordinate iniziali della navicella
-    row = GAME_WIN_HIGH/2;
-    column = GAME_WIN_LENGTH/2;
+    row = GAME_WIN_HEIGHT/2;
+    column = GAME_WIN_WIDTH/2;
 }
 
 //Restituisce la riga della navicella
@@ -77,13 +77,13 @@ void Spacecraft::CheckMove()
 	{
 		row = START_XY;
 	}
-	if (column >= GAME_WIN_LENGTH-3)
+	if (column >= GAME_WIN_WIDTH-3)
 	{
-		column = GAME_WIN_LENGTH-3;
+		column = GAME_WIN_WIDTH-3;
 	}
-	if (row >= GAME_WIN_HIGH)
+	if (row >= GAME_WIN_HEIGHT)
 	{
-		row = GAME_WIN_HIGH-1;
+		row = GAME_WIN_HEIGHT-1;
 	}
 }
 

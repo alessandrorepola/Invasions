@@ -3,9 +3,12 @@
 #define INVASIONS_H_INCLUDED
 
 #include <ctime>
+#include <string>
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h> //per la funzione usleep
+#include <iostream>
+#include <fstream>
 
 #ifndef WIN32
     #include <curses.h>
@@ -33,16 +36,16 @@
 #define START_XY 1
 
 //Dimensioni della finestra principale
-#define WIN_LENGTH 103
-#define WIN_HIGH 37
+#define WIN_WIDTH 103
+#define WIN_HEIGHT 37
 
 //Dimensioni della finestra di gioco
-#define GAME_WIN_LENGTH 100
-#define GAME_WIN_HIGH 30
+#define GAME_WIN_WIDTH 100
+#define GAME_WIN_HEIGHT 30
 
 //Dimensione del menu
-#define MENU_LENGHT 25
-#define MENU_HIGH 10
+#define MENU_WIDTH 25
+#define MENU_HEIGHT 10
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 10

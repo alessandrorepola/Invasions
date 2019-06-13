@@ -16,17 +16,17 @@ Menu::Menu(Window &parent)
 
     choice = INIT;
 
-    startx = (parent.GetWidth() - MENU_LENGHT) / 2;
+    startx = (parent.GetWidth() - MENU_WIDTH) / 2;
     if (parent.GetY() == INIT)
     {
         starty = (parent.GetHeight()+5) / 2;
     }
     else
     {
-        starty = (parent.GetHeight()-MENU_HIGH) / 2;
+        starty = (parent.GetHeight()-MENU_HEIGHT) / 2;
     }
 
-	menu_win = derwin(parent.GetWin(), MENU_HIGH, MENU_LENGHT, starty, startx);
+	menu_win = derwin(parent.GetWin(), MENU_HEIGHT, MENU_WIDTH, starty, startx);
 	keypad(menu_win, TRUE);
 
 	SelectChoice(parent);
@@ -78,29 +78,22 @@ void Menu::PrintMenu(Window &parent)
 	werase(menu_win);
 	box(menu_win, INIT, INIT);
 	for(i = INIT; i < N_CHOICES; ++i)
-	{	if(highlight == i + START_XY)
-		{	wattron(menu_win, COLOR_PAIR(CYAN));
-            if (parent.GetX() == INIT)
-            {
-                mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
-            }
-            else
-            {
-                mvwprintw(menu_win, y, x, "%s", secondary_menu_choices[i]);
-            }
-			wattrset(menu_win, COLOR_PAIR(WHITE));
-		}
-		else
+	{
+	    if(highlight == i + START_XY)
         {
-            if (parent.GetX() == INIT)
-            {
-                mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
-            }
-            else
-            {
-                mvwprintw(menu_win, y, x, "%s", secondary_menu_choices[i]);
-            }
+            wattron(menu_win, COLOR_PAIR(CYAN));
         }
+
+	    if (parent.GetX() == INIT)
+        {
+            mvwprintw(menu_win, y, x, "%s", first_menu_choices[i]);
+        }
+        else
+        {
+            mvwprintw(menu_win, y, x, "%s", secondary_menu_choices[i]);
+        }
+
+        wattrset(menu_win, COLOR_PAIR(WHITE));
         ++y;
 	}
 	wrefresh(menu_win);
