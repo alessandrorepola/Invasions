@@ -6,9 +6,6 @@
 //Imposta le varie funzioni per ncurses
 void SetConsole();
 
-//Per decidere cosa fare in base alla scelta della'utente
-void UserChoice(int, Window&);
-
 //Imposta le dimensioni del terminale
 void SizeTerm();
 
@@ -17,9 +14,6 @@ void InitColor();
 
 //Inizializzo le coppie di colori
 void ColorPair();
-
-//Stampa a video l'help
-void Help(Window&);
 
 int main()
 {
@@ -99,35 +93,4 @@ void ColorPair()
             init_pair(WHITE,    COLOR_WHITE,   COLOR_BLACK);
         }
     }
-}
-
-//Stampa a video l'Help
-void Help(Window &parent)
-{
-    Window help(parent.GetWin(), parent.GetWidth()/4, parent.GetHeight()/4, parent.GetWidth()/2, parent.GetHeight()/2);
-    werase(parent.GetWin());
-    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
-    wprintw(help.GetWin(), "\n                  Comandi di gioco\n");
-    wprintw(help.GetWin(), "\n      Comando                     Tasto\n");
-    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
-    wprintw(help.GetWin(), "\n      Sopra:                        "); waddch(help.GetWin(),ACS_UARROW);
-    wprintw(help.GetWin(), "\n      Sotto:                        "); waddch(help.GetWin(),ACS_DARROW);
-    wprintw(help.GetWin(), "\n      Destra:                       "); waddch(help.GetWin(),ACS_RARROW);
-    wprintw(help.GetWin(), "\n      Sinistra:                     "); waddch(help.GetWin(),ACS_LARROW);
-    wprintw(help.GetWin(), "\n      Pausa:                        p");
-    wprintw(help.GetWin(), "\n      Esci:                         q");
-    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
-    wprintw(help.GetWin(), "\n\n                  Comandi del menu\n");
-    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
-    wprintw(help.GetWin(), "\n      Voce Precedente:              "); waddch(help.GetWin(),ACS_UARROW);
-    wprintw(help.GetWin(), "\n      Voce Successiva:              "); waddch(help.GetWin(),ACS_DARROW);
-    wprintw(help.GetWin(), "\n      Scegli:                     Enter");
-
-    help.PrintWinBorder();
-    parent.PrintWinBorder();
-    wattrset(parent.GetWin(), COLOR_PAIR(BLUE));
-    mvwprintw(parent.GetWin(), 9, 30, " GUIDA ");
-    wattrset(parent.GetWin(), COLOR_PAIR(WHITE));
-    wrefresh(parent.GetWin());
-    getchar();
 }
