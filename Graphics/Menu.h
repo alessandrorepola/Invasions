@@ -1,7 +1,7 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 
-#include "../Invasions.h"
+#include "../Globals.h"
 #include "Window.h"
 
 class Menu

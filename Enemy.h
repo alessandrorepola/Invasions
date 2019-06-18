@@ -1,7 +1,7 @@
 #ifndef ENIMY_H_INCLUDED
 #define ENIMY_H_INCLUDED
 
-#include "Invasions.h"
+#include "Globals.h"
 
 class Enemy
 {

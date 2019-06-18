@@ -2,7 +2,7 @@
 #ifndef BULLET_H_INCLUDED
 #define BULLET_H_INCLUDED
 
-#include "Invasions.h"
+#include "Globals.h"
 
 class Bullet
 {

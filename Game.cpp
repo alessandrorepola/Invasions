@@ -1,5 +1,5 @@
 /**********************************************************
-* File Game.cpp                                           *
+* Game.cpp                                                *
 * Contiene l'implementazione dei metodi della classe Game *
 **********************************************************/
 
@@ -65,6 +65,7 @@ void Game::UserChoice(int choice)
 
         case HELP:
             Help(GetMainWin());
+            MainScreen();
             break;
 
         case EXIT:

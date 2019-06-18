@@ -127,4 +127,14 @@ enum Colors
     FULL_COLOR = 1000,
 };
 
-#endif // INVASIONS_H_INCLUDED
+namespace Globals
+{
+    void Init();       //Inizializza la schermata di ncurses
+    void Color();      //Per le impostazioni dei colori
+    void SetConsole(); //Imposta le varie funzioni per ncurses
+    void SizeTerm();   //Imposta le dimensioni del terminale
+    void InitColor();  //Inizializza le tonalità di colore
+    void ColorPair();  //Inizializzo le coppie di colori
+}
+
+#endif // GLOBALS_H_INCLUDED
