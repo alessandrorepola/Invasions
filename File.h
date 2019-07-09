@@ -3,10 +3,14 @@
 * file contenete la classe File per la gestione dei file *
 *********************************************************/
 
-#ifndef FILEMANAGER_H_INCLUDED
-#define FILEMANAGER_H_INCLUDED
+#ifndef FILE_H_INCLUDED
+#define FILE_H_INCLUDED
 
-#include "Globals.h"
+#include "Cannon.h"
+#include "Mothership.h"
+#include "Spacecraft.h"
+#include <iostream>
+#include <fstream>
 
 class File
 {
@@ -14,10 +18,14 @@ class File
 
     public:
 
-    bool exists();
-    bool create();
-    int read();
-    bool write();
+    bool Exists();
+    void Create();
+    int ReadBestScore();
+    void ReadObj(Cannon*, Mothership*);
+    void ReadOtherInfo(Spacecraft*, int*);
+    void WriteBestScore(int);
+    void WriteObj(Cannon, Mothership);
+    void WriteOtherInfo(Spacecraft, int);
 };
 
-#endif // FILEMANAGER_H_INCLUDED
+#endif // FILE_H_INCLUDED

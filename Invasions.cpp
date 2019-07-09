@@ -7,26 +7,25 @@ int main()
     Globals::Init();
     Globals::Color();
 
-    bool endGame = true;  //Per uscire dal gioco
+    bool Restart = false;  //Per ricominciare senza ritornare al menu principale
 
     //Loop del gioco
-    do
+    while(true)
     {
         //Oggetto game
         Game game;
 
         //Se l'utente ricomincia direttamente una nuova partita
-        //Salta la fase della schermata principale
-        if (endGame)
+        //Salta la schermata principale
+        if (!Restart)
         {
             //Schermata principale
             game.MainScreen();
         }
 
         //loop "infinito" della partita
-        endGame = game.StartGameLoop();
+        Restart = game.StartGameLoop();
     }
-    while (!endGame);  //Finchè l'utente non decide di uscire dal gioco
-    endwin(); //Termina la modalita' curses
+    //endwin(); //Termina la modalita' curses
     return 0;
 }

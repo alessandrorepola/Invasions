@@ -132,8 +132,12 @@ void Cannon::RemoveObject(Bullet *pbull)
     if (first == NULL)
         return;
 
+    //Sposto l'iteratore al colpo successivo
+    //In questo modo quando verrà cancellato il colpo stesso iter non punterà a NULL
+    NextBullet();
+
     //Controllo se è il primo colpo della lista
-    else if (first == pbull)
+    if (first == pbull)
         RemoveFirst();
 
     //Controllo se è l'ultimo colpo della lista
@@ -241,7 +245,7 @@ Cannon::~Cannon()
     //Puntatore di appoggio
     Bullet *tmp = first;
 
-    //Rilascio al sistema tutta lamemoria ancora allocata
+    //Rilascio al sistema tutta la memoria ancora allocata
     while (del!=NULL)
     {
         tmp = del->next; //A tmp assegno il colpo successivo a quello da cancellare

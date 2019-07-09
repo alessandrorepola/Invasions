@@ -113,8 +113,12 @@ void Mothership::RemoveEnemy(Enemy *pobj)
     if (first == NULL)
         return;
 
+    //Sposto l'iteratore al nemico successivo della lista
+    //In questo modo quando verrà cancellato l'oggetto nemico stesso iter non punterà a NULL
+    NextEnemy();
+
     //Controllo se è il primo nemico della lista
-    else if (first == pobj)
+    if (first == pobj)
         RemoveFirst();
 
     //Controllo se è l'ultimo nemico della lista

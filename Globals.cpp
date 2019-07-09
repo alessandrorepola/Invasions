@@ -23,7 +23,7 @@ void Globals::Color()
 //Imposto le varie funzioni per ncurses
 void Globals::SetConsole()
 {
-    SizeTerm();             //Imposta le dimensioni della console
+    SizeTerm();     //Imposta le dimensioni della console
     curs_set (false);		//Rende il cursore invisibile
 	keypad (stdscr, true);	//Abilita i tasti freccia
 	noecho ();				//Disabilita l'echo dei tasti premuti
@@ -34,7 +34,13 @@ void Globals::SetConsole()
 //Ridimensiona il terminale
 void Globals::SizeTerm()
 {
-    resize_term(WIN_HEIGHT+START_XY, WIN_WIDTH+START_XY);
+    #if defined (__WIN32__) && !defined (__CYGWIN__)
+        resize_term(WIN_HEIGHT+START_XY, WIN_WIDTH+START_XY);
+    #else
+        //Anche se imposta le dimensioni del terminale le finestre vengono impostate sulle vecchie dimensioni
+        //Bisogna, quindi, uscire dal programma e riavviarlo nella medesima console gia' ridimensionata
+        std::cout <<"\e[8;"<< WIN_HEIGHT << ";" << WIN_WIDTH << "t";
+    #endif
 }
 
 //Inizializzo le coppie di colori

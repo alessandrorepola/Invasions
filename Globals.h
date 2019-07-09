@@ -3,16 +3,14 @@
 #define INVASIONS_H_INCLUDED
 
 #include <ctime>
-#include <string>
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h> //per la funzione usleep
-#include <iostream>
-#include <fstream>
 
-#ifndef WIN32
+#if defined (__WIN32__) && !defined (__CYGWIN__)
     #include <curses.h>
 #else
+    #include <curses.h>
     #include <ncurses.h>
 #endif
 

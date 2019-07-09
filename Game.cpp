@@ -10,6 +10,8 @@ Game::Game()
 {
     score = INIT;
 
+    SetBestScore();
+
     //Dichiaro una finestra di gioco
     game_win = new Window(main_win.GetWin());
 
@@ -60,7 +62,7 @@ void Game::UserChoice(int choice)
             break;
 
         case LAST_MATCH:
-            //TO DO
+            ResumeLastMatch();
             break;
 
         case HELP:
@@ -69,6 +71,7 @@ void Game::UserChoice(int choice)
             break;
 
         case EXIT:
+            endwin();
             exit(INIT);
     }
 }
@@ -100,13 +103,17 @@ bool Game::StartGameLoop()
         switch (UserInput())
         {
             case RESTART:
-                return false;
+                return true;
 
             case MAIN_MENU:
-                MainScreen();
+                SaveBestScore();
+                SaveGameStatus();
                 return false;
 
             case EXIT:
+                SaveBestScore();
+                SaveGameStatus();
+                endwin();
                 exit(INIT);
         }
 
@@ -137,7 +144,7 @@ bool Game::StartGameLoop()
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
         usleep(1);
     }
-    return true;
+    return false;
 }
 
 //Messaggio iniziale
@@ -294,27 +301,49 @@ void Game::Collision()
 void Game::UpdateScore(int value)
 {
     score = score + value;
-    if (score > highScore)
+    if (score > bestScore)
     {
-        highScore = score;
+        bestScore = score;
     }
 }
 
 //Salva il miglior punteggio
-void Game::SaveScore()
+void Game::SaveBestScore()
 {
-    //TO DO
+    f.Create();
+    f.WriteBestScore(bestScore);
 }
 
 //Inizializza la variabile highScore
-void Game::ReadHighScore()
+void Game::SetBestScore()
 {
-    //TO DO
+    //Controllo che i file esistono
+    if(!f.Exists())
+    {
+        bestScore = INIT;
+    }
+    else
+    {
+        bestScore = f.ReadBestScore();
+    }
 }
 
-void SaveGame()
+//Salva lo stato attuale della partita
+void Game::SaveGameStatus()
 {
-    scr_init("Salva_Schermo.bin");
+    f.WriteObj(c, aliens);
+    f.WriteOtherInfo(player, score);
+}
+
+//Riprende la partita dal punto in cui è stata interrotta
+void Game::ResumeLastMatch()
+{
+    //f.ReadObj(&c, &aliens);
+    /*mvprintw(GAME_WIN_HEIGHT/1.5,43,"%d", sizeof(Cannon) );
+                    refresh();
+                    delay_output(5000);
+                    exit(0);*/
+    f.ReadOtherInfo(&player, &score);
 }
 
 //Restituisce un riferimento alla finestra principale
@@ -330,7 +359,7 @@ void Game::PrintScore()
     UpdateScore(INIT);
     werase(score_win->GetWin());
     wprintw(score_win->GetWin(), "\n Punteggio: %d",score);
-    wprintw(score_win->GetWin(), "\n Record: %d",highScore);
+    wprintw(score_win->GetWin(), "\n Record: %d",bestScore);
     score_win->PrintWinBorder();
 }
 
