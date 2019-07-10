@@ -23,10 +23,13 @@ class Cannon
     void RemoveObject(Bullet*); //Rimuove il colpo specificato
     void MoveObject();          //Muove i colpi
     void Draw(WINDOW*);         //Disegna i colpi
+    void SetFirst(Bullet *);    //Imposta il primo colpo letto dal file
+    void SetLast(Bullet *);    //Imposta il primo colpo letto dal file
     void SetIter();             //Imposta il puntatore iter
     void SetIter(Bullet *);     //Imposta il puntatore iter
     void NextBullet();          //Sposta il puntatore iter al colpo successivo
     Bullet *GetIter();          //Restituisce il puntatore iter
+    void DeleteList();          //Cancella gli elementi della lista
     ~Cannon();                  //Distruttore
 };
 

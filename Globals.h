@@ -10,7 +10,6 @@
 #if defined (__WIN32__) && !defined (__CYGWIN__)
     #include <curses.h>
 #else
-    #include <curses.h>
     #include <ncurses.h>
 #endif
 

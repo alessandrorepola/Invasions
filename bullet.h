@@ -20,9 +20,12 @@ class Bullet
     public:
 
     Bullet();         //Costruttore di default
+    Bullet(Bullet&);   //Costruttore che ricrea un colpo con le caratteristiche di quello salvato su file
     int GetRow();     //Restituisce la riga del colpo
     int GetColumn();  //Restituisce la colonna del colpo
     int GetId();      //Restituisce l'id del colpo
+    Bullet *GetPrev();//Restituisce il puntatore al colpo precedente
+    Bullet *GetNext();//Restituisce il puntatore al colpo successivo
     ~Bullet();        //Distruttore
 };
 

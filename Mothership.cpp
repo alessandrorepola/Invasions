@@ -212,8 +212,8 @@ void Mothership::FuseEnemy()
     //TO DO
 }
 
-//Distruttore
-Mothership::~Mothership()
+//Cancello gli elementio della lista
+void Mothership::DeleteList()
 {
     //Puntatore per la deallocazione della memoria
     Enemy *del = first;
@@ -228,4 +228,12 @@ Mothership::~Mothership()
         delete del;      //Cancello l'oggetto
         del = tmp;       //A del riassegno il prossimo oggetto da cancellare se esiste
     }
+}
+
+//Distruttore
+Mothership::~Mothership()
+{
+    first = NULL;
+    last = NULL;
+    iter = NULL;
 }

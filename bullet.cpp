@@ -1,6 +1,25 @@
 //File bullet.cpp
 #include "Bullet.h"
 
+//Costruttore di default
+Bullet::Bullet()
+{
+    next = NULL;
+    prev = NULL;
+}
+
+//Costruttore che ricrea un colpo con le caratteristiche di quello salvato su file
+Bullet::Bullet(Bullet &bull)
+{
+    //Inizializzo le coordinate del colpo
+    row = bull.GetRow();
+    column = bull.GetColumn();
+    id = bull.GetId();
+
+    //Inizializzo il tempo
+    start = bull.start;
+}
+
 //Costruttore che posiziona il colpo
 Bullet::Bullet(int r, int c, int type)
 {
@@ -62,6 +81,18 @@ int Bullet::GetColumn()
 int Bullet::GetId()
 {
     return id;
+}
+
+//Restituisce il puntatore al colpo precedente
+Bullet* Bullet::GetPrev()
+{
+    return prev;
+}
+
+//Restituisce il puntatore al colpo successivo
+Bullet* Bullet::GetNext()
+{
+    return next;
 }
 
 //Distruttore

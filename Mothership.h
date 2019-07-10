@@ -27,6 +27,7 @@ class Mothership
     void SetIter(Enemy *);     //Imposta il puntatore iter
     void NextEnemy();          //Sposta il puntatore iter al colpo successivo
     Enemy *GetIter();          //Restituisce il puntatore iter
+    void DeleteList();         //Cancella glielementi della lista
     ~Mothership();
 };
 

@@ -56,14 +56,13 @@ int File::ReadBestScore()
 
 void File::WriteObj(Cannon c, Mothership aliens)
 {
-   /* f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
+    f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
     for(c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
     {
-        sizeCannon = sizeCannon + sizeof(Bullet);
-
+        f.write ((char*) c.GetIter(), sizeof(Bullet));
     }
-    f.close();*/
+    f.close();
 
     /*f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
@@ -87,14 +86,25 @@ void File::WriteOtherInfo(Spacecraft player, int score)
 void File::ReadObj(Cannon *c, Mothership *aliens)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::in);
-    //c->SetIter();
-
-    //while (f.good())
+    Bullet b;
+    while (f.good())
     {
-        int sizeCannon;
-        f.read ((char*) &sizeCannon, sizeof(int));
-        f.read ((char*) c, sizeCannon);
-        //c->NextBullet();
+        f.read ((char*) &b, sizeof(Bullet));
+        if (b.GetPrev() == NULL)
+        {
+            c->SetFirst(&b);
+            c->SetIter();
+            c->NextBullet();
+        }
+        else if (b.GetNext() == NULL)
+        {
+            c->SetLast(&b);
+        }
+        else
+        {
+            c->SetIter(&b);
+            c->NextBullet();
+        }
     }
     f.close();
 

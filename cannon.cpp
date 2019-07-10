@@ -210,6 +210,16 @@ void Cannon::Draw (WINDOW *win)
     }
 }
 
+void Cannon::SetFirst(Bullet *pbull)
+{
+    first = new Bullet(*pbull);
+}
+
+void Cannon::SetLast(Bullet *pbull)
+{
+    last = new Bullet(*pbull);
+}
+
 //Imposta il puntatore iter
 void Cannon::SetIter()
 {
@@ -218,7 +228,7 @@ void Cannon::SetIter()
 
 void Cannon::SetIter(Bullet *pbull)
 {
-    iter = pbull;
+    iter = new Bullet(*pbull);
 }
 
 //Imposta il puntatore iter al colpo successivo
@@ -236,8 +246,8 @@ Bullet *Cannon::GetIter()
     return iter;
 }
 
-//Distruttore
-Cannon::~Cannon()
+//Cancella gli elementi restanti della lista
+void Cannon::DeleteList()
 {
     //Puntatore per la deallocazione della memoria
     Bullet *del = first;
@@ -252,4 +262,12 @@ Cannon::~Cannon()
         delete del;      //Cancello il colpo
         del = tmp;       //A del riassegno il prossimo colpo da cancellare
     }
+}
+
+//Distruttore
+Cannon::~Cannon()
+{
+    first = NULL;
+    last = NULL;
+    iter = NULL;
 }

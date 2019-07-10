@@ -71,6 +71,8 @@ void Game::UserChoice(int choice)
             break;
 
         case EXIT:
+            c.DeleteList();
+            aliens.DeleteList();
             endwin();
             exit(INIT);
     }
@@ -108,11 +110,15 @@ bool Game::StartGameLoop()
             case MAIN_MENU:
                 SaveBestScore();
                 SaveGameStatus();
+                c.DeleteList();
+                aliens.DeleteList();
                 return false;
 
             case EXIT:
                 SaveBestScore();
                 SaveGameStatus();
+                c.DeleteList();
+                aliens.DeleteList();
                 endwin();
                 exit(INIT);
         }
@@ -234,6 +240,7 @@ void Game::EnemyHitted()
                     {
                         aliens.RemoveEnemy(aliens.GetIter());
                         UpdateScore(20);
+                        break;
                     }
                 }
             }
@@ -261,6 +268,7 @@ void Game::PlayerHitted()
                 //Controllo se la navicella del giocatore è morta
                 if (player.DecreseLife(BULLET_DAMAGE))
                 {
+                    UpdateScreen();
                     mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
                     refresh();
                     delay_output(5000);
@@ -279,12 +287,13 @@ void Game::Collision()
     {
         if (((player.GetRow() == aliens.GetIter()->GetRow()) && ((player.GetColumn() == aliens.GetIter()->GetColumn()) || (player.GetColumn() == aliens.GetIter()->GetColumn()-1) || (player.GetColumn() == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()-1))))
         {
-            //Rimuovo il nemico
-            aliens.RemoveEnemy(aliens.GetIter());
-
             //Controllo i punti vita rimasti alla navicella del giocatore
             if(player.DecreseLife(aliens.GetIter()->GetLife()))
             {
+                //Rimuovo il nemico
+                aliens.RemoveEnemy(aliens.GetIter());
+
+                UpdateScreen();
                 mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
@@ -338,12 +347,10 @@ void Game::SaveGameStatus()
 //Riprende la partita dal punto in cui è stata interrotta
 void Game::ResumeLastMatch()
 {
-    //f.ReadObj(&c, &aliens);
-    /*mvprintw(GAME_WIN_HEIGHT/1.5,43,"%d", sizeof(Cannon) );
-                    refresh();
-                    delay_output(5000);
-                    exit(0);*/
+    f.ReadObj(&c, &aliens);
     f.ReadOtherInfo(&player, &score);
+    UpdateScreen();
+   // delay_output(2000);
 }
 
 //Restituisce un riferimento alla finestra principale
