@@ -42,6 +42,8 @@
 		<Unit filename="File.h" />
 		<Unit filename="Game.cpp" />
 		<Unit filename="Game.h" />
+		<Unit filename="GameEntity.cpp" />
+		<Unit filename="GameEntity.h" />
 		<Unit filename="Globals.cpp" />
 		<Unit filename="Globals.h" />
 		<Unit filename="Graphics/Menu.cpp" />
