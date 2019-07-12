@@ -8,19 +8,21 @@
 #ifndef GAMEENTITY_H_INCLUDED
 #define GAMEENTITY_H_INCLUDED
 
+#include "Globals.h"
+
 class GameEntity
 {
+    public:
     int row;
     int column;
     int life;
-
-    public:
-
+    clock_t start;
     GameEntity();
     virtual ~GameEntity();
     int GetRow();
     int GetColumn();
     int GetLife();
+    virtual void Move() = 0;
 
 };
 

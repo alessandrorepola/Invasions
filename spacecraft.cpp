@@ -12,58 +12,34 @@ Spacecraft::Spacecraft()
     column = GAME_WIN_WIDTH/2;
 }
 
-//Restituisce la riga della navicella
-int Spacecraft::GetRow()
+//Decrementa la colonna
+void Spacecraft::DecreaseColumn()
 {
-    return row;
+    --column;
 }
 
-//Restituisce la colonna della navicella
-int Spacecraft::GetColumn()
+//Decrementa la riga
+void Spacecraft::DecreaseRow()
 {
-    return column;
+    --row;
+}
+
+//Incremanta la colonna
+void Spacecraft::IncreaseColumn()
+{
+    ++column;
+}
+
+//Incrementa la riga
+void Spacecraft::IncreaseRow()
+{
+    ++row;
 }
 
 //Movimeto della navicella
-int Spacecraft::Move(int key, Window &parent)
+void Spacecraft::Move()
 {
-    switch (key)
-    {
-        //tasti direzionali
-        case KEY_UP:
-        --row;
-        break;
-
-        case KEY_DOWN:
-        ++row;
-        break;
-
-        case KEY_LEFT:
-        --column;
-        break;
-
-        case KEY_RIGHT:
-        ++column;
-        break;
-
-        case 'q':
-        case 'Q':
-            return EXIT;
-
-        case 'p':
-        case 'P':
-        {
-            Menu secondary_menu(parent);
-            return secondary_menu.GetChoice();
-        }
-
-        // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti ritorana al loop principale
-        case ERR:
-        default:
-            break;
-    }
     CheckMove();
-    return 0;
 }
 
 //Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
@@ -104,22 +80,17 @@ void Spacecraft::Shoot(Cannon &c)
 }
 
 //Decremanta la vita della navicella
-bool Spacecraft::DecreseLife(int damage)
+bool Spacecraft::DecreaseLife(int damage)
 {
     life = life-damage;
 
     //Controllo se la navicella è stata distrutta
-    if (life <= INIT)
+    if (life <= 0)
     {
+        life = 0;
         return true;
     }
     return false;
-}
-
-//Restituisce il valore della vita
-int Spacecraft::GetLife()
-{
-    return life;
 }
 
 //Distruttore

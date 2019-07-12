@@ -21,3 +21,8 @@ int GameEntity::GetColumn()
 {
     return column;
 }
+
+int GameEntity::GetLife()
+{
+    return life;
+}

@@ -15,7 +15,7 @@ class Cannon
 
     public:
 
-    Cannon();                   //Costruttore
+    Cannon();
     Bullet *GetFirst();         //Restituisce il puntatore al primo elemento della lista
     void AddObject(int, int, int);   //Genera un nuovo colpo con le sue coordinate
     void RemoveFirst();         //Remuove il primo colpo della lista

@@ -68,7 +68,7 @@ void Enemy::Move()
         SetDirection();
 
         //Sposta il nemico di una posizione in base alla direzione
-        Movement();
+        SetMovement();
     }
 }
 
@@ -144,7 +144,7 @@ void Enemy::SetDirection()
 }
 
 //Spostamento del nemico
-void Enemy::Movement()
+void Enemy::SetMovement()
 {
     switch (direction)
     {
@@ -184,24 +184,6 @@ void Enemy::Movement()
             --column;
             break;
     }
-}
-
-//Restituisce la riga del nemico
-int Enemy::GetRow()
-{
-    return row;
-}
-
-//Restituisce la colonna del nemico
-int Enemy::GetColumn()
-{
-    return column;
-}
-
-//Restituisce la vita del nemico
-int Enemy::GetLife()
-{
-    return life;
 }
 
 //Decrementa la vita del nemico

@@ -1,7 +1,6 @@
 //File bullet.cpp
 #include "Bullet.h"
 
-//Costruttore di default
 Bullet::Bullet()
 {
     next = NULL;
@@ -63,18 +62,6 @@ void Bullet::Move()
             ++row;
         }
     }
-}
-
-//Restituisce la riga del colpo
-int Bullet::GetRow()
-{
-    return row;
-}
-
-//Restituisce la colonna del colpo
-int Bullet::GetColumn()
-{
-    return column;
 }
 
 //Restituisce l'id del colpo

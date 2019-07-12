@@ -123,6 +123,9 @@ bool Game::StartGameLoop()
                 exit(INIT);
         }
 
+        //Sposta la navicella del giocatore
+        player.Move();
+
         //Sparo del giocatore
         player.Shoot(c);
 
@@ -208,13 +211,42 @@ int Game::UserInput()
     //Legge l'input da tastiera
     int key = getch();
 
-    int value = player.Move(key, *game_win);
+    switch (key)
+    {
+        //tasti direzionali
+        case KEY_UP:
+        player.DecreaseRow();
+        break;
 
-    //Chiama la funzione per muovere la navicella e controlla se e' stato digitato q
-    if (value == 0)
-        return 0;
+        case KEY_DOWN:
+        player.IncreaseRow();
+        break;
 
-    return value;
+        case KEY_LEFT:
+        player.DecreaseColumn();
+        break;
+
+        case KEY_RIGHT:
+        player.IncreaseColumn();
+        break;
+
+        case 'q':
+        case 'Q':
+            return EXIT;
+
+        case 'p':
+        case 'P':
+        {
+            Menu secondary_menu(*game_win);
+            return secondary_menu.GetChoice();
+        }
+
+        // Se non viene premuto nessun tasto o un altro tasto diverso dai precedenti ritorana al loop principale
+        case ERR:
+        default:
+            break;
+    }
+    return 0;
 }
 
 //Controlla se è stato colpito il nemico
@@ -266,7 +298,7 @@ void Game::PlayerHitted()
                 life_win->PrintWinBorder();
 
                 //Controllo se la navicella del giocatore è morta
-                if (player.DecreseLife(BULLET_DAMAGE))
+                if (player.DecreaseLife(BULLET_DAMAGE))
                 {
                     UpdateScreen();
                     mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
@@ -288,7 +320,7 @@ void Game::Collision()
         if (((player.GetRow() == aliens.GetIter()->GetRow()) && ((player.GetColumn() == aliens.GetIter()->GetColumn()) || (player.GetColumn() == aliens.GetIter()->GetColumn()-1) || (player.GetColumn() == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()-1))))
         {
             //Controllo i punti vita rimasti alla navicella del giocatore
-            if(player.DecreseLife(aliens.GetIter()->GetLife()))
+            if(player.DecreaseLife(aliens.GetIter()->GetLife()))
             {
                 //Rimuovo il nemico
                 aliens.RemoveEnemy(aliens.GetIter());
@@ -298,6 +330,11 @@ void Game::Collision()
                 refresh();
                 delay_output(5000);
                 exit(0);
+            }
+            else
+            {
+                //Rimuovo il nemico
+                aliens.RemoveEnemy(aliens.GetIter());
             }
 
             //Aggiorno il punteggio
