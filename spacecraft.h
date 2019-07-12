@@ -3,7 +3,7 @@
 #define SPACECRAFT_H_INCLUDED
 
 #include "GameEntity.h"
-#include "Cannon.h"
+#include "List.h"
 #include "Graphics/Window.h"
 #include "Graphics/Menu.h"
 
@@ -18,7 +18,7 @@ class Spacecraft : public GameEntity
     void IncreaseRow();
     void IncreaseColumn();
     void CheckMove();      //Controlla lo spostamento della navicella
-    void Shoot(Cannon&);   //Spara il colpo
+    void Shoot(List&);   //Spara il colpo
     void Draw(WINDOW*);    //Disegna la navicella
     bool DecreaseLife(int); //Decrementa la vita della navicella
     ~Spacecraft();         //Distruttore

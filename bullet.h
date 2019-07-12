@@ -7,6 +7,7 @@
 
 class Bullet : public GameEntity
 {
+    friend class List;
     friend class Cannon;
 
     Bullet *next;     //Puntatore al colpo successivo

@@ -51,6 +51,8 @@
 		<Unit filename="Graphics/Window.cpp" />
 		<Unit filename="Graphics/Window.h" />
 		<Unit filename="Invasions.cpp" />
+		<Unit filename="List.cpp" />
+		<Unit filename="List.h" />
 		<Unit filename="Mothership.cpp" />
 		<Unit filename="Mothership.h" />
 		<Unit filename="Spacecraft.cpp" />

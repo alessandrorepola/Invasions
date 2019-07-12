@@ -10,6 +10,7 @@
 #include "Mothership.h"
 #include "File.h"
 #include "Graphics/Window.h"
+#include "List.h"
 
 class Game
 {
@@ -19,7 +20,7 @@ class Game
     Window *score_win;      //Puntatore alla finestra per il punteggio
     Window *life_win;       //Puntatore alla finestra con la vita del giocatore
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
-	Cannon c;               //Dichiaro un oggetto cannon per gestire i colpi
+	List BulletList;        //Dichiaro una lista per gestire i colpi
 	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
 	File f;                 //Oggetto per la gestione dei file
 	int score;              //Per il punteggio

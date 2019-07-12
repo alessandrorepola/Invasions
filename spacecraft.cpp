@@ -73,10 +73,10 @@ void Spacecraft::Draw (WINDOW *win)
 }
 
 //Spara il colpo
-void Spacecraft::Shoot(Cannon &c)
+void Spacecraft::Shoot(List &BulletList)
 {
-    c.AddObject(row-1, column, PLAYER);
-    c.MoveObject();
+    BulletList.Add(row-1, column, PLAYER);
+    BulletList.Move();
 }
 
 //Decremanta la vita della navicella

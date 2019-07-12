@@ -10,7 +10,7 @@ Game::Game()
 {
     score = INIT;
 
-    SetBestScore();
+//    SetBestScore();
 
     //Dichiaro una finestra di gioco
     game_win = new Window(main_win.GetWin());
@@ -62,7 +62,7 @@ void Game::UserChoice(int choice)
             break;
 
         case LAST_MATCH:
-            ResumeLastMatch();
+//            ResumeLastMatch();
             break;
 
         case HELP:
@@ -71,7 +71,7 @@ void Game::UserChoice(int choice)
             break;
 
         case EXIT:
-            c.DeleteList();
+            BulletList.DeleteList();
             aliens.DeleteList();
             endwin();
             exit(INIT);
@@ -108,16 +108,16 @@ bool Game::StartGameLoop()
                 return true;
 
             case MAIN_MENU:
-                SaveBestScore();
-                SaveGameStatus();
-                c.DeleteList();
+//                SaveBestScore();
+//                SaveGameStatus();
+                BulletList.DeleteList();
                 aliens.DeleteList();
                 return false;
 
             case EXIT:
-                SaveBestScore();
-                SaveGameStatus();
-                c.DeleteList();
+//                SaveBestScore();
+//                SaveGameStatus();
+                BulletList.DeleteList();
                 aliens.DeleteList();
                 endwin();
                 exit(INIT);
@@ -127,19 +127,19 @@ bool Game::StartGameLoop()
         player.Move();
 
         //Sparo del giocatore
-        player.Shoot(c);
+        player.Shoot(BulletList);
 
         //Sparo del nemico
-        aliens.EnemyShoot(c);
+        //aliens.EnemyShoot(BulletList);
 
         //Sposta gli alieni
         aliens.MoveEnemy();
 
         //Controlla se il nemico è stato colpito
-        EnemyHitted();
+//        EnemyHitted();
 
         //Controlla se il nemico è stato colpito
-        PlayerHitted();
+//        PlayerHitted();
 
         //Generazione dei nemici
         aliens.AddEnemy();
@@ -148,7 +148,7 @@ bool Game::StartGameLoop()
         UpdateScreen();
 
         //Contrlla se c'è stata una collisione tra il nemico e la navicella
-        Collision();
+//        Collision();
 
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
         usleep(1);
@@ -193,7 +193,7 @@ void Game::UpdateScreen()
     PrintScore();
 
     //stampa i colpi sparati dalla navicella del giocatore
-    c.Draw(game_win->GetWin());
+    BulletList.Draw(game_win->GetWin());
 
     //Stampa i nemici
     aliens.Draw(game_win->GetWin());
@@ -250,16 +250,16 @@ int Game::UserInput()
 }
 
 //Controlla se è stato colpito il nemico
-void Game::EnemyHitted()
+/*void Game::EnemyHitted()
 {
     //Scansiona tutti i nemici
     for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
     {
         //Scanziona tutti i colpi
-        for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
+        for (BulletList.SetIter(); BulletList.GetIter()!= NULL; BulletList.Next())
         {
             //Controllo se il colpo è stato sparato dal giocatore
-            if (c.GetIter()->GetId() == PLAYER)
+            if (.GetIter()->GetId() == PLAYER)
             {
                 //Confronto le coordinate del colpo con quelle del nemico
                 if((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)))
@@ -388,7 +388,7 @@ void Game::ResumeLastMatch()
     f.ReadOtherInfo(&player, &score);
     UpdateScreen();
    // delay_output(2000);
-}
+}*/
 
 //Restituisce un riferimento alla finestra principale
 Window &Game::GetMainWin()
@@ -400,7 +400,7 @@ Window &Game::GetMainWin()
 void Game::PrintScore()
 {
     //Stampo i bordi della finestra
-    UpdateScore(INIT);
+//    UpdateScore(INIT);
     werase(score_win->GetWin());
     wprintw(score_win->GetWin(), "\n Punteggio: %d",score);
     wprintw(score_win->GetWin(), "\n Record: %d",bestScore);

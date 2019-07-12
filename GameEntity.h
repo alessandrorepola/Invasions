@@ -19,9 +19,9 @@ class GameEntity
     clock_t start;
     GameEntity();
     virtual ~GameEntity();
-    int GetRow();
-    int GetColumn();
-    int GetLife();
+    virtual int GetRow();
+    virtual int GetColumn();
+    virtual int GetLife();
     virtual void Move() = 0;
 
 };
