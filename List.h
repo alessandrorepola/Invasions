@@ -12,15 +12,13 @@ class List
 {
     std::list <GameEntity*> EntityList;
     std::list <GameEntity*>::iterator it;
-    clock_t start_enemy; //Per cronometrare il tempo trascorso dal colpo nemico
-    clock_t start_player; //Per cronometrare il tempo trascorso dal colpo del giocatore
+    clock_t start; //Per cronometrare il tempo trascorso dall'ultimo oggetto generato
 
     public:
 
     List();
     GameEntity *GetFirst();         //Restituisce il puntatore al primo elemento della lista
-    void Add(int, int, int);
-    void Add(GameEntity*);   //Genera un nuovo colpo con le sue coordinate
+    void Add(GameEntity*, double);   //Genera un nuovo colpo con le sue coordinate
     void Remove(GameEntity*); //Rimuove il colpo specificato
     void Move();          //Muove i colpi
     void Draw(WINDOW*);         //Disegna i colpi

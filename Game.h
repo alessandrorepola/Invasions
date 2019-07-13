@@ -21,7 +21,8 @@ class Game
     Window *life_win;       //Puntatore alla finestra con la vita del giocatore
     Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	List BulletList;        //Dichiaro una lista per gestire i colpi
-	Mothership aliens;      //Dichiaro un oggetto mothership per gestire i nemici
+	List EnemyList;         //Dichiaro una lista per gestire i nemici
+	Enemy *ep;              //Puntatore al nemico da aggiungere alla lista
 	File f;                 //Oggetto per la gestione dei file
 	int score;              //Per il punteggio
 	int bestScore;          //Miglior punteggio

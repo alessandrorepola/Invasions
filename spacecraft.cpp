@@ -10,6 +10,8 @@ Spacecraft::Spacecraft()
     //Coordinate iniziali della navicella
     row = GAME_WIN_HEIGHT/2;
     column = GAME_WIN_WIDTH/2;
+    bulletDirection = NORTH;
+    bulletGenerationTime = TIME_PLAYER_BULLET;
 }
 
 //Decrementa la colonna
@@ -37,9 +39,10 @@ void Spacecraft::IncreaseRow()
 }
 
 //Movimeto della navicella
-void Spacecraft::Move()
+bool Spacecraft::Move()
 {
     CheckMove();
+    return true;
 }
 
 //Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
@@ -75,7 +78,8 @@ void Spacecraft::Draw (WINDOW *win)
 //Spara il colpo
 void Spacecraft::Shoot(List &BulletList)
 {
-    BulletList.Add(row-1, column, PLAYER);
+    Bullet *pbullet = new Bullet(GetRow()-1, GetColumn(), bulletDirection);
+    BulletList.Add(pbullet, bulletGenerationTime);
     BulletList.Move();
 }
 

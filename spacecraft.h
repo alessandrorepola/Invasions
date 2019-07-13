@@ -9,10 +9,13 @@
 
 class Spacecraft : public GameEntity
 {
+    int bulletDirection;
+    double bulletGenerationTime;
+
     public:
 
     Spacecraft();          //Costruttore
-    void Move() override;        //sposta la navicella
+    bool Move() override;        //sposta la navicella
     void DecreaseRow();
     void DecreaseColumn();
     void IncreaseRow();

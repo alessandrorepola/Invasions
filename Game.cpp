@@ -72,7 +72,7 @@ void Game::UserChoice(int choice)
 
         case EXIT:
             BulletList.DeleteList();
-            aliens.DeleteList();
+            EnemyList.DeleteList();
             endwin();
             exit(INIT);
     }
@@ -111,14 +111,14 @@ bool Game::StartGameLoop()
 //                SaveBestScore();
 //                SaveGameStatus();
                 BulletList.DeleteList();
-                aliens.DeleteList();
+                EnemyList.DeleteList();
                 return false;
 
             case EXIT:
 //                SaveBestScore();
 //                SaveGameStatus();
                 BulletList.DeleteList();
-                aliens.DeleteList();
+                EnemyList.DeleteList();
                 endwin();
                 exit(INIT);
         }
@@ -133,7 +133,7 @@ bool Game::StartGameLoop()
         //aliens.EnemyShoot(BulletList);
 
         //Sposta gli alieni
-        aliens.MoveEnemy();
+        EnemyList.Move();
 
         //Controlla se il nemico è stato colpito
 //        EnemyHitted();
@@ -141,8 +141,10 @@ bool Game::StartGameLoop()
         //Controlla se il nemico è stato colpito
 //        PlayerHitted();
 
+        /*PROVVISORIO*/
         //Generazione dei nemici
-        aliens.AddEnemy();
+        ep = new Enemy;
+        EnemyList.Add(ep, ep->GetGenerationTime());
 
         //Aggiorno la schermata
         UpdateScreen();
@@ -196,7 +198,7 @@ void Game::UpdateScreen()
     BulletList.Draw(game_win->GetWin());
 
     //Stampa i nemici
-    aliens.Draw(game_win->GetWin());
+    EnemyList.Draw(game_win->GetWin());
 
     //Stampa la navicella del giocatore
     player.Draw(game_win->GetWin());

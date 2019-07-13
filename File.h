@@ -21,10 +21,10 @@ class File
     bool Exists();
     void Create();
     int ReadBestScore();
-    void ReadObj(Cannon*, Mothership*);
+//    void ReadObj(Cannon*, Mothership*);
     void ReadOtherInfo(Spacecraft*, int*);
     void WriteBestScore(int);
-    void WriteObj(Cannon, Mothership);
+ //   void WriteObj(Cannon, Mothership);
     void WriteOtherInfo(Spacecraft, int);
 };
 

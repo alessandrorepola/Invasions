@@ -8,21 +8,21 @@
 class Bullet : public GameEntity
 {
     friend class List;
-    friend class Cannon;
 
     Bullet *next;     //Puntatore al colpo successivo
     Bullet *prev;     //Puntatore al colpo precedente
-    Bullet(int, int, int); //Costruttore che prende come argomento la riga e la colonna
-    void Move() override;      //Muove il colpo sparato
-    int id;           //Identifica l'appartenenza del colpo
+    bool Move() override;      //Muove il colpo sparato
+    void Draw(WINDOW*) override;  //Disegna l'oggetto colpo sullo schermo
+    bool Remove();     //Controlla se il colpo deve essere eliminato
 
     public:
 
     Bullet();
+
+    Bullet(int, int, int); //Costruttore che prende come argomento la riga e la colonna
     Bullet(Bullet&);   //Costruttore che ricrea un colpo con le caratteristiche di quello salvato su file
     Bullet *GetPrev();//Restituisce il puntatore al colpo precedente
     Bullet *GetNext();//Restituisce il puntatore al colpo successivo
-    int GetId();      //Restituisce l'id del colpo
     ~Bullet();        //Distruttore
 };
 

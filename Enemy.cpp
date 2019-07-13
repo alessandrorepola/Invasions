@@ -6,6 +6,7 @@ Enemy::Enemy()
     next = NULL;
     prev = NULL;
     life = ENEMY_LIFE;
+    generationTime = ENEMY_GENERATION_TIME;
 
     //Genera il lato da cui parte il nemico
     side = rand()%CONSOLE_SIDE;
@@ -45,7 +46,7 @@ void Enemy::CoordGeneration()
 }
 
 //Per il movimento del nemico
-void Enemy::Move()
+bool Enemy::Move()
 {
     clock_t time;
     double diff = INIT;
@@ -70,6 +71,7 @@ void Enemy::Move()
         //Sposta il nemico di una posizione in base alla direzione
         SetMovement();
     }
+    return true;
 }
 
 //Imposta una direzione in cui si puo' spostare la navicella
@@ -186,6 +188,14 @@ void Enemy::SetMovement()
     }
 }
 
+//Disegna i nemici
+void Enemy::Draw (WINDOW *win)
+{
+    wattron(win, COLOR_PAIR(GREEN));
+    mvwprintw(win, row, column-1 ,"\\0/");
+    wattroff(win, COLOR_PAIR(GREEN));
+}
+
 //Decrementa la vita del nemico
 bool Enemy::CheckDie()
 {
@@ -199,6 +209,11 @@ bool Enemy::CheckDie()
 
     return false;
 
+}
+
+double Enemy::GetGenerationTime()
+{
+    return generationTime;
 }
 
 //Distruttore

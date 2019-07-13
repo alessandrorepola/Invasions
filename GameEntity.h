@@ -16,13 +16,16 @@ class GameEntity
     int row;
     int column;
     int life;
+    int direction;
     clock_t start;
     GameEntity();
     virtual ~GameEntity();
     virtual int GetRow();
     virtual int GetColumn();
     virtual int GetLife();
-    virtual void Move() = 0;
+    virtual int GetDirection();
+    virtual void Draw(WINDOW*) = 0;
+    virtual bool Move() = 0;
 
 };
 

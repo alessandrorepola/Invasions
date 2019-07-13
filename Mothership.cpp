@@ -152,7 +152,7 @@ void Mothership::MoveEnemy()
 }
 
 //Gestisce lo sparo dei nemici
-void Mothership::EnemyShoot(Cannon &c)
+/*void Mothership::EnemyShoot(Cannon &c)
 {
     for(SetIter(); GetIter()!= NULL; NextEnemy())
     {
@@ -164,7 +164,7 @@ void Mothership::EnemyShoot(Cannon &c)
             c.MoveObject();
         }
     }
-}
+}*/
 
 //Disegna tutti i nemici
 void Mothership::Draw (WINDOW *win)
@@ -172,9 +172,7 @@ void Mothership::Draw (WINDOW *win)
     Enemy *d = first;
     while(d != NULL)
     {
-        wattron(win, COLOR_PAIR(GREEN));
-        mvwprintw(win, d->row, d->column-1 ,"\\0/");
-        wattroff(win, COLOR_PAIR(GREEN));
+        d->Draw(win);
         d = d->next;
     }
 }

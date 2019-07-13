@@ -22,7 +22,7 @@ class Mothership
     void RemoveEnemy(Enemy*);  //Rimuove il nemico specificato
     void MoveEnemy();          //Muove i nemici
     void Draw(WINDOW*);        //Disegna i nemici
-    void EnemyShoot(Cannon &); //Sparo dei nemici
+//    void EnemyShoot(Cannon &); //Sparo dei nemici
     void SetIter();            //Imposta il puntatore iter
     void SetIter(Enemy *);     //Imposta il puntatore iter
     void NextEnemy();          //Sposta il puntatore iter al colpo successivo

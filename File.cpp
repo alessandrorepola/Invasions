@@ -54,7 +54,7 @@ int File::ReadBestScore()
     return bestScore;
 }
 
-void File::WriteObj(Cannon c, Mothership aliens)
+/*void File::WriteObj(Cannon c, Mothership aliens)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
@@ -70,8 +70,8 @@ void File::WriteObj(Cannon c, Mothership aliens)
     {
         f.write ((char*) &aliens, sizeof(aliens));
     }
-    f.close();*/
-}
+    f.close();
+}*/
 
 void File::WriteOtherInfo(Spacecraft player, int score)
 {
@@ -83,7 +83,7 @@ void File::WriteOtherInfo(Spacecraft player, int score)
     f.close();
 }
 
-void File::ReadObj(Cannon *c, Mothership *aliens)
+/*void File::ReadObj(Cannon *c, Mothership *aliens)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::in);
     Bullet b;
@@ -117,8 +117,8 @@ void File::ReadObj(Cannon *c, Mothership *aliens)
         f.read ((char*) aliens, sizeof(Enemy));
         aliens->NextEnemy();
     }
-    f.close();*/
-}
+    f.close();
+}*/
 
 void File::ReadOtherInfo(Spacecraft *player, int *score)
 {

@@ -7,44 +7,24 @@
 
 List::List()
 {
-    start_enemy = clock();
-    start_player = clock();
+    start = clock();
 }
 
-void List::Add(int r, int c, int id)
+void List::Add(GameEntity *obj, double generation_time)
 {
     clock_t time;
     double diff = INIT;
-    double generation_time;
 
     //Controllo il tempo trascorso dall'ultimo colpo
     time = clock();
-
-    if (id == PLAYER)
-    {
-        generation_time = TIME_PLAYER_BULLET;
-        diff = (double)(time-start_player);
-    }
-    else
-    {
-        generation_time = TIME_ENEMY_BULLET;
-        diff = (double)(time-start_enemy);
-    }
+    diff = (double)(time-start);
     diff = diff/CLOCKS_PER_SEC;
 
     //Controllo se si può muovere
     if (diff >= generation_time)
     {
-        if (id == PLAYER)
-        {
-            start_player = time;
-        }
-        else
-        {
-            start_enemy = time;
-        }
-        Bullet *add = new Bullet(r,c,id);
-        EntityList.push_back(add);
+        start = time;
+        EntityList.push_back(obj);
     }
 }
 
@@ -62,7 +42,7 @@ void List::Remove(GameEntity* remobj)
     it = EntityList.begin();
     while(it != EntityList.end())
     {
-        if ((*it)== remobj)
+        if (GetIter() == remobj)
         {
             EntityList.erase(it++);
             break;
@@ -83,25 +63,17 @@ void List::Move()
         it = EntityList.begin();
         while(it != EntityList.end())
         {
-            (*it)->Move();
-            it++;
+            //Se la Funzione Move dell'oggetto restituisce false
+            //L'oggetto deve essere rimosso dalla lista
+            if (!(GetIter()->Move()))
+            {
+                EntityList.erase(it++);
+            }
+            else
+            {
+                ++it;
+            }
         }
-    }
-
-    for (it = EntityList.begin(); it != EntityList.end(); it++)
-    {
-//        if ((*it)->id == PLAYER)
-        {
-            //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
-            if((*it)->GetRow() < START_XY)
-                Remove(*it);
-        }
-        /*else
-        {
-            //Controllo se il colpo è arrivato al bordo inferiore della console e quindi deve essere cancellato
-            if(it->GetRow() >= GAME_WIN_HEIGHT)
-                RemoveObject(it);
-        }*/
     }
 }
 
@@ -111,20 +83,14 @@ void List::Draw (WINDOW *win)
     it = EntityList.begin();
     while(it != EntityList.end())
     {
-        //if (d->GetId() == PLAYER)
-        {
-            wattrset(win, COLOR_PAIR(RED));
-            mvwaddch(win, (*it)->row, (*it)->column, ACS_DIAMOND);
-            wattrset(win, COLOR_PAIR(WHITE));
-        }
-        /*else
-        {
-            wattrset(win, COLOR_PAIR(BLUE));
-            mvwaddch(win, d->row, d->column, ACS_LANTERN);
-            wattrset(win, COLOR_PAIR(WHITE));
-        }*/
+        GetIter()->Draw(win);
         it++;
     }
+}
+
+GameEntity *List::GetIter()
+{
+    return *it;
 }
 
 List::~List()

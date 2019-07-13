@@ -7,6 +7,7 @@ GameEntity::GameEntity()
     row = 0;
     column = 0;
     life = 0;
+    direction = 0;
 }
 
 
@@ -25,4 +26,9 @@ int GameEntity::GetColumn()
 int GameEntity::GetLife()
 {
     return life;
+}
+
+int GameEntity::GetDirection()
+{
+    return direction;
 }

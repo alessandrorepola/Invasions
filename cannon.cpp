@@ -1,6 +1,6 @@
 //File cannon.cpp
 #include "Cannon.h"
-
+/*
 Cannon::Cannon()
 {
     first = NULL;
@@ -173,7 +173,7 @@ void Cannon::MoveObject()
 
     for (SetIter(); GetIter()!= NULL; NextBullet())
     {
-        if (GetIter()->GetId() == PLAYER)
+        if (GetIter()->GetDirection() == NORTH)
         {
             //Controllo se il colpo è arrivato al bordo superiore della console e quindi deve essere cancellato
             if(GetIter()->GetRow() < START_XY)
@@ -270,4 +270,4 @@ Cannon::~Cannon()
     first = NULL;
     last = NULL;
     iter = NULL;
-}
+}*/

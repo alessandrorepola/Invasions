@@ -3,7 +3,7 @@
 #define CANNON_H_INCLUDED
 
 #include "Bullet.h"
-
+/*
 class Cannon
 {
 
@@ -31,6 +31,6 @@ class Cannon
     Bullet *GetIter();          //Restituisce il puntatore iter
     void DeleteList();          //Cancella gli elementi della lista
     ~Cannon();                  //Distruttore
-};
+};*/
 
 #endif // CANNON_H_INCLUDED
