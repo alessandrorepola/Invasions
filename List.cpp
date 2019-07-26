@@ -37,60 +37,63 @@ void List::DeleteList()
 }
 
 //Rimuove l'oggetto specificato come argomento dalla lista
-void List::Remove(GameEntity* remobj)
+void List::Remove(GameEntity* obj)
 {
-    it = EntityList.begin();
-    while(it != EntityList.end())
+    SetIter();
+    while(!EndList())
     {
-        if (GetIter() == remobj)
+        if (GetIter() == obj)
         {
             EntityList.erase(it++);
             break;
         }
-    }
-}
-
-//Per lo spostamento sullo schermo degli oggetti della lista
-void List::Move()
-{
-    //Controllo se ci sono oggetti
-    if (EntityList.empty())
-    {
-        return;
-    }
-    else
-    {
-        it = EntityList.begin();
-        while(it != EntityList.end())
-        {
-            //Se la Funzione Move dell'oggetto restituisce false
-            //L'oggetto deve essere rimosso dalla lista
-            if (!(GetIter()->Move()))
-            {
-                EntityList.erase(it++);
-            }
-            else
-            {
-                ++it;
-            }
-        }
+        SetNext();
     }
 }
 
 //Disegna i colpi
 void List::Draw (WINDOW *win)
 {
-    it = EntityList.begin();
-    while(it != EntityList.end())
+    SetIter();
+    while(!EndList())
     {
         GetIter()->Draw(win);
-        it++;
+        SetNext();
     }
+}
+
+void List::SetIter()
+{
+    it = EntityList.begin();
+}
+
+void List::SetNext()
+{
+    ++it;
 }
 
 GameEntity *List::GetIter()
 {
     return *it;
+}
+
+Enemy *List::GetEnemy()
+{
+    return (static_cast <Enemy*> (*it));
+}
+
+Bullet *List::GetBullet()
+{
+    return (static_cast <Bullet*> (*it));
+}
+
+bool List::EndList()
+{
+    if (it != EntityList.end())
+    {
+        return false;
+    }
+    return true;
 }
 
 List::~List()

@@ -35,7 +35,7 @@ void Globals::SetConsole()
 void Globals::SizeTerm()
 {
     #if defined (__WIN32__) && !defined (__CYGWIN__)
-        resize_term(WIN_HEIGHT+START_XY, WIN_WIDTH+START_XY);
+        resize_term(WIN_HEIGHT, WIN_WIDTH);
     #else
         //Anche se imposta le dimensioni del terminale le finestre vengono impostate sulle vecchie dimensioni
         //Bisogna, quindi, uscire dal programma e riavviarlo nella medesima console gia' ridimensionata

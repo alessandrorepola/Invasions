@@ -1,13 +1,13 @@
 #ifndef LIST_H_INCLUDED
 #define LIST_H_INCLUDED
 
-#include "GameEntity.h"
-#include "Bullet.h"
-#include "Enemy.h"
-//#include "Globals.h"
-#include <iostream>
 #include <list>
+#include <iostream>
+#include "Enemy.h"
+#include "Bullet.h"
+#include "GameEntity.h"
 
+class Enemy;
 class List
 {
     std::list <GameEntity*> EntityList;
@@ -21,14 +21,15 @@ class List
     void Add(GameEntity*, double);   //Genera un nuovo colpo con le sue coordinate
     void Remove(GameEntity*); //Rimuove il colpo specificato
     void Move();          //Muove i colpi
+    void Move(List&);          //Muove i colpi
     void Draw(WINDOW*);         //Disegna i colpi
-    void SetFirst(GameEntity*);    //Imposta il primo colpo letto dal file
-    void SetLast(GameEntity*);    //Imposta il primo colpo letto dal file
     void SetIter();             //Imposta il puntatore iter
-    void SetIter(GameEntity*);     //Imposta il puntatore iter
-    void Next();          //Sposta il puntatore iter al colpo successivo
+    void SetNext();          //Sposta il puntatore iter al colpo successivo
     GameEntity *GetIter();          //Restituisce il puntatore iter
+    bool EndList();
     void DeleteList();          //Cancella gli elementi della lista
+    Enemy *GetEnemy();
+    Bullet *GetBullet();
     ~List();                  //Distruttore*/
 };
 

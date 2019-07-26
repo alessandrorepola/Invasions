@@ -29,13 +29,14 @@ Bullet::Bullet(int r, int c, int d)
     row = r;
     column = c;
     direction = d;
+    life = BULLET_DAMAGE;
 
     //Inizializzo il tempo
     start = clock();
 }
 
 //Sposta il colpo
-bool Bullet::Move()
+void Bullet::Move(Window&)
 {
     clock_t time;
     double diff = INIT;
@@ -58,10 +59,6 @@ bool Bullet::Move()
             ++row;
         }
     }
-    //Restituisce il valore di Remove() negato
-    //quindi , se restituisce vero, Move() restituirà falso
-    //Perchè il colpo non deve più spostarsi ma essere cancellato
-     return !Remove();
 }
 
 //DIsegna il colpo
@@ -82,10 +79,10 @@ void Bullet::Draw(WINDOW *win)
 }
 
 //Restituisce l'id del colpo
-bool Bullet::Remove()
+bool Bullet::Remove(Window &win)
 {
     //Se va verso l'alto
-    if ((GetRow() < START_XY) || (GetRow() >= GAME_WIN_HEIGHT))
+    if ((GetRow() < win.GetY()) || (GetRow() >= win.GetHeight()-1))
     {
         return true;
     }
@@ -107,6 +104,4 @@ Bullet* Bullet::GetNext()
 //Distruttore
 Bullet::~Bullet()
 {
-    next = NULL;
-    prev = NULL;
 }

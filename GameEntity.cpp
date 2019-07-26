@@ -32,3 +32,13 @@ int GameEntity::GetDirection()
 {
     return direction;
 }
+
+void GameEntity::DecreaseLife(int damage)
+{
+    life = life - damage;
+
+    if (life < 0)
+    {
+        life = 0;
+    }
+}

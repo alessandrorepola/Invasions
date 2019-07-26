@@ -4,6 +4,7 @@
 
 #include "GameEntity.h"
 #include "List.h"
+#include "Bullet.h"
 #include "Graphics/Window.h"
 #include "Graphics/Menu.h"
 
@@ -14,16 +15,15 @@ class Spacecraft : public GameEntity
 
     public:
 
-    Spacecraft();          //Costruttore
-    bool Move() override;        //sposta la navicella
+    Spacecraft(Window&);          //Costruttore
+    void Move(Window&) override;        //sposta la navicella
     void DecreaseRow();
     void DecreaseColumn();
     void IncreaseRow();
     void IncreaseColumn();
     void CheckMove();      //Controlla lo spostamento della navicella
-    void Shoot(List&);   //Spara il colpo
-    void Draw(WINDOW*);    //Disegna la navicella
-    bool DecreaseLife(int); //Decrementa la vita della navicella
+    void Shoot(List&, Window&);   //Spara il colpo
+    void Draw(WINDOW*) override;    //Disegna la navicella
     ~Spacecraft();         //Distruttore
 };
 

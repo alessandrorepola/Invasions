@@ -24,8 +24,7 @@
 
 //Tempo di generazione dei colpi
 #define TIME_PLAYER_BULLET 0.3
-#define TIME_ENEMY_BULLET 4
-
+#define TIME_ENEMY_BULLET 5
 //Constante per inizializzare le variabili a zero
 #define INIT 0
 
@@ -33,12 +32,8 @@
 #define START_XY 1
 
 //Dimensioni della finestra principale
-#define WIN_WIDTH 103
-#define WIN_HEIGHT 37
-
-//Dimensioni della finestra di gioco
-#define GAME_WIN_WIDTH 100
-#define GAME_WIN_HEIGHT 30
+#define WIN_WIDTH 120
+#define WIN_HEIGHT 35
 
 //Dimensione del menu
 #define MENU_WIDTH 25

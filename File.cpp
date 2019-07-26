@@ -14,7 +14,7 @@
 //Controlla che sia gia' presente il file
 bool File::Exists()
 {
-    f.open(FILE_BESTSCORE, std::ios::binary);
+    f.open(FILE_BESTSCORE, std::ios::in);
 
     if (!f)
     {
@@ -64,7 +64,7 @@ int File::ReadBestScore()
     }
     f.close();
 
-    /*f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
+    f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
     for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
     {
@@ -108,7 +108,7 @@ void File::WriteOtherInfo(Spacecraft player, int score)
     }
     f.close();
 
-   /* f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::in);
+    f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::in);
 
     aliens->SetIter();
 

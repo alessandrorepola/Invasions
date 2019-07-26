@@ -1,59 +1,60 @@
 //File Enemy.cpp
-#include "Enemy.h"
 
-Enemy::Enemy()
+#include "Enemy.h"
+#include "Bullet.h"
+
+Enemy::Enemy(Window &win)
 {
     next = NULL;
     prev = NULL;
     life = ENEMY_LIFE;
+    lastBulletTime = clock();
     generationTime = ENEMY_GENERATION_TIME;
+    bulletGenerationTime = TIME_ENEMY_BULLET;
+    bulletDirection = SOUTH;
 
     //Genera il lato da cui parte il nemico
     side = rand()%CONSOLE_SIDE;
 
     //Posiziono il nemico
-    CoordGeneration();
+    CoordGeneration(win);
 
     //Calcolo il tempo dall'inizio del gioco alla generazione del nemico
     start = clock();
 }
 
 //Genera le posizioni iniziali del nemico
-void Enemy::CoordGeneration()
+void Enemy::CoordGeneration(Window &win)
 {
     switch (side)
     {
         case UP:
-            row = START_XY;
-            column = (rand()%(GAME_WIN_WIDTH-4))+2;
+            row = win.GetY();
+            column = (rand()%(win.GetWidth()-4))+2;
             break;
 
         case DOWN:
-            row = GAME_WIN_HEIGHT-1;
-            column = (rand()%(GAME_WIN_WIDTH-4))+2;
+            row = win.GetHeight()-2;
+            column = (rand()%(win.GetWidth()-4))+2;
             break;
 
         case LEFT:
-            column = START_XY+1;
-            row = (rand()%(GAME_WIN_HEIGHT-2))+1;
+            column = win.GetX()+1;
+            row = (rand()%(win.GetHeight()-2))+1;
             break;
 
         case RIGHT:
-            column = GAME_WIN_WIDTH-2;
-            row = (rand()%(GAME_WIN_HEIGHT-2))+1;
+            column = win.GetWidth()-3;
+            row = (rand()%(win.GetHeight()-2))+1;
             break;
     }
 }
 
 //Per il movimento del nemico
-bool Enemy::Move()
+void Enemy::Move(Window &win)
 {
     clock_t time;
     double diff = INIT;
-
-    //Controllo se ci sono altri nemici
-    if (next != NULL)
-        next->Move();
 
     //Controllo il tempo trascorso dall'ultimo controllo
     time = clock();
@@ -66,22 +67,21 @@ bool Enemy::Move()
         start = time;
 
         //Imposta una direzione in cui si puo' spostare il nemico
-        SetDirection();
+        SetDirection(win);
 
         //Sposta il nemico di una posizione in base alla direzione
         SetMovement();
     }
-    return true;
 }
 
 //Imposta una direzione in cui si puo' spostare la navicella
-void Enemy::SetDirection()
+void Enemy::SetDirection(Window &win)
 {
     //Controllo se il nemico si trova lungo il bordo superiore della console
-    if (row <= START_XY)
+    if (row <= win.GetY())
     {
         //Controllo se si trova nell'angolo in alto a sinistra
-        if (column <= START_XY+1)
+        if (column <= win.GetX()+1)
         {
             //Genero una direzione in cui puo' muoversi il nemico
             while ((direction != EST) && (direction != SOUTH) && (direction != SOUTH_EST))
@@ -89,7 +89,7 @@ void Enemy::SetDirection()
         }
 
         //Altrimenti se si trova nell'angolo in alto a destra
-        else if (column >= GAME_WIN_WIDTH-2)
+        else if (column >= win.GetWidth()-3)
         {
             //Genero una direzione in cui puo' muouersi il nemico
             while ((direction != WEST) && (direction != SOUTH) && (direction != SOUTH_WEST))
@@ -105,17 +105,17 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova lungo il bordo inferiore della console
-    else if (row >= GAME_WIN_HEIGHT-1)
+    else if (row >= win.GetHeight()-2)
     {
         //Controllo se si trova nell'angolo in basso a sinistra
-        if (column <= START_XY+1)
+        if (column <= win.GetX()+1)
         {
             while ((direction != NORTH) && (direction != NORTH_EST))
                 direction = rand()%NORTH_WEST;
         }
 
         //Altrimenti se si trova nell'angolo in basso a destra
-        else if (column >= GAME_WIN_WIDTH-2)
+        else if (column >= win.GetWidth()-3)
         {
             while ((direction != NORTH) && (direction != NORTH_WEST))
                 direction = rand()%SOUTH_WEST;
@@ -130,7 +130,7 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova sul lato sinistro della console
-    else if (column <= START_XY+1)
+    else if (column <= win.GetX()+1)
     {
         //Non ricontrollo nuovamente se il nemico è negli angoli in quanto già è stato verificato precedentemente
         while ((direction != NORTH) && (direction != SOUTH) && (direction != EST) && (direction != NORTH_EST) && (direction != SOUTH_EST))
@@ -138,7 +138,7 @@ void Enemy::SetDirection()
     }
 
     //Controllo se il nemico si trova sul lato destro della console
-    else if (column >= GAME_WIN_WIDTH-2)
+    else if (column >= win.GetWidth()-3)
     {
         while ((direction != NORTH) && (direction != SOUTH) && (direction != WEST) && (direction != NORTH_WEST) && (direction != SOUTH_WEST))
             direction = rand()%SOUTH_WEST;
@@ -194,6 +194,27 @@ void Enemy::Draw (WINDOW *win)
     wattron(win, COLOR_PAIR(GREEN));
     mvwprintw(win, row, column-1 ,"\\0/");
     wattroff(win, COLOR_PAIR(GREEN));
+}
+
+//Sparo del nemico
+void Enemy::Shoot(List &EnemyBulletList)
+{
+    clock_t time;
+    double diff = INIT;
+
+    //Controllo il tempo trascorso dall'ultimo colpo
+    time = clock();
+    diff = (double)(time-lastBulletTime);
+    diff = diff/CLOCKS_PER_SEC;
+
+    //Controllo se si può muovere
+    if (diff >= bulletGenerationTime)
+    {
+        lastBulletTime = time;
+        Bullet *bulletp = new Bullet(GetRow()+1, GetColumn(), bulletDirection);
+        EnemyBulletList.Add(bulletp, 0);
+    }
+
 }
 
 //Decrementa la vita del nemico

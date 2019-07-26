@@ -23,9 +23,8 @@ int main()
             game.MainScreen();
         }
 
-        //loop "infinito" della partita
+        //loop della partita
         Restart = game.StartGameLoop();
     }
-    //endwin(); //Termina la modalita' curses
     return 0;
 }

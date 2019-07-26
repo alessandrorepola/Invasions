@@ -10,16 +10,15 @@ Game::Game()
 {
     score = INIT;
 
-//    SetBestScore();
+    SetBestScore();
 
-    //Dichiaro una finestra di gioco
-    game_win = new Window(main_win.GetWin());
+    player = new Spacecraft(*game_win);
 
-    //Dichiaro una finestra per la visualizzazione del punteggio
-    score_win = new Window(main_win.GetWin(), game_win->GetX(), game_win->GetHeight()+START_XY, game_win->GetWidth()/2, main_win.GetHeight()-game_win->GetHeight()-2);
+    //Finestra di gioco
+    game_win = new Window(main_win.GetWin(), main_win.GetX(), main_win.GetY(), main_win.GetWidth()-(main_win.GetWidth()/6), main_win.GetHeight());
 
-    //dichiaro una finestra per la visualizzazione della vita
-    life_win = new Window(main_win.GetWin(), score_win->GetWidth()+START_XY, score_win->GetY(), score_win->GetWidth()+1, score_win->GetHeight());
+    //Finestra per la visualizzazione del punteggio
+    info_win = new Window(main_win.GetWin(), game_win->GetWidth()+1, main_win.GetY(), main_win.GetWidth()/6, main_win.GetHeight());
 }
 
 //Stampa a video l'Help
@@ -108,14 +107,14 @@ bool Game::StartGameLoop()
                 return true;
 
             case MAIN_MENU:
-//                SaveBestScore();
+                SaveBestScore();
 //                SaveGameStatus();
                 BulletList.DeleteList();
                 EnemyList.DeleteList();
                 return false;
 
             case EXIT:
-//                SaveBestScore();
+                SaveBestScore();
 //                SaveGameStatus();
                 BulletList.DeleteList();
                 EnemyList.DeleteList();
@@ -124,33 +123,27 @@ bool Game::StartGameLoop()
         }
 
         //Sposta la navicella del giocatore
-        player.Move();
+        player->Move(*game_win);
 
         //Sparo del giocatore
-        player.Shoot(BulletList);
+        player->Shoot(BulletList, *game_win);
 
-        //Sparo del nemico
-        //aliens.EnemyShoot(BulletList);
-
-        //Sposta gli alieni
-        EnemyList.Move();
-
-        //Controlla se il nemico è stato colpito
-//        EnemyHitted();
+        //Routine del nemico che comprende
+        //Sparo
+        //Spostamento
+        EnemyRoutine();
 
         //Controlla se il nemico è stato colpito
-//        PlayerHitted();
+        EnemyHitted();
 
-        /*PROVVISORIO*/
-        //Generazione dei nemici
-        ep = new Enemy;
-        EnemyList.Add(ep, ep->GetGenerationTime());
+        //Controlla se il nemico è stato colpito
+        PlayerHitted();
 
         //Aggiorno la schermata
         UpdateScreen();
 
         //Contrlla se c'è stata una collisione tra il nemico e la navicella
-//        Collision();
+        Collision();
 
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
         usleep(1);
@@ -188,11 +181,9 @@ void Game::UpdateScreen()
 {
     //Disegno la finestra di gioco
     game_win->PrintWinBorder();
+    info_win->PrintWinBorder();
     main_win.PrintWinBorder();
-    PrintLife();
-
-    //Stampo il punteggio
-    PrintScore();
+    //PrintLife();
 
     //stampa i colpi sparati dalla navicella del giocatore
     BulletList.Draw(game_win->GetWin());
@@ -200,8 +191,11 @@ void Game::UpdateScreen()
     //Stampa i nemici
     EnemyList.Draw(game_win->GetWin());
 
+    //Stampa i colpi dei nemici
+    EnemyBulletList.Draw(game_win->GetWin());
+
     //Stampa la navicella del giocatore
-    player.Draw(game_win->GetWin());
+    player->Draw(game_win->GetWin());
 
     //Aggiorno la finestra di gioco
     wrefresh(main_win.GetWin());
@@ -217,19 +211,19 @@ int Game::UserInput()
     {
         //tasti direzionali
         case KEY_UP:
-        player.DecreaseRow();
+        player->DecreaseRow();
         break;
 
         case KEY_DOWN:
-        player.IncreaseRow();
+        player->IncreaseRow();
         break;
 
         case KEY_LEFT:
-        player.DecreaseColumn();
+        player->DecreaseColumn();
         break;
 
         case KEY_RIGHT:
-        player.IncreaseColumn();
+        player->IncreaseColumn();
         break;
 
         case 'q':
@@ -251,28 +245,62 @@ int Game::UserInput()
     return 0;
 }
 
+//Routine dei nemici per lo sparo e lo spostamento el la generazione
+void Game::EnemyRoutine()
+{
+    //Genera un nuovo nemico
+    Enemy *enemyp = new Enemy(*game_win);
+    EnemyList.Add(enemyp, enemyp->GetGenerationTime());
+
+    //Iterazioni su tutti gli oggetti della lista
+    for (EnemyList.SetIter(); !EnemyList.EndList(); EnemyList.SetNext())
+    {
+        //Sparo
+        EnemyList.GetEnemy()->Shoot(EnemyBulletList);  //Generazione del colpo
+        for (EnemyBulletList.SetIter(); !EnemyBulletList.EndList(); EnemyBulletList.SetNext())
+        {
+            EnemyBulletList.GetBullet()->Move(*game_win);   //Spostamento di tutti i colpi sparati
+
+            //Controlla se ci sono colpi da cancellare
+            if (EnemyBulletList.GetBullet()->Remove(*game_win))
+            {
+                EnemyBulletList.Remove(EnemyBulletList.GetBullet());
+            }
+        }
+
+        //Spostamento
+        EnemyList.GetEnemy()->Move(*game_win);
+    }
+
+}
+
 //Controlla se è stato colpito il nemico
-/*void Game::EnemyHitted()
+void Game::EnemyHitted()
 {
     //Scansiona tutti i nemici
-    for (aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
+    for (EnemyList.SetIter(); !EnemyList.EndList(); EnemyList.SetNext())
     {
         //Scanziona tutti i colpi
-        for (BulletList.SetIter(); BulletList.GetIter()!= NULL; BulletList.Next())
+        for (BulletList.SetIter(); !BulletList.EndList(); BulletList.SetNext())
         {
             //Controllo se il colpo è stato sparato dal giocatore
-            if (.GetIter()->GetId() == PLAYER)
+            if (BulletList.GetIter()->GetDirection() == NORTH)
             {
                 //Confronto le coordinate del colpo con quelle del nemico
-                if((c.GetIter()->GetRow() == aliens.GetIter()->GetRow()) && ((c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()-1) || (c.GetIter()->GetColumn() == aliens.GetIter()->GetColumn()+1)))
+                if((BulletList.GetIter()->GetRow() == EnemyList.GetIter()->GetRow()) &&
+                   ((BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()) ||
+                    (BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()-1) ||
+                    (BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()+1)))
                 {
+                    EnemyList.GetIter()->DecreaseLife(BulletList.GetIter()->GetLife());
+
                     //Cancello il colpo
-                    c.RemoveObject(c.GetIter());
+                    BulletList.Remove(BulletList.GetIter());
 
                     //Controllo se il nemico è morto
-                    if (aliens.GetIter()->CheckDie())
+                    if (EnemyList.GetIter()->GetLife() == 0)
                     {
-                        aliens.RemoveEnemy(aliens.GetIter());
+                        EnemyList.Remove(EnemyList.GetIter());
                         UpdateScore(20);
                         break;
                     }
@@ -285,29 +313,32 @@ int Game::UserInput()
 //Controlla se è stato colpito il giocatore
 void Game::PlayerHitted()
 {
-    //Scanziona tutti i colpi
-    for (c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
+    //Scanziona tutti i colpi nemici
+    for (EnemyBulletList.SetIter(); !EnemyBulletList.EndList(); EnemyBulletList.SetNext())
     {
-        //Controllo se il colpo è stato sparato dal nemico
-        if (c.GetIter()->GetId() == ENEMY)
+        //Confronto le coordinate del colpo con quelle della namicella
+        if((EnemyBulletList.GetIter()->GetRow() == player->GetRow()) &&
+            ((EnemyBulletList.GetIter()->GetColumn() == player->GetColumn()) ||
+            (EnemyBulletList.GetIter()->GetColumn() == player->GetColumn()-1) ||
+            (EnemyBulletList.GetIter()->GetColumn() == player->GetColumn()-2) ||
+            (EnemyBulletList.GetIter()->GetColumn() == player->GetColumn()+1) ||
+            (EnemyBulletList.GetIter()->GetColumn() == player->GetColumn()+2)))
         {
-            //Confronto le coordinate del colpo con quelle della namicella
-            if((c.GetIter()->GetRow() == player.GetRow()) && ((c.GetIter()->GetColumn() == player.GetColumn()) || (c.GetIter()->GetColumn() == player.GetColumn()-1) || (c.GetIter()->GetColumn() == player.GetColumn()-2) || (c.GetIter()->GetColumn() == player.GetColumn()+1) || (c.GetIter()->GetColumn() == player.GetColumn()+2)))
+            //Cancello il colpo
+            EnemyBulletList.Remove(EnemyBulletList.GetIter());
+
+            //life_win->PrintWinBorder();
+
+            player->DecreaseLife(BULLET_DAMAGE);
+
+            //Controllo se la navicella del giocatore è morta
+            if (player->GetLife() == 0)
             {
-                //Cancello il colpo
-                c.RemoveObject(c.GetIter());
-
-                life_win->PrintWinBorder();
-
-                //Controllo se la navicella del giocatore è morta
-                if (player.DecreaseLife(BULLET_DAMAGE))
-                {
-                    UpdateScreen();
-                    mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
-                    refresh();
-                    delay_output(5000);
-                    exit(0);
-                }
+                UpdateScreen();
+                mvprintw(30/2,43,"SEI MORTO");
+                refresh();
+                delay_output(5000);
+                exit(0);
             }
         }
     }
@@ -317,26 +348,30 @@ void Game::PlayerHitted()
 void Game::Collision()
 {
     //Controllo se c'è stata una collisione tra il nemico e la navicella
-    for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
+    for(EnemyList.SetIter(); !EnemyList.EndList(); EnemyList.SetNext())
     {
-        if (((player.GetRow() == aliens.GetIter()->GetRow()) && ((player.GetColumn() == aliens.GetIter()->GetColumn()) || (player.GetColumn() == aliens.GetIter()->GetColumn()-1) || (player.GetColumn() == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()-2 == aliens.GetIter()->GetColumn()+1) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()) || (player.GetColumn()+2 == aliens.GetIter()->GetColumn()-1))))
+        if (((player->GetRow() == EnemyList.GetIter()->GetRow()) &&
+             ((player->GetColumn() == EnemyList.GetIter()->GetColumn()) ||
+              (player->GetColumn() == EnemyList.GetIter()->GetColumn()-1) ||
+              (player->GetColumn() == EnemyList.GetIter()->GetColumn()+1) ||
+              (player->GetColumn()-2 == EnemyList.GetIter()->GetColumn()) ||
+              (player->GetColumn()-2 == EnemyList.GetIter()->GetColumn()+1) ||
+              (player->GetColumn()+2 == EnemyList.GetIter()->GetColumn()) ||
+              (player->GetColumn()+2 == EnemyList.GetIter()->GetColumn()-1))))
         {
-            //Controllo i punti vita rimasti alla navicella del giocatore
-            if(player.DecreaseLife(aliens.GetIter()->GetLife()))
-            {
-                //Rimuovo il nemico
-                aliens.RemoveEnemy(aliens.GetIter());
+            player->DecreaseLife(EnemyList.GetIter()->GetLife());
 
+            //Rimuovo il nemico
+            EnemyList.Remove(EnemyList.GetIter());
+
+            //Controllo i punti vita rimasti alla navicella del giocatore
+            if(player->GetLife() == 0)
+            {
                 UpdateScreen();
-                mvprintw(GAME_WIN_HEIGHT/2,43,"SEI MORTO");
+                mvprintw(30/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
                 exit(0);
-            }
-            else
-            {
-                //Rimuovo il nemico
-                aliens.RemoveEnemy(aliens.GetIter());
             }
 
             //Aggiorno il punteggio
@@ -365,7 +400,7 @@ void Game::SaveBestScore()
 //Inizializza la variabile highScore
 void Game::SetBestScore()
 {
-    //Controllo che i file esistono
+    //Controllo che i file esistano
     if(!f.Exists())
     {
         bestScore = INIT;
@@ -375,7 +410,7 @@ void Game::SetBestScore()
         bestScore = f.ReadBestScore();
     }
 }
-
+/*
 //Salva lo stato attuale della partita
 void Game::SaveGameStatus()
 {
@@ -399,10 +434,10 @@ Window &Game::GetMainWin()
 }
 
 //Inizializza il punteggio del giocatore
-void Game::PrintScore()
+/*void Game::PrintScore()
 {
     //Stampo i bordi della finestra
-//    UpdateScore(INIT);
+    UpdateScore(INIT);
     werase(score_win->GetWin());
     wprintw(score_win->GetWin(), "\n Punteggio: %d",score);
     wprintw(score_win->GetWin(), "\n Record: %d",bestScore);
@@ -416,12 +451,11 @@ void Game::PrintLife()
     wprintw(life_win->GetWin(), "\n Punti vita: %d",player.GetLife());
     wprintw(life_win->GetWin(), "\n Scudo: %d",INIT);
     life_win->PrintWinBorder();
-}
+}*/
 
 //Distruttore
 Game::~Game()
 {
     delete game_win;
-    delete score_win;
-    delete life_win;
+    delete info_win;
 }

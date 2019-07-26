@@ -4,6 +4,7 @@
 
 #include "Globals.h"
 #include "GameEntity.h"
+#include "Graphics/Window.h"
 
 class Bullet : public GameEntity
 {
@@ -11,14 +12,13 @@ class Bullet : public GameEntity
 
     Bullet *next;     //Puntatore al colpo successivo
     Bullet *prev;     //Puntatore al colpo precedente
-    bool Move() override;      //Muove il colpo sparato
     void Draw(WINDOW*) override;  //Disegna l'oggetto colpo sullo schermo
-    bool Remove();     //Controlla se il colpo deve essere eliminato
 
     public:
 
     Bullet();
-
+    void Move(Window&) override;      //Muove il colpo sparato
+    bool Remove(Window&);     //Controlla se il colpo deve essere eliminato
     Bullet(int, int, int); //Costruttore che prende come argomento la riga e la colonna
     Bullet(Bullet&);   //Costruttore che ricrea un colpo con le caratteristiche di quello salvato su file
     Bullet *GetPrev();//Restituisce il puntatore al colpo precedente

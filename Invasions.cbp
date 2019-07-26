@@ -53,7 +53,6 @@
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="List.cpp" />
 		<Unit filename="List.h" />
-		<Unit filename="Mothership.cpp" />
 		<Unit filename="Mothership.h" />
 		<Unit filename="Spacecraft.cpp" />
 		<Unit filename="Spacecraft.h" />

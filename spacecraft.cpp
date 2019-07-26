@@ -2,14 +2,14 @@
 #include "Spacecraft.h"
 
 //Costruttore
-Spacecraft::Spacecraft()
+Spacecraft::Spacecraft(Window &win)
 {
     //Vita iniziale della navicella
     life = SPACECRAFT_LIFE;
 
     //Coordinate iniziali della navicella
-    row = GAME_WIN_HEIGHT/2;
-    column = GAME_WIN_WIDTH/2;
+    row = win.GetHeight()/2;
+    column = win.GetWidth()/2;
     bulletDirection = NORTH;
     bulletGenerationTime = TIME_PLAYER_BULLET;
 }
@@ -39,30 +39,24 @@ void Spacecraft::IncreaseRow()
 }
 
 //Movimeto della navicella
-bool Spacecraft::Move()
+void Spacecraft::Move(Window& win)
 {
-    CheckMove();
-    return true;
-}
-
-//Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
-void Spacecraft::CheckMove()
-{
-	if (column <= START_XY+2)
+    //Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
+    if (column <= win.GetX()+2)
 	{
-		column = START_XY+2;
+		column = win.GetX()+2;
 	}
-	if (row <= START_XY)
+	if (row <= win.GetY())
 	{
-		row = START_XY;
+		row = win.GetY();
 	}
-	if (column >= GAME_WIN_WIDTH-3)
+	if (column >= win.GetWidth()-4)
 	{
-		column = GAME_WIN_WIDTH-3;
+		column = win.GetWidth()-4;
 	}
-	if (row >= GAME_WIN_HEIGHT)
+	if (row >= win.GetHeight()-1)
 	{
-		row = GAME_WIN_HEIGHT-1;
+		row = win.GetHeight()-2;
 	}
 }
 
@@ -76,25 +70,21 @@ void Spacecraft::Draw (WINDOW *win)
 }
 
 //Spara il colpo
-void Spacecraft::Shoot(List &BulletList)
+void Spacecraft::Shoot(List &PlayerBulletList, Window &win)
 {
     Bullet *pbullet = new Bullet(GetRow()-1, GetColumn(), bulletDirection);
-    BulletList.Add(pbullet, bulletGenerationTime);
-    BulletList.Move();
-}
+    PlayerBulletList.Add(pbullet, bulletGenerationTime);
 
-//Decremanta la vita della navicella
-bool Spacecraft::DecreaseLife(int damage)
-{
-    life = life-damage;
-
-    //Controllo se la navicella è stata distrutta
-    if (life <= 0)
+    for(PlayerBulletList.SetIter(); !PlayerBulletList.EndList(); PlayerBulletList.SetNext())
     {
-        life = 0;
-        return true;
+        PlayerBulletList.GetBullet()->Move(win);
+
+        //Controlla se ci sono colpi da cancellare
+        if (PlayerBulletList.GetBullet()->Remove(win))
+        {
+            PlayerBulletList.Remove(PlayerBulletList.GetBullet());
+        }
     }
-    return false;
 }
 
 //Distruttore

@@ -17,12 +17,11 @@ class Game
     Window main_win;        //Apro una finestra principale
     Window *game_win;       //Dichiaro un puntatore alla finestra di gioco
     Window *start_message;  //Messaggio iniziale
-    Window *score_win;      //Puntatore alla finestra per il punteggio
-    Window *life_win;       //Puntatore alla finestra con la vita del giocatore
-    Spacecraft player;      //Dichiaro un oggetto di tipo navicella per il giocatore
+    Window *info_win;      //Puntatore alla finestra per le informazioni sulla partita
+    Spacecraft *player;      //Dichiaro un oggetto di tipo navicella per il giocatore
 	List BulletList;        //Dichiaro una lista per gestire i colpi
+	List EnemyBulletList;
 	List EnemyList;         //Dichiaro una lista per gestire i nemici
-	Enemy *ep;              //Puntatore al nemico da aggiungere alla lista
 	File f;                 //Oggetto per la gestione dei file
 	int score;              //Per il punteggio
 	int bestScore;          //Miglior punteggio
@@ -33,6 +32,7 @@ class Game
     void UserChoice(int);   //Scelta dell'utente relativa al menu principale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
     int UserInput();        //Gestisce l'input per lo spastamento della navicella del giocatore
+    void EnemyRoutine();    //Routine dei nemici che comprende sparo e spostamento
     void EnemyHitted();     //Controlla se il nemico è stato colpito
     void PlayerHitted();    //Controlla se il giocatore è stato colpito
     void Collision();       //Controlla se la navicella alleata è stata colpita
