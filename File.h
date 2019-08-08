@@ -6,8 +6,6 @@
 #ifndef FILE_H_INCLUDED
 #define FILE_H_INCLUDED
 
-#include "Cannon.h"
-#include "Mothership.h"
 #include "Spacecraft.h"
 #include <iostream>
 #include <fstream>
@@ -20,12 +18,12 @@ class File
 
     bool Exists();
     void Create();
-    int ReadBestScore();
-//    void ReadObj(Cannon*, Mothership*);
-    void ReadOtherInfo(Spacecraft*, int*);
-    void WriteBestScore(int);
- //   void WriteObj(Cannon, Mothership);
-    void WriteOtherInfo(Spacecraft, int);
+    void Restore(int&);
+    void Restore(List*);
+    void Restore(Spacecraft*);
+    void Save(int);
+    void Save(List*);
+    void Save(Spacecraft);
 };
 
 #endif // FILE_H_INCLUDED

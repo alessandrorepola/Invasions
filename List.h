@@ -16,21 +16,21 @@ class List
 
     public:
 
-    List();
+    List();                         //Costruttore di default
     GameEntity *GetFirst();         //Restituisce il puntatore al primo elemento della lista
-    void Add(GameEntity*, double);   //Genera un nuovo colpo con le sue coordinate
-    void Remove(GameEntity*); //Rimuove il colpo specificato
-    void Move();          //Muove i colpi
-    void Move(List&);          //Muove i colpi
-    void Draw(WINDOW*);         //Disegna i colpi
-    void SetIter();             //Imposta il puntatore iter
-    void SetNext();          //Sposta il puntatore iter al colpo successivo
+    void Add(GameEntity*);          //Aggiunge alla lista gli oggetti salvati su file
+    void Add(GameEntity*, double);  //Aggiunge un nuovo oggetto alla lista
+    void Remove(GameEntity*);       //Rimuove l'oggetto specificato
+    void Draw(WINDOW*);             //Disegna gli oggetti della lista
+    void SetIter();                 //Imposta il puntatore iter
+    void SetNext();                 //Sposta il puntatore iter al colpo successivo
     GameEntity *GetIter();          //Restituisce il puntatore iter
-    bool EndList();
-    void DeleteList();          //Cancella gli elementi della lista
-    Enemy *GetEnemy();
-    Bullet *GetBullet();
-    ~List();                  //Distruttore*/
+    bool EndList();                 //Controlla se l'iteratore e' alla fine della lista
+    bool Empty();
+    void DeleteList();              //Cancella gli elementi della lista
+    Enemy *GetEnemy();              //Restituisce un puntatore di tipo Enemy
+    Bullet *GetBullet();            //Restituisce un puntatore di tipo Bullet
+    ~List();                        //Distruttore
 };
 
 #endif // LIST_H_INCLUDED

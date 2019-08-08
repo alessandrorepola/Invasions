@@ -38,76 +38,51 @@ void File::Create()
     f.close();
 }
 
-void File::WriteBestScore(int bestScore)
+void File::Save(int bestScore)
 {
     f.open(FILE_BESTSCORE, std::ios::binary | std::ios::trunc | std::ios::out);
     f.write ((char*) &bestScore, sizeof(int));
     f.close();
 }
 
-int File::ReadBestScore()
+void File::Restore(int& bestScore)
 {
-    int bestScore;
     f.open(FILE_BESTSCORE, std::ios::binary | std::ios::in);
     f.read ((char*) &bestScore, sizeof(int));
     f.close();
-    return bestScore;
 }
 
-/*void File::WriteObj(Cannon c, Mothership aliens)
+void File::Save(List *PlayerBulletList)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
-    for(c.SetIter(); c.GetIter()!= NULL; c.NextBullet())
+    for(PlayerBulletList->SetIter(); !PlayerBulletList->EndList(); PlayerBulletList->SetNext())
     {
-        f.write ((char*) c.GetIter(), sizeof(Bullet));
+        f.write ((char*) PlayerBulletList->GetBullet(), sizeof(Bullet));
     }
     f.close();
+}
 
-    f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
-
-    for(aliens.SetIter(); aliens.GetIter()!= NULL; aliens.NextEnemy())
-    {
-        f.write ((char*) &aliens, sizeof(aliens));
-    }
-    f.close();
-}*/
-
-void File::WriteOtherInfo(Spacecraft player, int score)
+void File::Save(Spacecraft player)
 {
     f.open(FILE_OTHER_INFO, std::ios::binary | std::ios::trunc | std::ios::out);
 
     f.write ((char*) &player, sizeof(Spacecraft));
-    f.write ((char*) &score, sizeof(int));
 
     f.close();
 }
 
-/*void File::ReadObj(Cannon *c, Mothership *aliens)
+void File::Restore(List* PlayerBulletList)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::in);
     Bullet b;
     while (f.good())
     {
         f.read ((char*) &b, sizeof(Bullet));
-        if (b.GetPrev() == NULL)
-        {
-            c->SetFirst(&b);
-            c->SetIter();
-            c->NextBullet();
-        }
-        else if (b.GetNext() == NULL)
-        {
-            c->SetLast(&b);
-        }
-        else
-        {
-            c->SetIter(&b);
-            c->NextBullet();
-        }
+        PlayerBulletList->Add(&b);
     }
     f.close();
-
+/*
     f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::in);
 
     aliens->SetIter();
@@ -117,15 +92,14 @@ void File::WriteOtherInfo(Spacecraft player, int score)
         f.read ((char*) aliens, sizeof(Enemy));
         aliens->NextEnemy();
     }
-    f.close();
-}*/
+    f.close();*/
+}
 
-void File::ReadOtherInfo(Spacecraft *player, int *score)
+void File::Restore(Spacecraft *player)
 {
     f.open(FILE_OTHER_INFO, std::ios::binary | std::ios::in);
 
     f.read ((char*) player, sizeof(Spacecraft));
-    f.read ((char*) score, sizeof(int));
 
     f.close();
 }

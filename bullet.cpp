@@ -3,28 +3,12 @@
 
 Bullet::Bullet()
 {
-    next = NULL;
-    prev = NULL;
-}
 
-//Costruttore che ricrea un colpo con le caratteristiche di quello salvato su file
-Bullet::Bullet(Bullet &bull)
-{
-    //Inizializzo le coordinate del colpo
-    row = bull.GetRow();
-    column = bull.GetColumn();
-    direction = bull.GetDirection();
-
-    //Inizializzo il tempo
-    start = bull.start;
 }
 
 //Costruttore che posiziona il colpo
 Bullet::Bullet(int r, int c, int d)
 {
-    next = NULL;
-    prev = NULL;
-
     //Inizializzo le coordinate del colpo
     row = r;
     column = c;
@@ -36,7 +20,7 @@ Bullet::Bullet(int r, int c, int d)
 }
 
 //Sposta il colpo
-void Bullet::Move(Window&)
+void Bullet::Move(Window& win)
 {
     clock_t time;
     double diff = INIT;
@@ -87,18 +71,6 @@ bool Bullet::Remove(Window &win)
         return true;
     }
     return false;
-}
-
-//Restituisce il puntatore al colpo precedente
-Bullet* Bullet::GetPrev()
-{
-    return prev;
-}
-
-//Restituisce il puntatore al colpo successivo
-Bullet* Bullet::GetNext()
-{
-    return next;
 }
 
 //Distruttore

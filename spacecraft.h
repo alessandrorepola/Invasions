@@ -24,7 +24,7 @@ class Spacecraft : public GameEntity
     void CheckMove();      //Controlla lo spostamento della navicella
     void Shoot(List&, Window&);   //Spara il colpo
     void Draw(WINDOW*) override;    //Disegna la navicella
-    ~Spacecraft();         //Distruttore
+    ~Spacecraft();        //Distruttore
 };
 
 #endif // SPACECRAFT_H_INCLUDED

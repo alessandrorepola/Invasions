@@ -34,8 +34,6 @@
 		</Compiler>
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
-		<Unit filename="Cannon.cpp" />
-		<Unit filename="Cannon.h" />
 		<Unit filename="Enemy.cpp" />
 		<Unit filename="Enemy.h" />
 		<Unit filename="File.cpp" />
@@ -53,7 +51,8 @@
 		<Unit filename="Invasions.cpp" />
 		<Unit filename="List.cpp" />
 		<Unit filename="List.h" />
-		<Unit filename="Mothership.h" />
+		<Unit filename="Ncurses.cpp" />
+		<Unit filename="Ncurses.h" />
 		<Unit filename="Spacecraft.cpp" />
 		<Unit filename="Spacecraft.h" />
 		<Extensions>

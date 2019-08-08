@@ -4,6 +4,7 @@
 **********************************************************/
 
 #include "Game.h"
+#include "Widgets.h"
 
 //Costruttore
 Game::Game()
@@ -12,44 +13,14 @@ Game::Game()
 
     SetBestScore();
 
-    player = new Spacecraft(*game_win);
-
     //Finestra di gioco
     game_win = new Window(main_win.GetWin(), main_win.GetX(), main_win.GetY(), main_win.GetWidth()-(main_win.GetWidth()/6), main_win.GetHeight());
 
     //Finestra per la visualizzazione del punteggio
     info_win = new Window(main_win.GetWin(), game_win->GetWidth()+1, main_win.GetY(), main_win.GetWidth()/6, main_win.GetHeight());
-}
 
-//Stampa a video l'Help
-void Game::Help(Window &parent)
-{
-    Window help(parent.GetWin(), parent.GetWidth()/4, parent.GetHeight()/4, parent.GetWidth()/2, parent.GetHeight()/2);
-    werase(parent.GetWin());
-    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
-    wprintw(help.GetWin(), "\n                  Comandi di gioco\n");
-    wprintw(help.GetWin(), "\n      Comando                     Tasto\n");
-    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
-    wprintw(help.GetWin(), "\n      Sopra:                        "); waddch(help.GetWin(),ACS_UARROW);
-    wprintw(help.GetWin(), "\n      Sotto:                        "); waddch(help.GetWin(),ACS_DARROW);
-    wprintw(help.GetWin(), "\n      Destra:                       "); waddch(help.GetWin(),ACS_RARROW);
-    wprintw(help.GetWin(), "\n      Sinistra:                     "); waddch(help.GetWin(),ACS_LARROW);
-    wprintw(help.GetWin(), "\n      Pausa:                        p");
-    wprintw(help.GetWin(), "\n      Esci:                         q");
-    wattrset(help.GetWin(), COLOR_PAIR(CYAN));
-    wprintw(help.GetWin(), "\n\n                  Comandi del menu\n");
-    wattrset(help.GetWin(), COLOR_PAIR(WHITE));
-    wprintw(help.GetWin(), "\n      Voce Precedente:              "); waddch(help.GetWin(),ACS_UARROW);
-    wprintw(help.GetWin(), "\n      Voce Successiva:              "); waddch(help.GetWin(),ACS_DARROW);
-    wprintw(help.GetWin(), "\n      Scegli:                     Enter");
-
-    help.PrintWinBorder();
-    parent.PrintWinBorder();
-    wattrset(parent.GetWin(), COLOR_PAIR(BLUE));
-    mvwprintw(parent.GetWin(), 9, 30, " GUIDA ");
-    wattrset(parent.GetWin(), COLOR_PAIR(WHITE));
-    wrefresh(parent.GetWin());
-    getchar();
+    //Oggetto navicella giocatore
+    player = new Spacecraft(*game_win);
 }
 
 //Per la scelta dell'utente
@@ -61,16 +32,16 @@ void Game::UserChoice(int choice)
             break;
 
         case LAST_MATCH:
-//            ResumeLastMatch();
+            ResumeLastMatch();
             break;
 
         case HELP:
-            Help(GetMainWin());
+            Widgets::Help(GetMainWin());
             MainScreen();
             break;
 
         case EXIT:
-            BulletList.DeleteList();
+            PlayerBulletList.DeleteList();
             EnemyList.DeleteList();
             endwin();
             exit(INIT);
@@ -84,15 +55,15 @@ void Game::MainScreen()
 
     //Disegno la finestra principale
     main_win.PrintWinBorder();
-    Banner();
+    Widgets::Banner(main_win.GetWin());
     wrefresh(main_win.GetWin());
 
     //Messaggio iniziale
-    StartMessage();
+    Widgets::StartMessage(main_win.GetWin());
 
     //Menu principale
-    Menu menu(GetMainWin());
-    UserChoice(menu.GetChoice());
+    Menu mainMenu(GetMainWin());
+    UserChoice(mainMenu.GetChoice());
 }
 
 //Loop principale del gioco
@@ -108,27 +79,26 @@ bool Game::StartGameLoop()
 
             case MAIN_MENU:
                 SaveBestScore();
-//                SaveGameStatus();
-                BulletList.DeleteList();
+                SaveGameStatus();
+                PlayerBulletList.DeleteList();
                 EnemyList.DeleteList();
                 return false;
 
             case EXIT:
                 SaveBestScore();
-//                SaveGameStatus();
-                BulletList.DeleteList();
+                SaveGameStatus();
+                PlayerBulletList.DeleteList();
                 EnemyList.DeleteList();
-                endwin();
-                exit(INIT);
+                Globals::End();
         }
 
         //Sposta la navicella del giocatore
         player->Move(*game_win);
 
         //Sparo del giocatore
-        player->Shoot(BulletList, *game_win);
+        player->Shoot(PlayerBulletList, *game_win);
 
-        //Routine del nemico che comprende
+        //Routine del nemico che comprende:
         //Sparo
         //Spostamento
         EnemyRoutine();
@@ -136,13 +106,13 @@ bool Game::StartGameLoop()
         //Controlla se il nemico è stato colpito
         EnemyHitted();
 
-        //Controlla se il nemico è stato colpito
+        //Controlla se la navicella del giocatore è stata colpito
         PlayerHitted();
 
         //Aggiorno la schermata
         UpdateScreen();
 
-        //Contrlla se c'è stata una collisione tra il nemico e la navicella
+        //Controlla se c'è stata una collisione tra il nemico e la navicella del giocatore
         Collision();
 
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
@@ -151,42 +121,16 @@ bool Game::StartGameLoop()
     return false;
 }
 
-//Messaggio iniziale
-void Game::StartMessage()
-{
-    start_message = new Window(main_win.GetWin(), 22, 12, 60, 5);
-    wprintw(start_message->GetWin(), "\n\tGuerriero Spaziale benvenuto in Invasions\n   Difendi l'universo dagli alieni e conquista la gloria\n\t\t     COSA ASPETTI!!!");
-    start_message->PrintWinBorder();
-    wrefresh(start_message->GetWin());
-    delete start_message;
-}
-
-//Banner iniziale
-void Game::Banner()
-{
-    wattron(main_win.GetWin(),COLOR_PAIR(ORANGE));
-    mvwprintw(main_win.GetWin(), 1, START_XY, "\t  _________ _                 _______  _______ _________ _______  _        _______");
-    mvwprintw(main_win.GetWin(), 2, START_XY, "\t  \\__   __/( (    /||\\     /|(  ___  )(  ____ \\\\__   __/(  ___  )( (    /|(  ____ \\");
-    mvwprintw(main_win.GetWin(), 3, START_XY, "\t     ) (   |  \\  ( || )   ( || (   ) || (    \\/   ) (   | (   ) ||  \\  ( || (    \\/");
-    mvwprintw(main_win.GetWin(), 4, START_XY, "\t     | |   |   \\ | || |   | || (___) || (_____    | |   | |   | ||   \\ | || (_____ ");
-    mvwprintw(main_win.GetWin(), 5, START_XY, "\t     | |   | (\\ \\) |( (   ) )|  ___  |(_____  )   | |   | |   | || (\\ \\) |(_____  )");
-    mvwprintw(main_win.GetWin(), 6, START_XY, "\t     | |   | | \\   | \\ \\_/ / | (   ) |      ) |   | |   | |   | || | \\   |      ) |");
-    mvwprintw(main_win.GetWin(), 7, START_XY, "\t  ___) (___| )  \\  |  \\   /  | )   ( |/\\____) |___) (___| (___) || )  \\  |/\\____) |");
-    mvwprintw(main_win.GetWin(), 8, START_XY, "\t  \\_______/|/    )_)   \\_/   |/     \\|\\_______)\\_______/(_______)|/    )_)\\_______)");
-    wattrset(main_win.GetWin(),COLOR_PAIR(WHITE));
-}
-
 //Stampa a video la condizione attuale della partita
 void Game::UpdateScreen()
 {
     //Disegno la finestra di gioco
     game_win->PrintWinBorder();
-    info_win->PrintWinBorder();
     main_win.PrintWinBorder();
-    //PrintLife();
+    PrintInfo();
 
-    //stampa i colpi sparati dalla navicella del giocatore
-    BulletList.Draw(game_win->GetWin());
+    //Stampa i colpi sparati dalla navicella del giocatore
+    PlayerBulletList.Draw(game_win->GetWin());
 
     //Stampa i nemici
     EnemyList.Draw(game_win->GetWin());
@@ -211,20 +155,20 @@ int Game::UserInput()
     {
         //tasti direzionali
         case KEY_UP:
-        player->DecreaseRow();
-        break;
+            player->DecreaseRow();
+            break;
 
         case KEY_DOWN:
-        player->IncreaseRow();
-        break;
+            player->IncreaseRow();
+            break;
 
         case KEY_LEFT:
-        player->DecreaseColumn();
-        break;
+            player->DecreaseColumn();
+            break;
 
         case KEY_RIGHT:
-        player->IncreaseColumn();
-        break;
+            player->IncreaseColumn();
+            break;
 
         case 'q':
         case 'Q':
@@ -245,7 +189,7 @@ int Game::UserInput()
     return 0;
 }
 
-//Routine dei nemici per lo sparo e lo spostamento el la generazione
+//Routine per lo sparo, lo spostamento e la generazione dei nemici
 void Game::EnemyRoutine()
 {
     //Genera un nuovo nemico
@@ -281,21 +225,21 @@ void Game::EnemyHitted()
     for (EnemyList.SetIter(); !EnemyList.EndList(); EnemyList.SetNext())
     {
         //Scanziona tutti i colpi
-        for (BulletList.SetIter(); !BulletList.EndList(); BulletList.SetNext())
+        for (PlayerBulletList.SetIter(); !PlayerBulletList.EndList(); PlayerBulletList.SetNext())
         {
             //Controllo se il colpo è stato sparato dal giocatore
-            if (BulletList.GetIter()->GetDirection() == NORTH)
+            if (PlayerBulletList.GetIter()->GetDirection() == NORTH)
             {
                 //Confronto le coordinate del colpo con quelle del nemico
-                if((BulletList.GetIter()->GetRow() == EnemyList.GetIter()->GetRow()) &&
-                   ((BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()) ||
-                    (BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()-1) ||
-                    (BulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()+1)))
+                if((PlayerBulletList.GetIter()->GetRow() == EnemyList.GetIter()->GetRow()) &&
+                   ((PlayerBulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()) ||
+                    (PlayerBulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()-1) ||
+                    (PlayerBulletList.GetIter()->GetColumn() == EnemyList.GetIter()->GetColumn()+1)))
                 {
-                    EnemyList.GetIter()->DecreaseLife(BulletList.GetIter()->GetLife());
+                    EnemyList.GetIter()->DecreaseLife(PlayerBulletList.GetIter()->GetLife());
 
                     //Cancello il colpo
-                    BulletList.Remove(BulletList.GetIter());
+                    PlayerBulletList.Remove(PlayerBulletList.GetIter());
 
                     //Controllo se il nemico è morto
                     if (EnemyList.GetIter()->GetLife() == 0)
@@ -338,6 +282,7 @@ void Game::PlayerHitted()
                 mvprintw(30/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
+                SaveBestScore();
                 exit(0);
             }
         }
@@ -371,6 +316,7 @@ void Game::Collision()
                 mvprintw(30/2,43,"SEI MORTO");
                 refresh();
                 delay_output(5000);
+                SaveBestScore();
                 exit(0);
             }
 
@@ -394,7 +340,7 @@ void Game::UpdateScore(int value)
 void Game::SaveBestScore()
 {
     f.Create();
-    f.WriteBestScore(bestScore);
+    f.Save(bestScore);
 }
 
 //Inizializza la variabile highScore
@@ -407,25 +353,23 @@ void Game::SetBestScore()
     }
     else
     {
-        bestScore = f.ReadBestScore();
+        f.Restore(bestScore);
     }
 }
-/*
+
 //Salva lo stato attuale della partita
 void Game::SaveGameStatus()
 {
-    f.WriteObj(c, aliens);
-    f.WriteOtherInfo(player, score);
+    f.Save(&PlayerBulletList);
+    f.Save(*player);
 }
 
 //Riprende la partita dal punto in cui è stata interrotta
 void Game::ResumeLastMatch()
 {
-    f.ReadObj(&c, &aliens);
-    f.ReadOtherInfo(&player, &score);
-    UpdateScreen();
-   // delay_output(2000);
-}*/
+    f.Restore(&PlayerBulletList);
+    f.Restore(player);
+}
 
 //Restituisce un riferimento alla finestra principale
 Window &Game::GetMainWin()
@@ -433,25 +377,16 @@ Window &Game::GetMainWin()
     return main_win;
 }
 
-//Inizializza il punteggio del giocatore
-/*void Game::PrintScore()
+//Stampa il conteneuto della finestra info_win
+void Game::PrintInfo()
 {
-    //Stampo i bordi della finestra
-    UpdateScore(INIT);
-    werase(score_win->GetWin());
-    wprintw(score_win->GetWin(), "\n Punteggio: %d",score);
-    wprintw(score_win->GetWin(), "\n Record: %d",bestScore);
-    score_win->PrintWinBorder();
+    werase(info_win->GetWin());
+    wprintw(info_win->GetWin(), "\n\n Punteggio: %d\n",score);
+    wprintw(info_win->GetWin(), "\n Record: %d\n",bestScore);
+    wprintw(info_win->GetWin(), "\n Punti vita: %d\n",player->GetLife());
+    wprintw(info_win->GetWin(), "\n Scudo: %d\n",INIT);
+    info_win->PrintWinBorder();
 }
-
-//Inizializza la vita del giocatore
-void Game::PrintLife()
-{
-    werase(life_win->GetWin());
-    wprintw(life_win->GetWin(), "\n Punti vita: %d",player.GetLife());
-    wprintw(life_win->GetWin(), "\n Scudo: %d",INIT);
-    life_win->PrintWinBorder();
-}*/
 
 //Distruttore
 Game::~Game()

@@ -10,6 +10,14 @@ List::List()
     start = clock();
 }
 
+//Agginge alla lista gli oggetti salvati sul file dall'ultima partita salvata
+void List::Add(GameEntity* obj)
+{
+    EntityList.push_back(obj);
+}
+
+//Aggiunge nuovi oggetti alla lista
+//Calcolando anche il tempo trascorso dall'ultimo oggetto aggiunto
 void List::Add(GameEntity *obj, double generation_time)
 {
     clock_t time;

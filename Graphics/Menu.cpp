@@ -5,6 +5,10 @@
 
 #include "Menu.h"
 
+//Dimensione del menu
+#define MENU_WIDTH 25
+#define MENU_HEIGHT 10
+
 Menu::Menu(Window &parent)
 {
     //Inizializzo le coordinate iniziali del menu

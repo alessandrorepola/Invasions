@@ -5,7 +5,6 @@
 int main()
 {
     Globals::Init();
-    Globals::Color();
 
     bool Restart = false;  //Per ricominciare senza ritornare al menu principale
 

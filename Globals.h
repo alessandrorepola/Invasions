@@ -6,12 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h> //per la funzione usleep
-
-#if defined (__WIN32__) && !defined (__CYGWIN__)
-    #include <curses.h>
-#else
-    #include <ncurses.h>
-#endif
+#include "Ncurses.h"
 
 //Numero di scelte del menu
 #define N_CHOICES 4
@@ -30,14 +25,6 @@
 
 //Coordinate Iniziali della console di gioco
 #define START_XY 1
-
-//Dimensioni della finestra principale
-#define WIN_WIDTH 120
-#define WIN_HEIGHT 35
-
-//Dimensione del menu
-#define MENU_WIDTH 25
-#define MENU_HEIGHT 10
 
 //Definisco la vita del nemico e della navicella dell'utente
 #define SPACECRAFT_LIFE 10
@@ -101,32 +88,11 @@ enum SecondaryMenuChoice
     MAIN_MENU,
 };
 
-//Dichiaro le costanti per i colori
-enum Colors
-{
-    RED = 10,
-    YELLOW,
-    BLUE,
-    ORANGE,
-    CYAN,
-    GREEN,
-    MAGENTA,
-    WHITE,
-
-    //Per regolare l'intensità di colore
-    EMPTY_COLOR = 0,
-    MEDIUM_COLOR = 500,
-    FULL_COLOR = 1000,
-};
-
 namespace Globals
 {
     void Init();       //Inizializza la schermata di ncurses
-    void Color();      //Per le impostazioni dei colori
-    void SetConsole(); //Imposta le varie funzioni per ncurses
     void SizeTerm();   //Imposta le dimensioni del terminale
-    void InitColor();  //Inizializza le tonalità di colore
-    void ColorPair();  //Inizializzo le coppie di colori
+    void End();        //Termina il programma
 }
 
 #endif // GLOBALS_H_INCLUDED
