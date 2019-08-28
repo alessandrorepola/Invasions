@@ -10,14 +10,13 @@ class Bullet : public GameEntity
 {
     friend class List;
 
-    void Draw(WINDOW*) override;  //Disegna l'oggetto colpo sullo schermo
+    void Draw() override;  //Disegna l'oggetto colpo sullo schermo
 
     public:
 
-    Bullet();
-    void Move(Window&) override;      //Muove il colpo sparato
-    bool Remove(Window&);     //Controlla se il colpo deve essere eliminato
-    Bullet(int, int, int); //Costruttore che prende come argomento la riga e la colonna
+    void Move() override;      //Muove il colpo sparato
+    bool Remove();     //Controlla se il colpo deve essere eliminato
+    Bullet(int, int, int, Window*); //Costruttore che prende come argomento la riga e la colonna
     ~Bullet();        //Distruttore
 };
 

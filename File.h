@@ -19,7 +19,7 @@ class File
     bool Exists();
     void Create();
     void Restore(int&);
-    void Restore(List*);
+    void Restore(List&);
     void Restore(Spacecraft*);
     void Save(int);
     void Save(List*);

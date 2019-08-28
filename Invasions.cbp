@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Bonus.cpp" />
+		<Unit filename="Bonus.h" />
 		<Unit filename="Bullet.cpp" />
 		<Unit filename="Bullet.h" />
 		<Unit filename="Enemy.cpp" />
@@ -55,6 +57,8 @@
 		<Unit filename="Ncurses.h" />
 		<Unit filename="Spacecraft.cpp" />
 		<Unit filename="Spacecraft.h" />
+		<Unit filename="Widgets.cpp" />
+		<Unit filename="Widgets.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

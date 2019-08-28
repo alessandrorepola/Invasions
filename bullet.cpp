@@ -1,26 +1,13 @@
 //File bullet.cpp
 #include "Bullet.h"
 
-Bullet::Bullet()
-{
-
-}
-
 //Costruttore che posiziona il colpo
-Bullet::Bullet(int r, int c, int d)
-{
-    //Inizializzo le coordinate del colpo
-    row = r;
-    column = c;
-    direction = d;
-    life = BULLET_DAMAGE;
-
-    //Inizializzo il tempo
-    start = clock();
-}
+Bullet::Bullet(int row, int column, int direction, Window *win):
+    GameEntity(row, column, BULLET_DAMAGE, direction, win)
+{}
 
 //Sposta il colpo
-void Bullet::Move(Window& win)
+void Bullet::Move()
 {
     clock_t time;
     double diff = INIT;
@@ -45,28 +32,28 @@ void Bullet::Move(Window& win)
     }
 }
 
-//DIsegna il colpo
-void Bullet::Draw(WINDOW *win)
+//Disegna il colpo
+void Bullet::Draw()
 {
     if (GetDirection() == NORTH)
     {
-        wattrset(win, COLOR_PAIR(RED));
-        mvwaddch(win, GetRow(), GetColumn(), ACS_DIAMOND);
-        wattrset(win, COLOR_PAIR(WHITE));
+        wattrset(win->GetWin(), COLOR_PAIR(RED));
+        mvwaddch(win->GetWin(), GetRow(), GetColumn(), ACS_DIAMOND);
+        wattrset(win->GetWin(), COLOR_PAIR(WHITE));
     }
     else
     {
-        wattrset(win, COLOR_PAIR(BLUE));
-        mvwaddch(win, GetRow(), GetColumn(), ACS_LANTERN);
-        wattrset(win, COLOR_PAIR(WHITE));
+        wattrset(win->GetWin(), COLOR_PAIR(BLUE));
+        mvwaddch(win->GetWin(), GetRow(), GetColumn(), ACS_LANTERN);
+        wattrset(win->GetWin(), COLOR_PAIR(WHITE));
     }
 }
 
 //Restituisce l'id del colpo
-bool Bullet::Remove(Window &win)
+bool Bullet::Remove()
 {
     //Se va verso l'alto
-    if ((GetRow() < win.GetY()) || (GetRow() >= win.GetHeight()-1))
+    if ((GetRow() < win->GetY()) || (GetRow() >= win->GetHeight()-1))
     {
         return true;
     }

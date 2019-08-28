@@ -36,6 +36,21 @@ void List::Add(GameEntity *obj, double generation_time)
     }
 }
 
+//Trasferisce il contenuto di una lista in un altra
+void List::Transfer(List *TempList)
+{
+    EntityList.splice(EntityList.begin(), TempList->EntityList);
+}
+
+bool List::Empty()
+{
+    if (EntityList.empty())
+    {
+        return true;
+    }
+    return false;
+}
+
 void List::DeleteList()
 {
     for (it = EntityList.begin(); it != EntityList.end(); it++)
@@ -60,13 +75,11 @@ void List::Remove(GameEntity* obj)
 }
 
 //Disegna i colpi
-void List::Draw (WINDOW *win)
+void List::Draw ()
 {
-    SetIter();
-    while(!EndList())
+    for(auto *obj : EntityList)
     {
-        GetIter()->Draw(win);
-        SetNext();
+        obj->Draw();
     }
 }
 

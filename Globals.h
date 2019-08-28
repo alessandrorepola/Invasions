@@ -54,8 +54,8 @@ enum ConsoleSide
 {
     UP,
     DOWN,
-    LEFT,
     RIGHT,
+    LEFT,
 };
 
 //Imposto le direzioni in cui si può muovere il nemico

@@ -2,17 +2,11 @@
 #include "Spacecraft.h"
 
 //Costruttore
-Spacecraft::Spacecraft(Window &win)
-{
-    //Vita iniziale della navicella
-    life = SPACECRAFT_LIFE;
-
-    //Coordinate iniziali della navicella
-    row = win.GetHeight()/2;
-    column = win.GetWidth()/2;
-    bulletDirection = NORTH;
-    bulletGenerationTime = TIME_PLAYER_BULLET;
-}
+Spacecraft::Spacecraft(Window *win):
+    GameEntity(win->GetHeight()/2, win->GetWidth()/2, SPACECRAFT_LIFE, int(), win),
+    bulletDirection(NORTH),
+    bulletGenerationTime(TIME_PLAYER_BULLET)
+{}
 
 //Decrementa la colonna
 void Spacecraft::DecreaseColumn()
@@ -39,48 +33,47 @@ void Spacecraft::IncreaseRow()
 }
 
 //Movimeto della navicella
-void Spacecraft::Move(Window& win)
+void Spacecraft::Move()
 {
     //Per controllare che la navicella del giocatore finisca fuori dal campo da gioco
-    if (column <= win.GetX()+2)
+    if (column <= win->GetX()+2)
 	{
-		column = win.GetX()+2;
+		column = win->GetX()+2;
 	}
-	if (row <= win.GetY())
+	if (row <= win->GetY())
 	{
-		row = win.GetY();
+		row = win->GetY();
 	}
-	if (column >= win.GetWidth()-4)
+	if (column >= win->GetWidth()-4)
 	{
-		column = win.GetWidth()-4;
+		column = win->GetWidth()-4;
 	}
-	if (row >= win.GetHeight()-1)
+	if (row >= win->GetHeight()-1)
 	{
-		row = win.GetHeight()-2;
+		row = win->GetHeight()-2;
 	}
 }
 
 //Disegna la navicella
-void Spacecraft::Draw (WINDOW *win)
+void Spacecraft::Draw ()
 {
-    wattrset(win, COLOR_PAIR(YELLOW));
-    mvwprintw(win,row,column-2,"\\-^-/");
-    wattrset(win, COLOR_PAIR(WHITE));
-    wrefresh(win);
+    wattrset(win->GetWin(), COLOR_PAIR(YELLOW));
+    mvwprintw(win->GetWin(),row,column-2,"\\-^-/");
+    wattrset(win->GetWin(), COLOR_PAIR(WHITE));
 }
 
 //Spara il colpo
-void Spacecraft::Shoot(List &PlayerBulletList, Window &win)
+void Spacecraft::Shoot(List &PlayerBulletList)
 {
-    Bullet *pbullet = new Bullet(GetRow()-1, GetColumn(), bulletDirection);
+    Bullet *pbullet = new Bullet(GetRow()-1, GetColumn(), bulletDirection, win);
     PlayerBulletList.Add(pbullet, bulletGenerationTime);
 
     for(PlayerBulletList.SetIter(); !PlayerBulletList.EndList(); PlayerBulletList.SetNext())
     {
-        PlayerBulletList.GetBullet()->Move(win);
+        PlayerBulletList.GetBullet()->Move();
 
         //Controlla se ci sono colpi da cancellare
-        if (PlayerBulletList.GetBullet()->Remove(win))
+        if (PlayerBulletList.GetBullet()->Remove())
         {
             PlayerBulletList.Remove(PlayerBulletList.GetBullet());
         }

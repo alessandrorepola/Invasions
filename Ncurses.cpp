@@ -31,13 +31,14 @@ void Ncurses::Colors::Init()
     start_color();
 
     //Modifico le tonalità dei colori per renderli più brillanti
+    //            COLOR            RED         GREEN        BLUE
     init_color (COLOR_RED,     FULL_COLOR,  EMPTY_COLOR,  EMPTY_COLOR);
     init_color (COLOR_BLUE,    EMPTY_COLOR, EMPTY_COLOR,  FULL_COLOR);
     init_color (COLOR_YELLOW,  FULL_COLOR,  FULL_COLOR,   EMPTY_COLOR);
     init_color (COLOR_GREEN,   EMPTY_COLOR, FULL_COLOR,   EMPTY_COLOR);
     init_color (ORANGE,        FULL_COLOR,  MEDIUM_COLOR, EMPTY_COLOR);
     init_color (COLOR_CYAN,    EMPTY_COLOR, FULL_COLOR,   FULL_COLOR);
-    init_color (COLOR_MAGENTA, FULL_COLOR,  EMPTY_COLOR,  EMPTY_COLOR);
+    init_color (COLOR_MAGENTA, FULL_COLOR,  EMPTY_COLOR,  FULL_COLOR);
     init_color (COLOR_WHITE,   FULL_COLOR,  FULL_COLOR,   FULL_COLOR);
 }
 
@@ -51,6 +52,7 @@ void Ncurses::Colors::ColorPair()
         if (can_change_color())
         {
             //Inizializzo i colori
+            //        COLOR     FOREGROUNG     BACKGROUND
             init_pair(RED,      COLOR_RED,     COLOR_BLACK);
             init_pair(YELLOW,   COLOR_YELLOW,  COLOR_BLACK);
             init_pair(BLUE,     COLOR_BLUE,    COLOR_BLACK);

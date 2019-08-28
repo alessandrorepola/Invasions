@@ -2,16 +2,21 @@
 
 #include "GameEntity.h"
 
-GameEntity::GameEntity()
+GameEntity::GameEntity(int row, int column, int life, int direction, Window *win):
+    row(row),
+    column(column),
+    life(life),
+    direction(direction),
+    win(win)
 {
-    row = 0;
-    column = 0;
-    life = 0;
-    direction = 0;
+    start = clock();
 }
 
 
-GameEntity::~GameEntity() {}
+GameEntity::~GameEntity()
+{
+    win = nullptr;
+}
 
 int GameEntity::GetRow()
 {

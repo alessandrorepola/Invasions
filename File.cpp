@@ -56,9 +56,12 @@ void File::Save(List *PlayerBulletList)
 {
     f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::trunc | std::ios::out);
 
-    for(PlayerBulletList->SetIter(); !PlayerBulletList->EndList(); PlayerBulletList->SetNext())
+    if (!PlayerBulletList->Empty())
     {
-        f.write ((char*) PlayerBulletList->GetBullet(), sizeof(Bullet));
+        for(PlayerBulletList->SetIter(); !PlayerBulletList->EndList(); PlayerBulletList->SetNext())
+        {
+            f.write ((char*) PlayerBulletList->GetBullet(), sizeof(Bullet));
+        }
     }
     f.close();
 }
@@ -72,16 +75,16 @@ void File::Save(Spacecraft player)
     f.close();
 }
 
-void File::Restore(List* PlayerBulletList)
+void File::Restore(List& EnemyList)
 {
-    f.open(FILE_BULLET_LIST, std::ios::binary | std::ios::in);
-    Bullet b;
+    /*f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::in);
+    Enemy enemy;
     while (f.good())
     {
-        f.read ((char*) &b, sizeof(Bullet));
-        PlayerBulletList->Add(&b);
+        f.read ((char*) &enemy, sizeof(Enemy));
+        EnemyList.Add(&enemy);
     }
-    f.close();
+    f.close();*/
 /*
     f.open(FILE_ENEMY_LIST, std::ios::binary | std::ios::in);
 

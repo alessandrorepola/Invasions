@@ -11,19 +11,21 @@
 //#include "Widgets.h"
 #include "Graphics/Window.h"
 #include "List.h"
+#include "Bonus.h"
 
 class Game
 {
+    int score;              //Per il punteggio
+	int bestScore;          //Miglior punteggio
     Window main_win;        //Apro una finestra principale
     Window *game_win;       //Dichiaro un puntatore alla finestra di gioco
     Window *info_win;       //Puntatore alla finestra per le informazioni sulla partita
     Spacecraft *player;     //Dichiaro un oggetto di tipo navicella per il giocatore
+    Bonus *bonus;           //Dichiaro un puntatore ad un oggetto di tipo bonus
 	List PlayerBulletList;  //Dichiaro una lista per gestire i colpi sparati dal giocatore
 	List EnemyBulletList;   //Dichiaro una lista per gestire i colpi sparati dal giocatore
 	List EnemyList;         //Dichiaro una lista per gestire i nemici
 	File f;                 //Oggetto per la gestione dei file
-	int score;              //Per il punteggio
-	int bestScore;          //Miglior punteggio
 
     void UserChoice(int);   //Scelta dell'utente relativa al menu principale
     void UpdateScreen();    //Stampa a video lo stato attuale della partita
@@ -31,6 +33,8 @@ class Game
     void EnemyRoutine();    //Routine dei nemici che comprende sparo e spostamento
     void EnemyHitted();     //Controlla se il nemico è stato colpito
     void PlayerHitted();    //Controlla se il giocatore è stato colpito
+    void BonusRoutine();    //Gestione movimento, spostamento e cancellazione del bonus
+    void BonusCaught();     //Controlla se il giocattore ha catturato il bonus
     void Collision();       //Controlla se la navicella alleata è stata colpita
     void UpdateScore(int);  //Aggiorna il punteggio attuale della partita
     void SaveBestScore();   //Salva il miglior punteggio

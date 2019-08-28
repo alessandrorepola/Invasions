@@ -11,27 +11,31 @@
 #include "Globals.h"
 #include "Graphics/Window.h"
 
+
 class GameEntity
 {
     protected:
 
-    int row;
-    int column;
-    int life;
-    int direction;
-    clock_t start;
+    int row;        //Riga dell'oggetto
+    int column;     //Colonna dell'oggetto
+    int life;       //Punti vita
+    int direction;  //Direzione in cui si sposta l'oggetto
+    clock_t start;  //Tempo trascorso dall'esecuzione del programma alla creazione dell'oggetto
+                    //In questo modo possiamo calcolarci la differenza di tempo per lo spostamento
+    Window *win;    //Puntatore alla finestra in cui esiste l'oggetto
 
     public:
 
-    GameEntity();
-    virtual ~GameEntity();
-    virtual int GetRow();
-    virtual int GetColumn();
-    virtual int GetLife();
-    virtual int GetDirection();
-    virtual void DecreaseLife(int);
-    virtual void Draw(WINDOW*) = 0;
-    virtual void Move(Window&) = 0;
+    GameEntity() = default;         //Costruttore di default
+    GameEntity(int, int, int, int, Window*);
+    virtual ~GameEntity();          //Distruttore virtuale
+    virtual int GetRow();           //Restiruisce la riga dell'oggetto
+    virtual int GetColumn();        //Restituisce la colonna dell'oggetto
+    virtual int GetLife();          //Restituisce i punti vita dell'oggetto
+    virtual int GetDirection();     //Restituisce la direzione
+    virtual void DecreaseLife(int); //Decrementa la variabile life
+    virtual void Draw() = 0;        //Per il disegno dell'oggetto
+    virtual void Move() = 0;        //Per lo spaostamento dell'oggetto
 
 };
 

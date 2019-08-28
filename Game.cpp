@@ -7,10 +7,11 @@
 #include "Widgets.h"
 
 //Costruttore
-Game::Game()
+Game::Game():
+    score(INIT),
+    bonus(nullptr)
 {
-    score = INIT;
-
+    //Ripristino il moiglior punteggio salvato
     SetBestScore();
 
     //Finestra di gioco
@@ -20,7 +21,7 @@ Game::Game()
     info_win = new Window(main_win.GetWin(), game_win->GetWidth()+1, main_win.GetY(), main_win.GetWidth()/6, main_win.GetHeight());
 
     //Oggetto navicella giocatore
-    player = new Spacecraft(*game_win);
+    player = new Spacecraft(game_win);
 }
 
 //Per la scelta dell'utente
@@ -63,6 +64,7 @@ void Game::MainScreen()
 
     //Menu principale
     Menu mainMenu(GetMainWin());
+    werase(main_win.GetWin());
     UserChoice(mainMenu.GetChoice());
 }
 
@@ -71,7 +73,7 @@ bool Game::StartGameLoop()
 {
     while (true)
     {
-        //Sposta la nevicella del giocatore
+        //Analizza l'input utente
         switch (UserInput())
         {
             case RESTART:
@@ -93,10 +95,10 @@ bool Game::StartGameLoop()
         }
 
         //Sposta la navicella del giocatore
-        player->Move(*game_win);
+        player->Move();
 
         //Sparo del giocatore
-        player->Shoot(PlayerBulletList, *game_win);
+        player->Shoot(PlayerBulletList);
 
         //Routine del nemico che comprende:
         //Sparo
@@ -109,11 +111,20 @@ bool Game::StartGameLoop()
         //Controlla se la navicella del giocatore è stata colpito
         PlayerHitted();
 
-        //Aggiorno la schermata
-        UpdateScreen();
+        //Routine del bonus:
+        //Spostamento
+        //Cancellazione
+        //Generazione
+        BonusRoutine();
+
+        //Controlla se il giocatore ha catturato il bonus
+        BonusCaught();
 
         //Controlla se c'è stata una collisione tra il nemico e la navicella del giocatore
         Collision();
+
+        //Aggiorno la schermata
+        UpdateScreen();
 
         //Rallento l'esecuzione del loop per evitare un utilizzo intenso della CPU
         usleep(1);
@@ -130,16 +141,22 @@ void Game::UpdateScreen()
     PrintInfo();
 
     //Stampa i colpi sparati dalla navicella del giocatore
-    PlayerBulletList.Draw(game_win->GetWin());
+    PlayerBulletList.Draw();
 
     //Stampa i nemici
-    EnemyList.Draw(game_win->GetWin());
+    EnemyList.Draw();
 
     //Stampa i colpi dei nemici
-    EnemyBulletList.Draw(game_win->GetWin());
+    EnemyBulletList.Draw();
 
     //Stampa la navicella del giocatore
-    player->Draw(game_win->GetWin());
+    player->Draw();
+
+    if (bonus)
+    {
+        //Stampa a video il bonus se esiste
+        bonus->Draw();
+    }
 
     //Aggiorno la finestra di gioco
     wrefresh(main_win.GetWin());
@@ -193,7 +210,7 @@ int Game::UserInput()
 void Game::EnemyRoutine()
 {
     //Genera un nuovo nemico
-    Enemy *enemyp = new Enemy(*game_win);
+    Enemy *enemyp = new Enemy(game_win);
     EnemyList.Add(enemyp, enemyp->GetGenerationTime());
 
     //Iterazioni su tutti gli oggetti della lista
@@ -203,17 +220,17 @@ void Game::EnemyRoutine()
         EnemyList.GetEnemy()->Shoot(EnemyBulletList);  //Generazione del colpo
         for (EnemyBulletList.SetIter(); !EnemyBulletList.EndList(); EnemyBulletList.SetNext())
         {
-            EnemyBulletList.GetBullet()->Move(*game_win);   //Spostamento di tutti i colpi sparati
+            EnemyBulletList.GetBullet()->Move();   //Spostamento di tutti i colpi sparati
 
             //Controlla se ci sono colpi da cancellare
-            if (EnemyBulletList.GetBullet()->Remove(*game_win))
+            if (EnemyBulletList.GetBullet()->Remove())
             {
                 EnemyBulletList.Remove(EnemyBulletList.GetBullet());
             }
         }
 
         //Spostamento
-        EnemyList.GetEnemy()->Move(*game_win);
+        EnemyList.GetEnemy()->Move();
     }
 
 }
@@ -279,12 +296,55 @@ void Game::PlayerHitted()
             if (player->GetLife() == 0)
             {
                 UpdateScreen();
-                mvprintw(30/2,43,"SEI MORTO");
-                refresh();
-                delay_output(5000);
+                Widgets::FinalMessage(*game_win);
                 SaveBestScore();
-                exit(0);
+                Globals::End();
             }
+        }
+    }
+}
+
+//Gestione movimento, spostamento e cancellazione del bonus
+void Game::BonusRoutine()
+{
+    //Controllo se esiste un bonus
+    if (bonus)
+    {
+        //Spostamento del bonus
+        bonus->Move();
+
+        //Verifico se il bonus è arrivato alla fine della schermata
+        //Dovra' quindi essere cancellato
+        if (bonus->Remove())
+        {
+            delete bonus;
+            bonus = nullptr;
+        }
+    }
+    else
+    {
+        //Genera un bonus
+        if (bonus->Generation())
+        {
+            bonus = new Bonus(game_win);
+        }
+    }
+}
+
+//Controlla se il giocatore ha beccato il bonus
+void Game::BonusCaught()
+{
+    if(bonus)
+    {
+        if (((player->GetRow() == bonus->GetRow()) &&
+            ((player->GetColumn() == bonus->GetColumn()) ||
+             (player->GetColumn()+1 == bonus->GetColumn()) ||
+             (player->GetColumn()-1 == bonus->GetColumn()) ||
+             (player->GetColumn()+2 == bonus->GetColumn()) ||
+             (player->GetColumn()-2 == bonus->GetColumn()))))
+        {
+            delete bonus;
+            bonus = nullptr;
         }
     }
 }
@@ -313,11 +373,9 @@ void Game::Collision()
             if(player->GetLife() == 0)
             {
                 UpdateScreen();
-                mvprintw(30/2,43,"SEI MORTO");
-                refresh();
-                delay_output(5000);
+                Widgets::FinalMessage(*game_win);
                 SaveBestScore();
-                exit(0);
+                Globals::End();
             }
 
             //Aggiorno il punteggio
@@ -360,14 +418,14 @@ void Game::SetBestScore()
 //Salva lo stato attuale della partita
 void Game::SaveGameStatus()
 {
-    f.Save(&PlayerBulletList);
+    f.Save(&EnemyList);
     f.Save(*player);
 }
 
 //Riprende la partita dal punto in cui è stata interrotta
 void Game::ResumeLastMatch()
 {
-    f.Restore(&PlayerBulletList);
+    f.Restore(EnemyList);
     f.Restore(player);
 }
 

@@ -20,8 +20,9 @@ class List
     GameEntity *GetFirst();         //Restituisce il puntatore al primo elemento della lista
     void Add(GameEntity*);          //Aggiunge alla lista gli oggetti salvati su file
     void Add(GameEntity*, double);  //Aggiunge un nuovo oggetto alla lista
+    void Transfer(List*);
     void Remove(GameEntity*);       //Rimuove l'oggetto specificato
-    void Draw(WINDOW*);             //Disegna gli oggetti della lista
+    void Draw();             //Disegna gli oggetti della lista
     void SetIter();                 //Imposta il puntatore iter
     void SetNext();                 //Sposta il puntatore iter al colpo successivo
     GameEntity *GetIter();          //Restituisce il puntatore iter

@@ -14,18 +14,15 @@ class Enemy : public GameEntity
     double bulletGenerationTime;
     double generationTime;
     int side;               //Il lato iniziale da cui parte la navicella
-    Enemy *next;            //Puntatore all'oggetto successivo
-    Enemy *prev;            //Puntatore all'oggetto precedente
-    clock_t start;          //Misura il tempo dall'ultimo nemico generato
-    void CoordGeneration(Window&); //Genera le posizioni iniziali del nemico
-    void Draw(WINDOW*)override;
-    void SetDirection(Window&);    //Imposta una direzione in cui si puo' spostare la navicella
+    void CoordGeneration(); //Genera le posizioni iniziali del nemico
+    void Draw()override;
+    void SetDirection();    //Imposta una direzione in cui si puo' spostare la navicella
     void SetMovement();     //Sposta il nemico di una posizione in base alla direzione
 
     public:
 
-    Enemy(Window&);                //Costruttore
-    void Move(Window&) override;            //Muove il nemico
+    Enemy(Window*);                //Costruttore
+    void Move() override;            //Muove il nemico
     bool CheckDie();        //Controlla se il nemico e stato distrutto
     double GetGenerationTime();
     void Shoot(List&);      //Sparo del Nemico

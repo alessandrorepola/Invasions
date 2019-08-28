@@ -2,6 +2,8 @@
 
 #include "Widgets.h"
 
+#define TIME 5000
+
 //Banner iniziale
 void Widgets::Banner(WINDOW *win)
 {
@@ -57,4 +59,32 @@ void Widgets::Help(Window parent)
     wattrset(parent.GetWin(), COLOR_PAIR(WHITE));
     wrefresh(parent.GetWin());
     getchar();
+}
+
+//Messaggio finale
+void Widgets::FinalMessage(Window win)
+{
+    int row = win.GetHeight()/3.5;
+    int column = win.GetWidth()/3;
+
+    attrset(COLOR_PAIR(MAGENTA));
+    mvprintw(row,column," _______  _______  _______  _______       ");
+    mvprintw(++row,column,"(  ____ \\(  ___  )(       )(  ____ \\  ");
+    mvprintw(++row,column,"| (    \\/| (   ) || () () || (    \\/  ");
+    mvprintw(++row,column,"| |      | (___) || || || || (__        ");
+    mvprintw(++row,column,"| | ____ |  ___  || |(_)| ||  __)       ");
+    mvprintw(++row,column,"| | \\_  )| (   ) || |   | || (         ");
+    mvprintw(++row,column,"| (___) || )   ( || )   ( || (____/\\   ");
+    mvprintw(++row,column,"(_______)|/     \\||/     \\|(_______/  ");
+    mvprintw(++row,column," _______           _______  _______     ");
+    mvprintw(++row,column,"(  ___  )|\\     /|(  ____ \\(  ____ )  ");
+    mvprintw(++row,column,"| (   ) || )   ( || (    \\/| (    )|   ");
+    mvprintw(++row,column,"| |   | || |   | || (__    | (____)|    ");
+    mvprintw(++row,column,"| |   | |( (   ) )|  __)   |     __)    ");
+    mvprintw(++row,column,"| |   | | \\ \\_/ / | (      | (\\ (    ");
+    mvprintw(++row,column,"| (___) |  \\   /  | (____/\\| ) \\ \\__");
+    mvprintw(++row,column,"(_______)   \\_/   (_______/|/   \\__/  ");
+    attrset(COLOR_PAIR(WHITE));
+    refresh();
+    delay_output(TIME);
 }

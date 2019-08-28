@@ -15,15 +15,15 @@ class Spacecraft : public GameEntity
 
     public:
 
-    Spacecraft(Window&);          //Costruttore
-    void Move(Window&) override;        //sposta la navicella
+    Spacecraft(Window*);          //Costruttore
+    void Move() override;        //sposta la navicella
     void DecreaseRow();
     void DecreaseColumn();
     void IncreaseRow();
     void IncreaseColumn();
     void CheckMove();      //Controlla lo spostamento della navicella
-    void Shoot(List&, Window&);   //Spara il colpo
-    void Draw(WINDOW*) override;    //Disegna la navicella
+    void Shoot(List&);   //Spara il colpo
+    void Draw() override;    //Disegna la navicella
     ~Spacecraft();        //Distruttore
 };
 
